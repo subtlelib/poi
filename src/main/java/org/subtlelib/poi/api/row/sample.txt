@@ -1,0 +1,40 @@
+    /**
+     * without conditional cell
+            boolean isFirstRow = true;
+            for (Entry<Double, Double> condDiscRatesAndAmounts : condDiscRatesAndAmountsMap.entrySet()) {
+                sheetContext
+                    .nextRow();
+
+                if (isFirstRow) {
+                    sheetContext
+                        .currentRow()
+                            .skip()
+                            .text(condName)
+                            .skip(2);
+                    
+                    isFirstRow = false;
+                } else {
+                    sheetContext
+                        .currentRow()
+                            .skip(4);
+                }
+
+                
+                sheetContext
+                    .currentRow().withDefaultTextStyle(ExcelStyle.NUMBERS)
+                        .percentage(condDiscRatesAndAmounts.getKey())
+                        .formattedNumber(condDiscRatesAndAmounts.getValue() * -1);
+            }
+    * with conditional cell
+            boolean isFirstRow = true;
+            for (Entry<Double, Double> condDiscRatesAndAmounts : condDiscRatesAndAmountsMap.entrySet()) {
+                sheetContext
+                    .nextRow()
+                        .at(1).conditionalCell(isFirstRow).text(condName)
+                        .withDefaultTextStyle(ExcelStyle.NUMBERS)
+                        .at(4).percentage(condDiscRatesAndAmounts.getKey())
+                        .formattedNumber(condDiscRatesAndAmounts.getValue() * -1);
+                
+                isFirstRow = false;
+            }
+     */
