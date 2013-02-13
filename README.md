@@ -1,4 +1,4 @@
 poi
 ===
 
-Apache POI builder
+A fancy way to boilerplate-less POI
