@@ -2,6 +2,8 @@ package org.subtlelib.poi.impl.row;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+import java.util.Date;
+
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -80,6 +82,23 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     	return number == null ? skipCell() : number(number, style);
     }
 
+	@Override
+	public RowContext date(Date date) {
+		return date(date, getDateStyle());
+	}
+
+    @Override
+	public RowContext date(Date date, Style style) {
+    	checkArgument(date != null, "Date is null");
+    	
+        HSSFCell cell = row.createCell(index);
+        cell.setCellValue(date);
+        cell.setCellStyle(styleRegistry.registerStyle(style));
+        
+        index++;
+        return this;
+	}
+    
     @Override
     public RowContext total(String text) {
         return text(text, getTotalStyle());
@@ -117,6 +136,12 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     	return condition ? this : new RowContextNoImpl(sheet, this);
     }
 
+	@Override
+	public RowContext setColumnWidth(int width) {
+		sheet.setColumnWidth(index - 1, width);
+		return this;
+	}
+    
     @Override
     public HSSFRow getNativeRow() {
         return row;

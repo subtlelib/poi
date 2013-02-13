@@ -3,18 +3,18 @@ package org.subtlelib.poi.impl.sheet;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
-import org.subtlelib.poi.api.style.Style;
-import org.subtlelib.poi.api.style.StyleConfiguration;
+import org.subtlelib.poi.api.workbook.WorkbookContext;
 import org.subtlelib.poi.impl.row.RowContextNoImpl;
-import org.subtlelib.poi.impl.style.DefaultStyleConfiguration;
+import org.subtlelib.poi.impl.style.HierarchicalStyleConfiguration;
 
-public class SheetContextNoImpl extends DefaultStyleConfiguration implements SheetContext {
+public class SheetContextNoImpl extends HierarchicalStyleConfiguration<SheetContext> implements SheetContext {
 
 	private final SheetContext parent;
 	
 	private final RowContext noImplRowContext = new RowContextNoImpl(this);
 	
-	public SheetContextNoImpl(SheetContext parent) {
+	public SheetContextNoImpl(SheetContext parent, WorkbookContext workbook) {
+    	super(workbook);		
 		this.parent = parent;
 	}
 
@@ -58,6 +58,11 @@ public class SheetContextNoImpl extends DefaultStyleConfiguration implements She
 		throw new UnsupportedOperationException("Native sheet is not supported by SheetContextNoImpl");
 	}
 
+    @Override
+    public SheetContext setColumnWidth(int columnNumber, int width) {
+    	return this;
+    }
+	
 	@Override
 	public SheetContext setColumnWidths(int... multipliers) {
 		return this;
@@ -68,39 +73,4 @@ public class SheetContextNoImpl extends DefaultStyleConfiguration implements She
 		return this;
 	}
 	
-	@Override
-	public SheetContext setStyleConfiguration(StyleConfiguration styleConfiguration) {
-		return this;
-	}
-
-	@Override
-	public StyleConfiguration getStyleConfiguration() {
-		throw new UnsupportedOperationException("No style configuration defined for SheetContextNoImpl");
-	}
-
-	@Override
-	public SheetContext setTotalStyle(Style style) {
-		return this;
-	}
-
-	@Override
-	public SheetContext setHeaderStyle(Style style) {
-		return this;
-	}
-
-	@Override
-	public SheetContext setPercentageStyle(Style style) {
-		return this;
-	}
-	
-	@Override
-	public SheetContext setTextStyle(Style style) {
-		return this;
-	}
-
-	@Override
-	public SheetContext setNumberStyle(Style style) {
-		return this;
-	}
-
 }

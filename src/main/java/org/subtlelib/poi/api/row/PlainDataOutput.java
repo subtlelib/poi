@@ -1,5 +1,7 @@
 package org.subtlelib.poi.api.row;
 
+import java.util.Date;
+
 import org.subtlelib.poi.api.style.Style;
 
 public interface PlainDataOutput {
@@ -13,5 +15,8 @@ public interface PlainDataOutput {
     public RowContext number(Number number, Style style);
     public RowContext optionalNumber(Number number);
     public RowContext optionalNumber(Number number, Style style);
+    
+    public RowContext date(Date date);
+    public RowContext date(Date date, Style style);
 
 }

@@ -16,10 +16,12 @@ import org.subtlelib.poi.api.style.StyleConfiguration;
 public class DefaultStyleConfiguration implements StyleConfiguration {
 
 	private static final Style COMMON_STYLE = new Style() {
+		
 		@Override
 		public HSSFCellStyle toNativeStyle(HSSFWorkbook workbook) {
 			return workbook.createCellStyle();
 		}
+
 	};
 	
 	@Override
@@ -29,6 +31,11 @@ public class DefaultStyleConfiguration implements StyleConfiguration {
 
 	@Override
 	public Style getNumberStyle() {
+		return commonStyle();
+	}
+
+	@Override
+	public Style getDateStyle() {
 		return commonStyle();
 	}
 
@@ -50,5 +57,5 @@ public class DefaultStyleConfiguration implements StyleConfiguration {
 	private Style commonStyle() {
 		return COMMON_STYLE;
 	}
-	
+
 }

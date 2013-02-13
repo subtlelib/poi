@@ -13,6 +13,7 @@ public interface SheetContext extends RowNavigation<SheetContext, RowContext>, R
 
 	public RowContext currentRow();
 	
+	public SheetContext setColumnWidth(int columnNumber, int width);
 	public SheetContext setColumnWidths(int... widths);
 	public SheetContext hideGrid();
 	

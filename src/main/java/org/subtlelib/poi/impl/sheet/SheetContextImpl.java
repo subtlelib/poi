@@ -20,13 +20,17 @@ public class SheetContextImpl extends HierarchicalStyleConfiguration<SheetContex
     protected RowContext currentRow;
     protected int lineNo = -1;
 
-    private final SheetContext noImplSheetContext = new SheetContextNoImpl(this);
-    private final RowContext noImplRowContext = new RowContextNoImpl(this);
+    private final SheetContext noImplSheetContext;
+    private final RowContext noImplRowContext;
     
     public SheetContextImpl(HSSFSheet sheet, WorkbookContext workbook) {
     	super(workbook);
+    	
         this.sheet = sheet;
         this.workbook = workbook;
+        
+        this.noImplSheetContext = new SheetContextNoImpl(this, workbook);
+        this.noImplRowContext = new RowContextNoImpl(this);
     }
     
     @Override
@@ -70,10 +74,16 @@ public class SheetContextImpl extends HierarchicalStyleConfiguration<SheetContex
     }
 
     @Override
-	public SheetContext setColumnWidths(int... multipliers) {
+    public SheetContext setColumnWidth(int columnNumber, int width) {
         //TODO max col width in excel is 255 characters; check aforementioned condition with a test (whether our 1.1 doesn't reduce this upper boundary), add precondition check
+    	sheet.setColumnWidth(columnNumber, (int) (getConfiguration().getColumnWidthBaseValue() * width));
+    	return this;
+    }
+    
+    @Override
+	public SheetContext setColumnWidths(int... multipliers) {
     	for (int i = 0; i < multipliers.length; i++) {
-            sheet.setColumnWidth(i, (int) (getConfiguration().getColumnWidthBaseValue() * multipliers[i]));
+            setColumnWidth(i, multipliers[i]);
         }
         return this;
     }

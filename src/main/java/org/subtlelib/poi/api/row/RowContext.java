@@ -12,6 +12,8 @@ import org.subtlelib.poi.api.style.StyleConfiguration;
 public interface RowContext extends PlainDataOutput, FormattedDataOutput, CellNavigation<RowContext>, CellCondition<RowContext>,
 		RowNavigation<SheetContext, RowContext>, RowCondition<RowContext>, StyleConfiguration, StyleConfigurable<RowContext> {
 
-    public HSSFRow getNativeRow();
-
+    public RowContext setColumnWidth(int width);
+    
+	public HSSFRow getNativeRow();
+    
 }

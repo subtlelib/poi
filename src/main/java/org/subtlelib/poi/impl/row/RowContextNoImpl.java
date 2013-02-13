@@ -1,5 +1,7 @@
 package org.subtlelib.poi.impl.row;
 
+import java.util.Date;
+
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
@@ -60,6 +62,16 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
         return delegate;
     }
     
+	@Override
+	public RowContext date(Date date) {
+		return delegate;
+	}
+
+	@Override
+	public RowContext date(Date date, Style style) {
+		return delegate;
+	}
+
     @Override
     public RowContext skipCell() {
         return delegate;
@@ -95,6 +107,11 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
 		return delegate;
 	}
 
+	@Override
+	public RowContext setColumnWidth(int width) {
+		return delegate;
+	}
+	
     @Override
     public HSSFRow getNativeRow() {
         throw new UnsupportedOperationException("RowContextNoImpl doesn't have underlying poi row");
