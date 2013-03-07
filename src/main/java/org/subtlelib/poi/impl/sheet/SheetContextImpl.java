@@ -19,6 +19,8 @@ public class SheetContextImpl extends HierarchicalStyleConfiguration<SheetContex
     
     protected RowContext currentRow;
     protected int lineNo = -1;
+    
+    private int defaultRowIndent = 0;
 
     private final SheetContext noImplSheetContext;
     private final RowContext noImplRowContext;
@@ -47,7 +49,7 @@ public class SheetContextImpl extends HierarchicalStyleConfiguration<SheetContex
 
     @Override
 	public RowContext nextRow() {
-        currentRow = new RowContextImpl(sheet.createRow(++lineNo), this, workbook);
+        currentRow = new RowContextImpl(sheet.createRow(++lineNo), this, workbook, defaultRowIndent);
         return currentRow;
     }
 
@@ -91,6 +93,12 @@ public class SheetContextImpl extends HierarchicalStyleConfiguration<SheetContex
 	@Override
 	public SheetContext hideGrid() {
 		sheet.setDisplayGridlines(false);
+		return this;
+	}
+	
+	@Override
+	public SheetContext setDefaultRowIndent(int indent) {
+		this.defaultRowIndent = indent;
 		return this;
 	}
 

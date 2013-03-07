@@ -15,7 +15,9 @@ public interface SheetContext extends RowNavigation<SheetContext, RowContext>, R
 	
 	public SheetContext setColumnWidth(int columnNumber, int width);
 	public SheetContext setColumnWidths(int... widths);
+	
 	public SheetContext hideGrid();
+	public SheetContext setDefaultRowIndent(int indent);
 	
 	public HSSFSheet getNativeSheet();
   

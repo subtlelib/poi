@@ -73,4 +73,9 @@ public class SheetContextNoImpl extends HierarchicalStyleConfiguration<SheetCont
 		return this;
 	}
 	
+	@Override
+	public SheetContext setDefaultRowIndent(int indent) {	
+		return this;
+	}
+	
 }

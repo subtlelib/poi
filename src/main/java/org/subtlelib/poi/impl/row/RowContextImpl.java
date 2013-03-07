@@ -20,12 +20,14 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     private final HSSFRow row;
     
     private int index;
+    private int indent;
     
-    public RowContextImpl(HSSFRow row, SheetContext sheet, StyleRegistry styleRegistry) {
+    public RowContextImpl(HSSFRow row, SheetContext sheet, StyleRegistry styleRegistry, int indent) {
         super(sheet);
         this.row = row;
         this.styleRegistry = styleRegistry;
-        this.index = 0;
+        this.index = indent;
+        this.indent = indent;
     }
     
     @Override
@@ -120,14 +122,14 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     }
 
     @Override
-    public RowContext skipCells(int i) {
-        index += i;
+    public RowContext skipCells(int number) {
+        index += number;
         return this;
     }
 
     @Override
-    public RowContext cellAt(int i) {
-        index = i;
+    public RowContext cellAt(int newIndex) {
+        index = newIndex + indent;
         return this;
     }
     
