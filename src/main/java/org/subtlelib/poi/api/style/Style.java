@@ -5,6 +5,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public interface Style {
 
-	public HSSFCellStyle toNativeStyle(HSSFWorkbook workbook);
+	public void enrich(HSSFWorkbook workbook, HSSFCellStyle style);
 	
 }

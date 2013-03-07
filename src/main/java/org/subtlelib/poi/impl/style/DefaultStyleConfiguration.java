@@ -1,7 +1,5 @@
 package org.subtlelib.poi.impl.style;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.style.StyleConfiguration;
 
@@ -15,14 +13,7 @@ import org.subtlelib.poi.api.style.StyleConfiguration;
  */
 public class DefaultStyleConfiguration implements StyleConfiguration {
 
-	private static final Style COMMON_STYLE = new Style() {
-		
-		@Override
-		public HSSFCellStyle toNativeStyle(HSSFWorkbook workbook) {
-			return workbook.createCellStyle();
-		}
-
-	};
+	private static final Style COMMON_STYLE = new CompositeStyleImpl();
 	
 	@Override
 	public Style getTextStyle() {

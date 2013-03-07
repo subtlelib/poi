@@ -2,9 +2,9 @@ package org.subtlelib.poi.impl.row;
 
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
-import org.subtlelib.poi.impl.style.HierarchicalStyleConfiguration;
+import org.subtlelib.poi.impl.style.InheritableStyleConfiguration;
 
-public abstract class AbstractDelegatingRowContext extends HierarchicalStyleConfiguration<RowContext> implements RowContext {
+public abstract class AbstractDelegatingRowContext extends InheritableStyleConfiguration<RowContext> implements RowContext {
 
     protected final SheetContext sheet;
 

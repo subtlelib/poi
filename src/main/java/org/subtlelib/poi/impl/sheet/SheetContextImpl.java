@@ -9,9 +9,9 @@ import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.workbook.WorkbookContext;
 import org.subtlelib.poi.impl.row.RowContextImpl;
 import org.subtlelib.poi.impl.row.RowContextNoImpl;
-import org.subtlelib.poi.impl.style.HierarchicalStyleConfiguration;
+import org.subtlelib.poi.impl.style.InheritableStyleConfiguration;
 
-public class SheetContextImpl extends HierarchicalStyleConfiguration<SheetContext> implements SheetContext {
+public class SheetContextImpl extends InheritableStyleConfiguration<SheetContext> implements SheetContext {
 
 	private final WorkbookContext workbook;
     

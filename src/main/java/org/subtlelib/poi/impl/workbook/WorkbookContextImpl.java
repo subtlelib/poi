@@ -15,9 +15,9 @@ import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.style.StyleConfiguration;
 import org.subtlelib.poi.api.workbook.WorkbookContext;
 import org.subtlelib.poi.impl.sheet.SheetContextImpl;
-import org.subtlelib.poi.impl.style.HierarchicalStyleConfiguration;
+import org.subtlelib.poi.impl.style.InheritableStyleConfiguration;
 
-public class WorkbookContextImpl extends HierarchicalStyleConfiguration<WorkbookContext> implements WorkbookContext {
+public class WorkbookContextImpl extends InheritableStyleConfiguration<WorkbookContext> implements WorkbookContext {
 
     private final HSSFWorkbook workbook;
     
@@ -36,17 +36,20 @@ public class WorkbookContextImpl extends HierarchicalStyleConfiguration<Workbook
         return new SheetContextImpl(workbook.createSheet(sheetName), this);
     }
     
-    @Override
-    public HSSFCellStyle registerStyle(Style style) {
-    	checkArgument(style != null, "Style is null");
-    	
-        HSSFCellStyle registeredStyle = registeredStyles.get(style);
-        if (registeredStyle == null) {
-            registeredStyle = style.toNativeStyle(workbook);
-            registeredStyles.put(style, registeredStyle);
-        }
-        return registeredStyle;
-    }
+	@Override
+	public HSSFCellStyle registerStyle(Style style) {
+		checkArgument(style != null, "Style is null");
+
+		HSSFCellStyle registeredStyle = registeredStyles.get(style);
+		
+		if (registeredStyle == null) {
+			registeredStyle = workbook.createCellStyle();
+			style.enrich(workbook, registeredStyle);
+			registeredStyles.put(style, registeredStyle);
+		}
+		
+		return registeredStyle;
+	}
     
     @Override
     public byte[] toNativeBytes() {
