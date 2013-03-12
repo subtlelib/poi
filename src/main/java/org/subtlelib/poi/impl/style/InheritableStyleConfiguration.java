@@ -105,5 +105,9 @@ public abstract class InheritableStyleConfiguration<T> implements StyleConfigura
 	public StyleConfiguration getStyleConfiguration() {
 		return this;
 	}
-
+	
+	protected CompositeStyle combineStyles(Style baseStyle, Style overridingStyle) {
+		return new CompositeStyleImpl(baseStyle).setStyle(overridingStyle);
+	}
+	
 }

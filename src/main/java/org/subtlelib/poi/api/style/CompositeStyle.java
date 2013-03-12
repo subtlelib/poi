@@ -5,6 +5,6 @@ import java.util.Collection;
 public interface CompositeStyle extends Style {
 
 	public Collection<Style> getStyles();
-	public void setStyle(Style style);
+	public CompositeStyle setStyle(Style style);
 	
 }

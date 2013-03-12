@@ -24,6 +24,12 @@ public class CompositeStyleImpl implements CompositeStyle {
 	public CompositeStyleImpl(Style sourceStyle) {
 		setStyle(sourceStyle);
 	}
+
+	public CompositeStyleImpl(SimpleStyle... styles) {
+		for (SimpleStyle style : styles) {
+			addStyle(style);
+		}
+	}
 	
 	@Override
 	public Collection<Style> getStyles() {
@@ -38,7 +44,7 @@ public class CompositeStyleImpl implements CompositeStyle {
 	}
 	
 	@Override
-	public void setStyle(Style style) {
+	public CompositeStyle setStyle(Style style) {
 		if (style instanceof CompositeStyle) {
 			CompositeStyle castedStyle = CompositeStyle.class.cast(style);
 			for (Style compositeStyleItem : castedStyle.getStyles()) {
@@ -47,6 +53,8 @@ public class CompositeStyleImpl implements CompositeStyle {
 		} else {
 			addStyle(style);
 		}
+		
+		return this;
 	}
 		
 	private void addStyle(Style style) {

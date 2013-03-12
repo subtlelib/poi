@@ -28,7 +28,7 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
     }
 
 	@Override
-    public RowContext header(String caption) {
+    public RowContext header(String text) {
         return delegate;
     }
 

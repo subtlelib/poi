@@ -32,24 +32,17 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     
     @Override
     public RowContext text(String text) {
-        return text(text, getTextStyle());
+    	return writeText(text, getTextStyle());
     }
 
     @Override
     public RowContext text(String text, Style style) {
-    	checkArgument(text != null, "Text is null");
-    	
-        HSSFCell cell = row.createCell(index);
-        cell.setCellValue(new HSSFRichTextString(text));
-        cell.setCellStyle(styleRegistry.registerStyle(style));
-
-        index++;
-        return this;
+    	return writeText(text, combineStyles(getTextStyle(), style));
     }
 
 	@Override
 	public RowContext optionalText(String text) {
-		return optionalText(text, getTextStyle());
+		return text == null ? skipCell() : text(text);
 	}
 
 	@Override
@@ -59,24 +52,17 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 
     @Override
     public RowContext number(Number number) {
-        return number(number, getNumberStyle());
+        return writeNumber(number, getNumberStyle());
     }
     
     @Override
     public RowContext number(Number number, Style style) {
-    	checkArgument(number != null, "Number is null");
-    	
-        HSSFCell cell = row.createCell(index);
-        cell.setCellValue(number.doubleValue());
-        cell.setCellStyle(styleRegistry.registerStyle(style));
-        
-        index++;
-        return this;
+    	return writeNumber(number, combineStyles(getNumberStyle(), style));
     }
 
     @Override
     public RowContext optionalNumber(Number number) {
-    	return optionalNumber(number, getNumberStyle());
+    	return number == null ? skipCell() : number(number);
     }
 
     @Override
@@ -86,34 +72,27 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 
 	@Override
 	public RowContext date(Date date) {
-		return date(date, getDateStyle());
+		return writeDate(date, getDateStyle());
 	}
 
     @Override
 	public RowContext date(Date date, Style style) {
-    	checkArgument(date != null, "Date is null");
-    	
-        HSSFCell cell = row.createCell(index);
-        cell.setCellValue(date);
-        cell.setCellStyle(styleRegistry.registerStyle(style));
-        
-        index++;
-        return this;
+    	return writeDate(date, combineStyles(getDateStyle(), style));
 	}
-    
+
     @Override
     public RowContext total(String text) {
-        return text(text, getTotalStyle());
+        return writeText(text, getTotalStyle());
     }
 
     @Override
-    public RowContext header(String caption) {
-        return text(caption, getHeaderStyle());
+    public RowContext header(String text) {
+        return writeText(text, getHeaderStyle());
     }
     
     @Override
     public RowContext percentage(Number number) {
-    	return number(number.doubleValue() / 100, getPercentageStyle());
+    	return writeNumber(number.doubleValue() / 100, getPercentageStyle());
     }
 
     @Override
@@ -148,5 +127,29 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     public HSSFRow getNativeRow() {
         return row;
     }
+    
+    private RowContext writeText(String text, Style style) {
+    	createCell(text, style).setCellValue(new HSSFRichTextString(text));
+    	return this;
+    }
+    
+	private RowContext writeNumber(Number number, Style style) {
+		createCell(number, style).setCellValue(number.doubleValue());
+        return this;
+	}
+    
+	private RowContext writeDate(Date date, Style style) {
+		createCell(date, style).setCellValue(date);
+        return this;
+	}
+    
+	private HSSFCell createCell(Object value, Style style) {
+		checkArgument(value != null, "Value is null for column %s", index);
+    	
+        HSSFCell cell = row.createCell(index++);
+        cell.setCellStyle(styleRegistry.registerStyle(style));
 
+        return cell;
+	}
+    
 }
