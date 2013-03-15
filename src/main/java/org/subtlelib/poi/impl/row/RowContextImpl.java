@@ -101,8 +101,8 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     }
 
     @Override
-    public RowContext skipCells(int number) {
-        index += number;
+    public RowContext skipCells(int offset) {
+        index += offset;
         return this;
     }
 

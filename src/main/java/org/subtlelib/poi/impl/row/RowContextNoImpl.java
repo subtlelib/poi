@@ -78,12 +78,12 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
     }
 
     @Override
-    public RowContext skipCells(int i) {
+    public RowContext skipCells(int offset) {
         return delegate;
     }
 
     @Override
-    public RowContext cellAt(int i) {
+    public RowContext cellAt(int newIndex) {
         return delegate;
     }
 

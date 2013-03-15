@@ -39,7 +39,7 @@ public class SheetContextNoImpl extends InheritableStyleConfiguration<SheetConte
 	}
 
 	@Override
-	public SheetContext skipRows(int linesNumber) {
+	public SheetContext skipRows(int offset) {
 		return this;
 	}
 

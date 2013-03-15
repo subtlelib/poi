@@ -17,6 +17,11 @@ public abstract class AbstractDelegatingRowContext extends InheritableStyleConfi
     public RowContext nextRow() {
         return sheet.nextRow();
     }
+    
+    @Override
+    public RowContext currentRow() {
+    	throw new IllegalStateException("Operation makes no sense on RowContext instance. Nothing will change if you just remove this line from your code");
+    }
    
     @Override
     public RowContext nextConditionalRow(boolean condition) {
@@ -29,8 +34,8 @@ public abstract class AbstractDelegatingRowContext extends InheritableStyleConfi
     }
 
     @Override
-    public SheetContext skipRows(int linesNumber) {
-        return sheet.skipRows(linesNumber);
+    public SheetContext skipRows(int offset) {
+        return sheet.skipRows(offset);
     }
     
 }

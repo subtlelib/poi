@@ -42,8 +42,8 @@ public class SheetContextImpl extends InheritableStyleConfiguration<SheetContext
     }
 
     @Override
-	public SheetContext skipRows(int n) {
-        this.lineNo += n;
+	public SheetContext skipRows(int offset) {
+        this.lineNo += offset;
         return this;
     }
 
