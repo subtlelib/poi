@@ -5,7 +5,7 @@
 	<groupId>org.subtlelib</groupId>
 	<artifactId>poi.builder</artifactId>
 	<name>Convenience library for apache poi-based xls documents creation</name>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 
 	<scm>
 		<connection>scm:git:https://github.com/subtlelib/poi.git</connection>
@@ -54,7 +54,12 @@
 			<version>1.0.9</version>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.1</version>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>

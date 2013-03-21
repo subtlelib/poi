@@ -7,6 +7,7 @@ import java.util.Date;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.joda.time.LocalDate;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.style.Style;
@@ -14,7 +15,7 @@ import org.subtlelib.poi.api.style.StyleRegistry;
 
 
 public class RowContextImpl extends AbstractDelegatingRowContext {
-    
+
     private final StyleRegistry styleRegistry;
     
     private final HSSFRow row;
@@ -29,7 +30,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
         this.index = indent;
         this.indent = indent;
     }
-    
+
     @Override
     public RowContext text(String text) {
     	return writeText(text, getTextStyle());
@@ -81,6 +82,21 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 	}
 
     @Override
+    public RowContext date(LocalDate date) {
+        checkLocalDateIsNotNull(date);
+        return date(date.toDate());
+    }
+
+    @Override
+    public RowContext date(LocalDate date, Style style) {
+        checkLocalDateIsNotNull(date);
+        return date(date.toDate(), style);
+    }
+
+    private void checkLocalDateIsNotNull(LocalDate date) {
+        checkArgument(date != null, "trying to set null LocalDate in column %s", index);
+    }
+
     public RowContext total(String text) {
         return writeText(text, getTotalStyle());
     }

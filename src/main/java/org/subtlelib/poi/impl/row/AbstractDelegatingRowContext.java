@@ -37,5 +37,9 @@ public abstract class AbstractDelegatingRowContext extends InheritableStyleConfi
     public SheetContext skipRows(int offset) {
         return sheet.skipRows(offset);
     }
-    
+
+    @Override
+    public SheetContext stepOneRowBack() {
+        return sheet.stepOneRowBack();
+    }
 }

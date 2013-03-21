@@ -43,7 +43,12 @@ public class SheetContextNoImpl extends InheritableStyleConfiguration<SheetConte
 		return this;
 	}
 
-	@Override
+    @Override
+    public SheetContext stepOneRowBack() {
+        return this;
+    }
+
+    @Override
 	public SheetContext startConditionalBlock(boolean condition) {
 		return this;
 	}

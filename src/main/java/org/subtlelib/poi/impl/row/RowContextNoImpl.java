@@ -3,6 +3,7 @@ package org.subtlelib.poi.impl.row;
 import java.util.Date;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.joda.time.LocalDate;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.style.Style;
@@ -71,6 +72,16 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
 	public RowContext date(Date date, Style style) {
 		return delegate;
 	}
+
+    @Override
+    public RowContext date(LocalDate date) {
+        return delegate;
+    }
+
+    @Override
+    public RowContext date(LocalDate date, Style style) {
+        return delegate;
+    }
 
     @Override
     public RowContext skipCell() {

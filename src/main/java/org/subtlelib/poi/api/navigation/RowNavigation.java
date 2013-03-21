@@ -42,4 +42,5 @@ public interface RowNavigation<S, R> extends RowCondition<R> {
      */
     public S skipRows(int offset);
 
+    public S stepOneRowBack();
 }
