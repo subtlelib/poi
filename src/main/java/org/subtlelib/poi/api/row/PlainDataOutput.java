@@ -2,6 +2,7 @@ package org.subtlelib.poi.api.row;
 
 import java.util.Date;
 
+import org.joda.time.LocalDate;
 import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.style.StyleConfiguration;
 
@@ -123,5 +124,7 @@ public interface PlainDataOutput {
 	 * @param style style to be applied to the current cell on top of the predefined style 
 	 */        
     public RowContext date(Date date, Style style);
+    public RowContext date(LocalDate date);
+    public RowContext date(LocalDate date, Style style);
 
 }

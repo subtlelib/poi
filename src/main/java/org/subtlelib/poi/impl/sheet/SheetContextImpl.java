@@ -7,6 +7,7 @@ import org.subtlelib.poi.api.configuration.Configuration;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.workbook.WorkbookContext;
+import org.subtlelib.poi.impl.row.HSSFRows;
 import org.subtlelib.poi.impl.row.RowContextImpl;
 import org.subtlelib.poi.impl.row.RowContextNoImpl;
 import org.subtlelib.poi.impl.style.InheritableStyleConfiguration;
@@ -48,8 +49,15 @@ public class SheetContextImpl extends InheritableStyleConfiguration<SheetContext
     }
 
     @Override
+    public SheetContext stepOneRowBack() {
+        lineNo -= 1;
+        currentRow = null;
+        return this;
+    }
+
+    @Override
 	public RowContext nextRow() {
-        currentRow = new RowContextImpl(sheet.createRow(++lineNo), this, workbook, defaultRowIndent);
+        currentRow = new RowContextImpl(HSSFRows.getOrCreate(sheet, ++lineNo), this, workbook, defaultRowIndent);
         return currentRow;
     }
 
