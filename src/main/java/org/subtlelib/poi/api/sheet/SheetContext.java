@@ -18,6 +18,7 @@ public interface SheetContext extends RowNavigation<SheetContext, RowContext>, B
 
     /**
      * Retrieve POI sheet referred to by current {@link SheetContext}
+     * Please refrain from using the exposed {@link HSSFSheet} directly unless you need functionality of POI not provided by {@link SheetContext}.
      * 
      * @return native POI {@link HSSFSheet}
      */

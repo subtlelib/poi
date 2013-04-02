@@ -37,6 +37,7 @@ public interface RowContext extends PlainDataOutput, FormattedDataOutput, CellNa
     
     /**
      * Retrieve POI row referred to by current {@link RowContext}.
+     * Please refrain from using the exposed {@link HSSFRow} directly unless you need functionality of POI not provided by {@link RowContext}.
      * 
      * @return native POI {@link HSSFRow}
      */
