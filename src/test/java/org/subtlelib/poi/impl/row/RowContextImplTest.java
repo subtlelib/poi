@@ -1,20 +1,14 @@
 package org.subtlelib.poi.impl.row;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.List;
-
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.style.StyleConfiguration;
@@ -35,7 +29,6 @@ public class RowContextImplTest {
     Cell cell = mock(Cell.class);
     Style style = mock(Style.class);
     ColumnTotalsDataRange dataRange = mock(ColumnTotalsDataRange.class);
-    ArgumentCaptor<RichTextString> richTextStringCaptor = ArgumentCaptor.forClass(RichTextString.class);
 
     @Before
     public void setUp() throws Exception {
@@ -47,7 +40,7 @@ public class RowContextImplTest {
         when(sheetContext.getTextStyle()).thenReturn(style);
         when(sheetContext.getTotalStyle()).thenReturn(style);
 
-        rowContext = new RowContextImpl(row, sheetContext, styleRegistry, 1);
+        rowContext = new RowContextImpl(row, sheetContext, styleRegistry, 0);
 
         when(row.createCell(anyInt())).thenReturn(cell);
     }
@@ -63,10 +56,8 @@ public class RowContextImplTest {
                 .total(Formula.SUM);
 
         // verify
-        verify(cell, times(2)).setCellValue(richTextStringCaptor.capture());
-        List<RichTextString> results = richTextStringCaptor.getAllValues();
-        assertEquals("SUM(A2:A15)", results.get(0).getString());
-        assertEquals("SUM(B2:B15)", results.get(1).getString());
+        verify(cell).setCellFormula("SUM(A2:A15)");
+        verify(cell).setCellFormula("SUM(B2:B15)");
     }
 
     @Test
@@ -80,10 +71,8 @@ public class RowContextImplTest {
                 .totals(Formula.SUM, 2);
 
         // verify
-        verify(cell, times(2)).setCellValue(richTextStringCaptor.capture());
-        List<RichTextString> results = richTextStringCaptor.getAllValues();
-        assertEquals("SUM(AB2:AB15)", results.get(0).getString());
-        assertEquals("SUM(AC2:AC15)", results.get(1).getString());
+        verify(cell).setCellFormula("SUM(AB2:AB15)");
+        verify(cell).setCellFormula("SUM(AC2:AC15)");
     }
 
     private void setDataRange2to15() {
