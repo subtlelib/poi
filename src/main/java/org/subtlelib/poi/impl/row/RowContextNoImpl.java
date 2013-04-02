@@ -2,11 +2,13 @@ package org.subtlelib.poi.impl.row;
 
 import java.util.Date;
 
-import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.ss.usermodel.Row;
 import org.joda.time.LocalDate;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.style.Style;
+import org.subtlelib.poi.api.totals.ColumnTotalsDataRange;
+import org.subtlelib.poi.api.totals.Formula;
 
 //TODO think of the case conditionalCell().text() - is text() supposed to move pointer in delegate?
 public class RowContextNoImpl extends AbstractDelegatingRowContext {
@@ -124,8 +126,32 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
 	}
 	
     @Override
-    public HSSFRow getNativeRow() {
+    public Row getNativeRow() {
         throw new UnsupportedOperationException("RowContextNoImpl doesn't have underlying poi row");
     }
 
+    @Override
+    public RowContext setTotalsDataBlock(ColumnTotalsDataRange data) {
+        return delegate;
+    }
+
+    @Override
+    public RowContext total(Formula formula) {
+        return delegate;
+    }
+
+    @Override
+    public RowContext total(Formula formula, Style style) {
+        return delegate;
+    }
+
+    @Override
+    public RowContext totals(Formula formula, int times) {
+        return delegate;
+    }
+
+    @Override
+    public RowContext totals(Formula formula, int times, Style style) {
+        return delegate;
+    }
 }

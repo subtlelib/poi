@@ -1,29 +1,36 @@
 package org.subtlelib.poi.impl.row;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
 
 import java.util.Date;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
-import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.joda.time.LocalDate;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.style.StyleRegistry;
+import org.subtlelib.poi.api.totals.ColumnTotalsDataRange;
+import org.subtlelib.poi.api.totals.Formula;
+import org.subtlelib.poi.impl.column.Columns;
+
+import com.google.common.annotations.VisibleForTesting;
 
 
 public class RowContextImpl extends AbstractDelegatingRowContext {
 
     private final StyleRegistry styleRegistry;
     
-    private final HSSFRow row;
+    private final Row row;
+    private ColumnTotalsDataRange totalsData;
     
     private int index;
     private int indent;
     
-    public RowContextImpl(HSSFRow row, SheetContext sheet, StyleRegistry styleRegistry, int indent) {
+    public RowContextImpl(Row row, SheetContext sheet, StyleRegistry styleRegistry, int indent) {
         super(sheet);
         this.row = row;
         this.styleRegistry = styleRegistry;
@@ -140,7 +147,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 	}
     
     @Override
-    public HSSFRow getNativeRow() {
+    public Row getNativeRow() {
         return row;
     }
     
@@ -158,14 +165,55 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 		createCell(date, style).setCellValue(date);
         return this;
 	}
+
+    private RowContext writeFormula(String formula, Style style) {
+        createCell(formula, style).setCellFormula(formula);
+        return this;
+    }
     
-	private HSSFCell createCell(Object value, Style style) {
+	@VisibleForTesting
+    Cell createCell(Object value, Style style) {
 		checkArgument(value != null, "Value is null for column %s", index);
     	
-        HSSFCell cell = row.createCell(index++);
+        Cell cell = row.createCell(index++);
         cell.setCellStyle(styleRegistry.registerStyle(style));
 
         return cell;
 	}
-    
+
+    @Override
+    public RowContext setTotalsDataBlock(ColumnTotalsDataRange data) {
+        this.totalsData = data;
+        return this;
+    }
+
+    @Override
+    public RowContext total(Formula formula) {
+        return total(formula, getTextStyle());
+    }
+
+    @Override
+    public RowContext total(Formula formula, Style style) {
+        checkState(totalsData != null, "Please set totals data before rendering totals formula (setTotalsDataBlock(...)");
+
+        String columnIndex = Columns.columnIndexAsLetters(index + 1);
+        String totalString = formula.toString() + '(' + columnIndex + totalsData.getStartLineNo()
+                + ":"
+                + columnIndex + totalsData.getEndLineNo() + ')';
+        writeFormula(totalString, style);
+        return this;
+    }
+
+    @Override
+    public RowContext totals(Formula formula, int times) {
+        return totals(formula, times, getTextStyle());
+    }
+
+    @Override
+    public RowContext totals(Formula formula, int times, Style style) {
+        for (int i = 0; i < times; i++) {
+            total(formula, style);
+        }
+        return this;
+    }
 }

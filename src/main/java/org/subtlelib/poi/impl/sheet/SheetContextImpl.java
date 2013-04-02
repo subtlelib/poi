@@ -2,21 +2,23 @@ package org.subtlelib.poi.impl.sheet;
 
 import static com.google.common.base.Preconditions.checkState;
 
-import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.subtlelib.poi.api.configuration.Configuration;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
+import org.subtlelib.poi.api.totals.ColumnTotalsDataRange;
 import org.subtlelib.poi.api.workbook.WorkbookContext;
-import org.subtlelib.poi.impl.row.HSSFRows;
 import org.subtlelib.poi.impl.row.RowContextImpl;
 import org.subtlelib.poi.impl.row.RowContextNoImpl;
+import org.subtlelib.poi.impl.row.Rows;
 import org.subtlelib.poi.impl.style.InheritableStyleConfiguration;
+import org.subtlelib.poi.impl.totals.ColumnTotalsDataRangeImpl;
 
 public class SheetContextImpl extends InheritableStyleConfiguration<SheetContext> implements SheetContext {
 
 	private final WorkbookContext workbook;
     
-    private final HSSFSheet sheet;
+    private final Sheet sheet;
     
     protected RowContext currentRow;
     protected int lineNo = -1;
@@ -26,7 +28,7 @@ public class SheetContextImpl extends InheritableStyleConfiguration<SheetContext
     private final SheetContext noImplSheetContext;
     private final RowContext noImplRowContext;
     
-    public SheetContextImpl(HSSFSheet sheet, WorkbookContext workbook) {
+    public SheetContextImpl(Sheet sheet, WorkbookContext workbook) {
     	super(workbook);
     	
         this.sheet = sheet;
@@ -57,7 +59,7 @@ public class SheetContextImpl extends InheritableStyleConfiguration<SheetContext
 
     @Override
 	public RowContext nextRow() {
-        currentRow = new RowContextImpl(HSSFRows.getOrCreate(sheet, ++lineNo), this, workbook, defaultRowIndent);
+        currentRow = new RowContextImpl(Rows.getOrCreate(sheet, ++lineNo), this, workbook, defaultRowIndent);
         return currentRow;
     }
 
@@ -79,7 +81,7 @@ public class SheetContextImpl extends InheritableStyleConfiguration<SheetContext
     }
 
     @Override
-	public HSSFSheet getNativeSheet() {
+	public Sheet getNativeSheet() {
         return sheet;
     }
 
@@ -124,4 +126,12 @@ public class SheetContextImpl extends InheritableStyleConfiguration<SheetContext
 		return workbook.getConfiguration();
 	}
 
+    @Override
+    public ColumnTotalsDataRange startColumnTotalsDataRangeFromNextRow() {
+        return new ColumnTotalsDataRangeImpl(this);
+    }
+
+    public int getCurrentLineNo() {
+        return lineNo;
+    }
 }
