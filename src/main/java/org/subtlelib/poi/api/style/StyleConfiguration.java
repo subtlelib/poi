@@ -1,6 +1,11 @@
 package org.subtlelib.poi.api.style;
 
-
+/**
+ * Provides style configuration per designated data type.
+ * 
+ * @author i.voshkulat
+ *
+ */
 public interface StyleConfiguration {
 	
 	public Style getTotalStyle();

@@ -58,7 +58,7 @@ public class WorkbookContextImpl extends InheritableStyleConfiguration<WorkbookC
     		workbook.write(baos);
     		return baos.toByteArray();
     	} catch (IOException e) {
-    		throw new RuntimeException("Quite unlikely case as we are working with in-memory data. Wrap to avoid handling checked exception", e);
+    		throw new RuntimeException("Quite unlikely case as we are working with an in-memory data. Wrap to avoid handling checked exception", e);
 		}
     }
 
