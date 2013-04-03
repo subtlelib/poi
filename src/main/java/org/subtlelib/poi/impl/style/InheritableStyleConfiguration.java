@@ -1,5 +1,7 @@
 package org.subtlelib.poi.impl.style;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 import org.subtlelib.poi.api.style.CompositeStyle;
 import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.style.StyleConfigurable;
@@ -106,8 +108,16 @@ public abstract class InheritableStyleConfiguration<T> implements StyleConfigura
 		return this;
 	}
 	
-	protected CompositeStyle combineStyles(Style baseStyle, Style overridingStyle) {
-		return new CompositeStyleImpl(baseStyle).setStyle(overridingStyle);
+	protected CompositeStyle combineStyles(Style... styles) {
+		checkArgument(styles != null, "List of styles to combine is null");
+		checkArgument(styles.length > 0, "List of styles to combine is empty");
+		
+		CompositeStyle mergedStyle = new CompositeStyleImpl(styles[0]);
+		for (int i = 1; i < styles.length; i++) {
+			mergedStyle.setStyle(styles[i]);
+		}
+
+		return mergedStyle;
 	}
 	
 }

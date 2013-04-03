@@ -3,6 +3,7 @@ package org.subtlelib.poi.impl.sheet;
 import static com.google.common.base.Preconditions.checkState;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.subtlelib.poi.api.configuration.Configuration;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
@@ -98,6 +99,12 @@ public class SheetContextImpl extends InheritableStyleConfiguration<SheetContext
         return this;
     }
     
+	@Override
+	public SheetContext mergeCells(int startColumn, int endColumn) {
+		sheet.addMergedRegion(new CellRangeAddress(lineNo, lineNo, startColumn, endColumn));
+		return this;
+	}
+
 	@Override
 	public SheetContext hideGrid() {
 		sheet.setDisplayGridlines(false);

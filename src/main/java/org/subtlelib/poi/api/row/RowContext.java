@@ -36,6 +36,13 @@ public interface RowContext extends PlainDataOutput, FormattedDataOutput, CellNa
     public RowContext setColumnWidth(int width);
     
     /**
+     * Merge cells of the current row starting from the current cell.
+     * 
+     * @param number total number of cells to merge (including the current one)
+     */
+    public RowContext mergeCells(int number);
+    
+    /**
      * Retrieve POI row referred to by current {@link RowContext}.
      * Please refrain from using the exposed {@link HSSFRow} directly unless you need functionality of POI not provided by {@link RowContext}.
      * 

@@ -74,6 +74,11 @@ public class SheetContextNoImpl extends InheritableStyleConfiguration<SheetConte
 	}
 	
 	@Override
+	public SheetContext mergeCells(int startColumn, int endColumn) {
+		return this;
+	}
+
+	@Override
 	public SheetContext hideGrid() {
 		return this;
 	}

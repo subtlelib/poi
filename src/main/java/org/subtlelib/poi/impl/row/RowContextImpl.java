@@ -2,6 +2,7 @@ package org.subtlelib.poi.impl.row;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+import java.util.Collection;
 import java.util.Date;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -10,12 +11,18 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.joda.time.LocalDate;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
+import org.subtlelib.poi.api.style.CompositeStyle;
 import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.style.StyleRegistry;
+import org.subtlelib.poi.impl.style.system.SystemCellWrapTextStyle;
+
+import com.google.common.base.Joiner;
 
 
 public class RowContextImpl extends AbstractDelegatingRowContext {
 
+	private static final Joiner multilineTextJoiner = Joiner.on("\n");
+	
     private final StyleRegistry styleRegistry;
     
     private final HSSFRow row;
@@ -38,7 +45,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 
     @Override
     public RowContext text(String text, Style style) {
-    	return writeText(text, combineStyles(getTextStyle(), style));
+    	return writeText(text, getTextStyle(), style);
     }
 
 	@Override
@@ -51,6 +58,17 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 		return text == null ? skipCell() : text(text, style);
 	}
 
+
+	@Override
+	public RowContext multilineText(Collection<String> lines) {
+		return writeMultilineText(lines, getTextStyle());
+	}
+
+	@Override
+	public RowContext multilineText(Collection<String> lines, Style style) {
+		return writeMultilineText(lines, getTextStyle(), style);
+	}
+
     @Override
     public RowContext number(Number number) {
         return writeNumber(number, getNumberStyle());
@@ -58,7 +76,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     
     @Override
     public RowContext number(Number number, Style style) {
-    	return writeNumber(number, combineStyles(getNumberStyle(), style));
+    	return writeNumber(number, getNumberStyle(), style);
     }
 
     @Override
@@ -78,7 +96,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 
     @Override
 	public RowContext date(Date date, Style style) {
-    	return writeDate(date, combineStyles(getDateStyle(), style));
+    	return writeDate(date, getDateStyle(), style);
 	}
 
     @Override
@@ -140,28 +158,50 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 	}
     
     @Override
+	public RowContext mergeCells(int number) {
+    	sheet.mergeCells(index, index + number - 1);
+		return this;
+	}
+
+	@Override
     public HSSFRow getNativeRow() {
         return row;
     }
     
-    private RowContext writeText(String text, Style style) {
-    	createCell(text, style).setCellValue(new HSSFRichTextString(text));
+    private RowContext writeText(String text, Style... styles) {
+    	checkArgument(text != null, "Text is null for column %s", index);
+    	
+    	createCell(1, combineStyles(styles)).setCellValue(new HSSFRichTextString(text));
+    	return this;
+    }
+
+    private RowContext writeMultilineText(Collection<String> lines, Style... styles) {
+    	checkArgument(lines != null, "Lines is null for column %s", index);
+    	
+    	String text = multilineTextJoiner.join(lines);
+		CompositeStyle style = combineStyles(styles).setStyle(SystemCellWrapTextStyle.WRAP_TEXT);
+		
+		createCell(lines.size(), style).setCellValue(new HSSFRichTextString(text));
     	return this;
     }
     
-	private RowContext writeNumber(Number number, Style style) {
-		createCell(number, style).setCellValue(number.doubleValue());
+	private RowContext writeNumber(Number number, Style... styles) {
+		checkArgument(number != null, "Number is null for column %s", index);
+		
+		createCell(1, combineStyles(styles)).setCellValue(number.doubleValue());
         return this;
 	}
     
-	private RowContext writeDate(Date date, Style style) {
-		createCell(date, style).setCellValue(date);
+	private RowContext writeDate(Date date, Style... styles) {
+		checkArgument(date != null, "Date is null for column %s", index);
+		
+		createCell(1, combineStyles(styles)).setCellValue(date);
         return this;
 	}
     
-	private HSSFCell createCell(Object value, Style style) {
-		checkArgument(value != null, "Value is null for column %s", index);
-    	
+	private HSSFCell createCell(int rowHeightMultiplier, Style style) {
+		row.setHeightInPoints(row.getHeightInPoints() * rowHeightMultiplier);	
+		
         HSSFCell cell = row.createCell(index++);
         cell.setCellStyle(styleRegistry.registerStyle(style));
 

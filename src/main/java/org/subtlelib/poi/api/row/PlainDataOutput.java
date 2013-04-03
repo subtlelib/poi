@@ -1,5 +1,6 @@
 package org.subtlelib.poi.api.row;
 
+import java.util.Collection;
 import java.util.Date;
 
 import org.joda.time.LocalDate;
@@ -56,7 +57,31 @@ public interface PlainDataOutput {
 	 * @param style style to be applied to the current cell on top of the predefined style 
      */
     public RowContext optionalText(String text, Style style);
-	
+
+	/**
+	 * Write mandatory multiline text to the current cell.
+	 * Shift current cell pointer to the next position.
+	 * 
+	 * Style as per {@link StyleConfiguration#getTextStyle()} on the current level is applied.
+	 * For details of style configuration please see {@link StyleConfiguration} implementation used.
+	 * 
+	 * @param lines non-null collection of strings
+	 */
+    public RowContext multilineText(Collection<String> lines);
+    
+	/**
+	 * Write mandatory multiline text to the current cell.
+	 * Shift current cell pointer to the next position.
+	 * 
+	 * Style which is a product of merging/overwriting {@link StyleConfiguration#getTextStyle()} with a provided style is applied.
+	 * For details of style configuration please see {@link StyleConfiguration} implementation used.
+	 * For details of style merging see actual {@link Style} in use.
+	 * 
+	 * @param lines non-null collection of strings
+	 * @param style style to be applied to the current cell on top of the predefined style
+	 */
+    public RowContext multilineText(Collection<String> lines, Style style);
+    
 	/**
 	 * Write mandatory number to the current cell.
 	 * Shift current cell pointer to the next position.

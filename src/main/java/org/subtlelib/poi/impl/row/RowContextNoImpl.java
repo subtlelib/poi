@@ -1,5 +1,6 @@
 package org.subtlelib.poi.impl.row;
 
+import java.util.Collection;
 import java.util.Date;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -43,7 +44,17 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
         return delegate;
     }
 
-    @Override
+	@Override
+	public RowContext multilineText(Collection<String> lines) {
+		return delegate;
+	}
+
+	@Override
+	public RowContext multilineText(Collection<String> lines, Style style) {
+		return delegate;
+	}
+
+	@Override
     public RowContext number(Number number, Style style) {
         return delegate;
     }
@@ -120,6 +131,11 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
 
 	@Override
 	public RowContext setColumnWidth(int width) {
+		return delegate;
+	}
+	
+    @Override
+	public RowContext mergeCells(int number) {
 		return delegate;
 	}
 	
