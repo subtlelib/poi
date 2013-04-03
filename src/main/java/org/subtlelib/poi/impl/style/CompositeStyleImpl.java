@@ -45,6 +45,7 @@ public class CompositeStyleImpl implements CompositeStyle {
 	
 	@Override
 	public CompositeStyle setStyle(Style style) {
+        // TODO get rid of instanceof-s and use polymorphism
 		if (style instanceof CompositeStyle) {
 			CompositeStyle castedStyle = CompositeStyle.class.cast(style);
 			for (Style compositeStyleItem : castedStyle.getStyles()) {
@@ -58,7 +59,8 @@ public class CompositeStyleImpl implements CompositeStyle {
 	}
 		
 	private void addStyle(Style style) {
-		if (style instanceof SimpleStyle) {
+        // TODO get rid of instanceof's and use polymorphism
+        if (style instanceof SimpleStyle) {
 			checkArgument(!styles.containsKey(null), "Simultaneous use of SimpleStyle and Style is error-prone. Please use either one");
 			SimpleStyle castedStyle = SimpleStyle.class.cast(style);
 			styles.put(castedStyle.getType(), castedStyle);

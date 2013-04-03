@@ -1,6 +1,7 @@
 package org.subtlelib.poi.api.row;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.ss.usermodel.Row;
 import org.subtlelib.poi.api.condition.CellCondition;
 import org.subtlelib.poi.api.configuration.Configuration;
 import org.subtlelib.poi.api.navigation.CellNavigation;
@@ -8,6 +9,7 @@ import org.subtlelib.poi.api.navigation.RowNavigation;
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.style.StyleConfigurable;
 import org.subtlelib.poi.api.style.StyleConfiguration;
+import org.subtlelib.poi.api.totals.SupportsColumnTotalsRendering;
 
 /**
  * Row context.
@@ -16,7 +18,8 @@ import org.subtlelib.poi.api.style.StyleConfiguration;
  *
  */
 public interface RowContext extends PlainDataOutput, FormattedDataOutput, CellNavigation<RowContext>, CellCondition<RowContext>,
-		RowNavigation<SheetContext, RowContext>, StyleConfiguration, StyleConfigurable<RowContext> {
+		RowNavigation<SheetContext, RowContext>, StyleConfiguration, StyleConfigurable<RowContext>,
+        SupportsColumnTotalsRendering<RowContext> {
 
 	/**
 	 * Set width of the last output cell.
@@ -48,6 +51,6 @@ public interface RowContext extends PlainDataOutput, FormattedDataOutput, CellNa
      * 
      * @return native POI {@link HSSFRow}
      */
-	public HSSFRow getNativeRow();
+	public Row getNativeRow();
     
 }
