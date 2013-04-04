@@ -1,6 +1,7 @@
 package org.subtlelib.poi.impl.sheet;
 
 import org.apache.poi.ss.usermodel.Sheet;
+import org.subtlelib.poi.api.configuration.Configuration;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.totals.ColumnTotalsDataRange;
@@ -88,6 +89,21 @@ public class SheetContextNoImpl extends InheritableStyleConfiguration<SheetConte
 	public SheetContext setDefaultRowIndent(int indent) {	
 		return this;
 	}
+
+    @Override
+    public SheetContext fitOnPagesByWidth(int pages) {
+        return this;
+    }
+
+    @Override
+    public SheetContext fitOnPagesByHeight(int pages) {
+        return this;
+    }
+
+    @Override
+    public Configuration getConfiguration() {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public ColumnTotalsDataRange startColumnTotalsDataRangeFromNextRow() {

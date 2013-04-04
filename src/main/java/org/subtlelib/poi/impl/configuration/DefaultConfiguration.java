@@ -10,17 +10,26 @@ import org.subtlelib.poi.api.configuration.Configuration;
  *
  */
 public class DefaultConfiguration implements Configuration {
-
 	private double columnWidthBaseValue = 256 * 1.1;
-	
-	@Override
+    private int rowHeightBaseValue = 20;
+
+    @Override
 	public double getColumnWidthBaseValue() {
 		return columnWidthBaseValue;
 	}
 
-	public DefaultConfiguration setColumnWidthBaseValue(double value) {
-		this.columnWidthBaseValue = value;
-		return this;
-	}
+    public DefaultConfiguration setColumnWidthBaseValue(double value) {
+        this.columnWidthBaseValue = value;
+        return this;
+    }
 
+    @Override
+    public double getRowHeightBaseValue() {
+        return rowHeightBaseValue;
+    }
+
+    public DefaultConfiguration setRowHeightBaseValue(int rowHeightBaseValue) {
+        this.rowHeightBaseValue = rowHeightBaseValue;
+        return this;
+    }
 }

@@ -135,7 +135,12 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
 	public RowContext setColumnWidth(int width) {
 		return delegate;
 	}
-	
+
+    @Override
+    public RowContext setHeight(int height) {
+        return delegate;
+    }
+
     @Override
 	public RowContext mergeCells(int number) {
 		return delegate;

@@ -162,7 +162,13 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 		sheet.setColumnWidth(index - 1, width);
 		return this;
 	}
-    
+
+    @Override
+    public RowContext setHeight(int height) {
+        row.setHeight((short) (sheet.getConfiguration().getRowHeightBaseValue() * height));
+        return this;
+    }
+
     @Override
 	public RowContext mergeCells(int number) {
     	sheet.mergeCells(index, index + number - 1);

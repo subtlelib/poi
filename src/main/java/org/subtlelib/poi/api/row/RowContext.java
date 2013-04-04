@@ -37,6 +37,14 @@ public interface RowContext extends PlainDataOutput, FormattedDataOutput, CellNa
 	 * @param width width in units, subject to multiplication - see {@link Configuration#getColumnWidthBaseValue()}
 	 */
     public RowContext setColumnWidth(int width);
+
+
+    /**
+     * Set height of the current row. Subject to multiplication - see {@link Configuration#getRowHeightBaseValue()}
+     *
+     * @param height by default, in points (as in Excel row height dialog).
+     */
+    public RowContext setHeight(int height);
     
     /**
      * Merge cells of the current row starting from the current cell.

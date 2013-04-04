@@ -45,4 +45,8 @@ public interface SheetConfiguration<T> {
 	 */
 	public T setDefaultRowIndent(int indent);
 
+    public T fitOnPagesByWidth(int pages);
+    public T fitOnPagesByHeight(int pages);
+
+    Configuration getConfiguration();
 }

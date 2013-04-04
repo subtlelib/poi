@@ -2,6 +2,7 @@ package org.subtlelib.poi.impl.sheet;
 
 import static com.google.common.base.Preconditions.checkState;
 
+import org.apache.poi.ss.usermodel.PrintSetup;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.subtlelib.poi.api.configuration.Configuration;
@@ -119,7 +120,23 @@ public class SheetContextImpl extends InheritableStyleConfiguration<SheetContext
 		return this;
 	}
 
-	@Override
+    @Override
+    public SheetContext fitOnPagesByWidth(int pages) {
+        PrintSetup printSetup = sheet.getPrintSetup();
+        sheet.setAutobreaks(true);
+        printSetup.setFitWidth((short) pages);
+        return this;
+    }
+
+    @Override
+    public SheetContext fitOnPagesByHeight(int pages) {
+        PrintSetup printSetup = sheet.getPrintSetup();
+        sheet.setAutobreaks(true);
+        printSetup.setFitHeight((short) pages);
+        return this;
+    }
+
+    @Override
 	public SheetContext startConditionalBlock(boolean condition) {
 		return condition ? this : noImplSheetContext;
 	}
@@ -129,7 +146,8 @@ public class SheetContextImpl extends InheritableStyleConfiguration<SheetContext
 		return this;
 	}
 
-	private Configuration getConfiguration() {
+	@Override
+    public Configuration getConfiguration() {
 		return workbook.getConfiguration();
 	}
 
