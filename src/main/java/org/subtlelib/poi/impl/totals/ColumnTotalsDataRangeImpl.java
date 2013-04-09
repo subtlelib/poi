@@ -27,6 +27,8 @@ public class ColumnTotalsDataRangeImpl implements ColumnTotalsDataRange {
     public void end() {
         checkState(endLineNo == NOT_SET, "Don't call end() twice. End line was already marked: %s", endLineNo);
         endLineNo = sheetContext.getCurrentLineNo();
+        checkState(endLineNo != startLineNo, "No data for totals. " +
+                "Start line of data range equals to end line: %s", endLineNo);
     }
 
     @Override

@@ -17,6 +17,8 @@ public interface ColumnTotalsDataRange {
      * call this method when you finished writing your data.
      */
     void end();
+    /** 1-based line number that marks the start of the data range (line number corresponds to how it's shown in Excel */
     int getStartLineNo();
+    /** 1-based line number that marks the end of the data range (line number corresponds to how it's shown in Excel */
     int getEndLineNo();
 }
