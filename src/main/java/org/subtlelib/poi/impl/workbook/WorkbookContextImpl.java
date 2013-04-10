@@ -71,5 +71,4 @@ public class WorkbookContextImpl extends InheritableStyleConfiguration<WorkbookC
 	public Configuration getConfiguration() {
 		return configuration;
 	}
-
 }

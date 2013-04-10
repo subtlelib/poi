@@ -1,8 +1,5 @@
 package org.subtlelib.poi.impl.style;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
-import org.subtlelib.poi.api.style.CompositeStyle;
 import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.style.StyleConfigurable;
 import org.subtlelib.poi.api.style.StyleConfiguration;
@@ -10,25 +7,25 @@ import org.subtlelib.poi.api.style.StyleConfiguration;
 @SuppressWarnings("unchecked")
 public abstract class InheritableStyleConfiguration<T> implements StyleConfiguration, StyleConfigurable<T> {
 
-	private CompositeStyle textStyle;
-	private CompositeStyle numberStyle;
-	private CompositeStyle dateStyle;
+	private Style textStyle;
+	private Style numberStyle;
+	private Style dateStyle;
 
-	private CompositeStyle totalStyle;
-	private CompositeStyle headerStyle;
-	private CompositeStyle percentageStyle;
+	private Style totalStyle;
+	private Style headerStyle;
+	private Style percentageStyle;
 
 	public InheritableStyleConfiguration(StyleConfiguration parentConfig) {
 		overwriteStyles(parentConfig);
 	}
 
 	private void overwriteStyles(StyleConfiguration parentConfig) {
-		textStyle = new CompositeStyleImpl(parentConfig.getTextStyle());
-		numberStyle = new CompositeStyleImpl(parentConfig.getNumberStyle());
-		dateStyle = new CompositeStyleImpl(parentConfig.getDateStyle());
-		totalStyle = new CompositeStyleImpl(parentConfig.getTotalStyle());
-		headerStyle = new CompositeStyleImpl(parentConfig.getHeaderStyle());
-		percentageStyle = new CompositeStyleImpl(parentConfig.getPercentageStyle());
+		textStyle = parentConfig.getTextStyle();
+		numberStyle = parentConfig.getNumberStyle();
+		dateStyle = parentConfig.getDateStyle();
+		totalStyle = parentConfig.getTotalStyle();
+		headerStyle = parentConfig.getHeaderStyle();
+		percentageStyle = parentConfig.getPercentageStyle();
 	}
 	
 	@Override
@@ -38,7 +35,7 @@ public abstract class InheritableStyleConfiguration<T> implements StyleConfigura
 
 	@Override
 	public T setTotalStyle(Style style) {
-		totalStyle.setStyle(style);
+		totalStyle = StylesInternal.combineOrOverride(totalStyle, style);
 		return (T) this;
 	}
 
@@ -49,7 +46,7 @@ public abstract class InheritableStyleConfiguration<T> implements StyleConfigura
 
 	@Override
 	public T setHeaderStyle(Style style) {
-		this.headerStyle.setStyle(style);
+		headerStyle = StylesInternal.combineOrOverride(headerStyle, style);
 		return (T) this;
 	}
 
@@ -60,7 +57,7 @@ public abstract class InheritableStyleConfiguration<T> implements StyleConfigura
 
 	@Override
 	public T setPercentageStyle(Style style) {
-		this.percentageStyle.setStyle(style);
+		percentageStyle = StylesInternal.combineOrOverride(percentageStyle, style);
 		return (T) this;
 	}
 	
@@ -71,7 +68,7 @@ public abstract class InheritableStyleConfiguration<T> implements StyleConfigura
 
 	@Override
 	public T setTextStyle(Style style) {
-		this.textStyle.setStyle(style);
+		textStyle = StylesInternal.combineOrOverride(textStyle, style);
 		return (T) this;
 	}
 
@@ -82,7 +79,7 @@ public abstract class InheritableStyleConfiguration<T> implements StyleConfigura
 
 	@Override
 	public T setNumberStyle(Style style) {
-		this.numberStyle.setStyle(style);
+		numberStyle = StylesInternal.combineOrOverride(numberStyle, style);
 		return (T) this;
 	}
 
@@ -93,7 +90,7 @@ public abstract class InheritableStyleConfiguration<T> implements StyleConfigura
 
 	@Override
 	public T setDateStyle(Style style) {
-		this.dateStyle.setStyle(style);
+		dateStyle = StylesInternal.combineOrOverride(dateStyle, style);
 		return (T) this;
 	}
 	
@@ -107,17 +104,4 @@ public abstract class InheritableStyleConfiguration<T> implements StyleConfigura
 	public StyleConfiguration getStyleConfiguration() {
 		return this;
 	}
-	
-	protected CompositeStyle combineStyles(Style... styles) {
-		checkArgument(styles != null, "List of styles to combine is null");
-		checkArgument(styles.length > 0, "List of styles to combine is empty");
-		
-		CompositeStyle mergedStyle = new CompositeStyleImpl(styles[0]);
-		for (int i = 1; i < styles.length; i++) {
-			mergedStyle.setStyle(styles[i]);
-		}
-
-		return mergedStyle;
-	}
-	
 }

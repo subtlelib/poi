@@ -9,44 +9,37 @@ import org.subtlelib.poi.api.style.StyleConfiguration;
  * Please consider enum-based implementation of {@link StyleConfiguration} and reuse it across the application.
  * 
  * @author i.voshkulat
- *
  */
 public class DefaultStyleConfiguration implements StyleConfiguration {
 
-	private static final Style COMMON_STYLE = new CompositeStyleImpl();
-	
 	@Override
 	public Style getTextStyle() {
-		return commonStyle();
-	}
+        return EmptyStyle.instance;
+    }
 
 	@Override
 	public Style getNumberStyle() {
-		return commonStyle();
-	}
+        return EmptyStyle.instance;
+    }
 
 	@Override
 	public Style getDateStyle() {
-		return commonStyle();
-	}
+        return EmptyStyle.instance;
+    }
 
 	@Override
 	public Style getTotalStyle() {
-		return commonStyle();
-	}
+        return EmptyStyle.instance;
+    }
 
 	@Override
 	public Style getHeaderStyle() {
-		return commonStyle();
-	}
+        return EmptyStyle.instance;
+    }
 
 	@Override
 	public Style getPercentageStyle() {
-		return commonStyle();
-	}	
-
-	private Style commonStyle() {
-		return COMMON_STYLE;
-	}
+        return EmptyStyle.instance;
+    }
 
 }

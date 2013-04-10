@@ -12,12 +12,12 @@ import org.apache.poi.ss.usermodel.Row;
 import org.joda.time.LocalDate;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
-import org.subtlelib.poi.api.style.CompositeStyle;
 import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.style.StyleRegistry;
 import org.subtlelib.poi.api.totals.ColumnTotalsDataRange;
 import org.subtlelib.poi.api.totals.Formula;
 import org.subtlelib.poi.impl.column.Columns;
+import org.subtlelib.poi.impl.style.StylesInternal;
 import org.subtlelib.poi.impl.style.system.SystemCellWrapTextStyle;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -51,7 +51,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 
     @Override
     public RowContext text(String text, Style style) {
-    	return writeText(text, getTextStyle(), style);
+    	return writeText(text, StylesInternal.combineOrOverride(getTextStyle(), style));
     }
 
 	@Override
@@ -72,7 +72,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 
 	@Override
 	public RowContext multilineText(Collection<String> lines, Style style) {
-		return writeMultilineText(lines, getTextStyle(), style);
+		return writeMultilineText(lines, StylesInternal.combineOrOverride(getTextStyle(), style));
 	}
 
     @Override
@@ -82,7 +82,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     
     @Override
     public RowContext number(Number number, Style style) {
-    	return writeNumber(number, getNumberStyle(), style);
+    	return writeNumber(number, StylesInternal.combineOrOverride(getNumberStyle(), style));
     }
 
     @Override
@@ -102,7 +102,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 
     @Override
 	public RowContext date(Date date, Style style) {
-    	return writeDate(date, getDateStyle(), style);
+    	return writeDate(date, StylesInternal.combineOrOverride(getDateStyle(), style));
 	}
 
     @Override
@@ -180,34 +180,34 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
         return row;
     }
     
-    private RowContext writeText(String text, Style... styles) {
+    private RowContext writeText(String text, Style style) {
     	checkArgument(text != null, "Text is null for column %s", index);
     	
-    	createCell(1, combineStyles(styles)).setCellValue(new HSSFRichTextString(text));
+    	createCell(1, style).setCellValue(new HSSFRichTextString(text));
     	return this;
     }
 
-    private RowContext writeMultilineText(Collection<String> lines, Style... styles) {
+    private RowContext writeMultilineText(Collection<String> lines, Style style) {
     	checkArgument(lines != null, "Lines is null for column %s", index);
     	
     	String text = multilineTextJoiner.join(lines);
-		CompositeStyle style = combineStyles(styles).setStyle(SystemCellWrapTextStyle.WRAP_TEXT);
+		Style styleWithWrapped = StylesInternal.combineOrOverride(style, SystemCellWrapTextStyle.WRAP_TEXT);
 		
-		createCell(lines.size(), style).setCellValue(new HSSFRichTextString(text));
+		createCell(lines.size(), styleWithWrapped).setCellValue(new HSSFRichTextString(text));
     	return this;
     }
     
-	private RowContext writeNumber(Number number, Style... styles) {
+	private RowContext writeNumber(Number number, Style style) {
 		checkArgument(number != null, "Number is null for column %s", index);
 		
-		createCell(1, combineStyles(styles)).setCellValue(number.doubleValue());
+		createCell(1, style).setCellValue(number.doubleValue());
         return this;
 	}
     
-	private RowContext writeDate(Date date, Style... styles) {
+	private RowContext writeDate(Date date, Style style) {
 		checkArgument(date != null, "Date is null for column %s", index);
 		
-		createCell(1, combineStyles(styles)).setCellValue(date);
+		createCell(1, style).setCellValue(date);
         return this;
 	}
 

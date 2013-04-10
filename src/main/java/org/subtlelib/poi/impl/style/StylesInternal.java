@@ -1,0 +1,31 @@
+package org.subtlelib.poi.impl.style;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import org.subtlelib.poi.api.style.AdditiveStyle;
+import org.subtlelib.poi.api.style.Style;
+import org.subtlelib.poi.api.style.Styles;
+
+import com.google.common.collect.ImmutableList;
+
+/**
+ * Created on 10/04/13
+ * @author d.serdiuk
+ */
+public class StylesInternal {
+    /**
+     * If at least one style given is non-additive, second passed style is returned (it 'overrides' the 1st).
+     * Otherwise, styles are combined and a composite style is returned.
+     * @param style1 not-null
+     * @param style2 not-null
+     */
+    public static Style combineOrOverride(Style style1, Style style2) {
+        checkNotNull(style1, "first style to combine cannot be null");
+        checkNotNull(style2, "second style to combine cannot be null");
+
+        if (!(style1 instanceof AdditiveStyle) || !(style2 instanceof AdditiveStyle)) {
+            return style2;
+        }
+        return Styles.combine(ImmutableList.of((AdditiveStyle) style1, (AdditiveStyle) style2));
+    }
+}

@@ -2,9 +2,9 @@ package org.subtlelib.poi.impl.style.system;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.subtlelib.poi.api.style.SimpleStyle;
+import org.subtlelib.poi.api.style.AdditiveStyle;
 
-public enum SystemCellWrapTextStyle implements SimpleStyle {
+public enum SystemCellWrapTextStyle implements AdditiveStyle {
 	
 	WRAP_TEXT;
 	
