@@ -48,5 +48,4 @@ public interface SheetConfiguration<T> {
     public T fitOnPagesByWidth(int pages);
     public T fitOnPagesByHeight(int pages);
 
-    Configuration getConfiguration();
 }

@@ -44,7 +44,7 @@ public interface RowContext extends PlainDataOutput, FormattedDataOutput, CellNa
      *
      * @param height by default, in points (as in Excel row height dialog).
      */
-    public RowContext setHeight(int height);
+    public RowContext setRowHeight(int height);
     
     /**
      * Merge cells of the current row starting from the current cell.

@@ -164,7 +164,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 	}
 
     @Override
-    public RowContext setHeight(int height) {
+    public RowContext setRowHeight(int height) {
         row.setHeight((short) (sheet.getConfiguration().getRowHeightBaseValue() * height));
         return this;
     }

@@ -102,7 +102,7 @@ public class SheetContextNoImpl extends InheritableStyleConfiguration<SheetConte
 
     @Override
     public Configuration getConfiguration() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Configuration is not supported by SheetContextNoImpl");
     }
 
     @Override

@@ -137,7 +137,7 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
 	}
 
     @Override
-    public RowContext setHeight(int height) {
+    public RowContext setRowHeight(int height) {
         return delegate;
     }
 
