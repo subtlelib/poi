@@ -152,7 +152,7 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
     }
 
     @Override
-    public RowContext setTotalsDataBlock(ColumnTotalsDataRange data) {
+    public RowContext setTotalsDataRange(ColumnTotalsDataRange data) {
         return delegate;
     }
 

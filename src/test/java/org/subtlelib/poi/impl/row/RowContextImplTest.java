@@ -51,7 +51,7 @@ public class RowContextImplTest {
         setDataRange2to15();
 
         // do
-        rowContext.setTotalsDataBlock(dataRange)
+        rowContext.setTotalsDataRange(dataRange)
                 .total(Formula.SUM)
                 .total(Formula.SUM);
 
@@ -66,7 +66,7 @@ public class RowContextImplTest {
         setDataRange2to15();
 
         // do
-        rowContext.setTotalsDataBlock(dataRange)
+        rowContext.setTotalsDataRange(dataRange)
                 .skipCells(27)
                 .totals(Formula.SUM, 2);
 
@@ -76,7 +76,7 @@ public class RowContextImplTest {
     }
 
     private void setDataRange2to15() {
-        when(dataRange.getStartLineNo()).thenReturn(2);
-        when(dataRange.getEndLineNo()).thenReturn(15);
+        when(dataRange.getStartRowNo()).thenReturn(2);
+        when(dataRange.getEndRowNo()).thenReturn(15);
     }
 }

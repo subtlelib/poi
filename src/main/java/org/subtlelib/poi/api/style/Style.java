@@ -11,5 +11,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
  * used as keys in a map in StyleRegistry.
  */
 public interface Style {
-	public void enrich(HSSFWorkbook workbook, HSSFCellStyle style);
+
+    public void enrich(HSSFWorkbook workbook, HSSFCellStyle style);
 }

@@ -23,7 +23,7 @@ public class SheetContextImpl extends InheritableStyleConfiguration<SheetContext
     private final Sheet sheet;
     
     protected RowContext currentRow;
-    protected int lineNo = -1;
+    protected int rowNo = -1;
     
     private int defaultRowIndent = 0;
 
@@ -42,26 +42,26 @@ public class SheetContextImpl extends InheritableStyleConfiguration<SheetContext
     
     @Override
 	public SheetContext skipRow() {
-        lineNo++;
+        rowNo++;
         return this;
     }
 
     @Override
 	public SheetContext skipRows(int offset) {
-        this.lineNo += offset;
+        this.rowNo += offset;
         return this;
     }
 
     @Override
     public SheetContext stepOneRowBack() {
-        lineNo -= 1;
+        rowNo -= 1;
         currentRow = null;
         return this;
     }
 
     @Override
 	public RowContext nextRow() {
-        currentRow = new RowContextImpl(Rows.getOrCreate(sheet, ++lineNo), this, workbook, defaultRowIndent);
+        currentRow = new RowContextImpl(Rows.getOrCreate(sheet, ++rowNo), this, workbook, defaultRowIndent);
         return currentRow;
     }
 
@@ -104,7 +104,7 @@ public class SheetContextImpl extends InheritableStyleConfiguration<SheetContext
     
 	@Override
 	public SheetContext mergeCells(int startColumn, int endColumn) {
-		sheet.addMergedRegion(new CellRangeAddress(lineNo, lineNo, startColumn, endColumn));
+		sheet.addMergedRegion(new CellRangeAddress(rowNo, rowNo, startColumn, endColumn));
 		return this;
 	}
 
@@ -156,7 +156,7 @@ public class SheetContextImpl extends InheritableStyleConfiguration<SheetContext
         return new ColumnTotalsDataRangeImpl(this);
     }
 
-    public int getCurrentLineNo() {
-        return lineNo;
+    public int getCurrentRowNo() {
+        return rowNo;
     }
 }

@@ -1,7 +1,8 @@
 package org.subtlelib.poi.api.totals;
 
 /**
- * Enum string representation must correspond to valid Excel formulas.
+ * Enum string representation must correspond to valid Excel formulae.
+ * <br/>
  * Created on 28/03/13
  * @author d.serdiuk
  */

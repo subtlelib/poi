@@ -229,7 +229,10 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 	}
 
     @Override
-    public RowContext setTotalsDataBlock(ColumnTotalsDataRange data) {
+    public RowContext setTotalsDataRange(ColumnTotalsDataRange data) {
+        if (!data.isEndMarked()) {
+            data.endOnPreviousRow();
+        }
         this.totalsData = data;
         return this;
     }
@@ -244,9 +247,9 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
         checkState(totalsData != null, "Please set totals data before rendering totals formula (setTotalsDataBlock(...)");
 
         String columnIndex = Columns.columnIndexAsLetters(index + 1);
-        String totalString = formula.toString() + '(' + columnIndex + totalsData.getStartLineNo()
+        String totalString = formula.toString() + '(' + columnIndex + totalsData.getStartRowNo()
                 + ":"
-                + columnIndex + totalsData.getEndLineNo() + ')';
+                + columnIndex + totalsData.getEndRowNo() + ')';
         writeFormula(totalString, style);
         return this;
     }

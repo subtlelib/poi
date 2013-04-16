@@ -7,7 +7,12 @@ import org.subtlelib.poi.api.style.Style;
  * @author d.serdiuk
  */
 public interface SupportsColumnTotalsRendering<R> {
-    R setTotalsDataBlock(ColumnTotalsDataRange data);
+    /**
+     * The data range will be used to render totals.
+     * <b>If the end of data range has not yet been marked, {@link ColumnTotalsDataRange#endOnPreviousRow()}
+     * method will be called</b>
+     */
+    R setTotalsDataRange(ColumnTotalsDataRange data);
     R total(Formula formula);
     R total(Formula formula, Style style);
     R totals(Formula formula, int times);

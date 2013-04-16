@@ -7,7 +7,7 @@ package org.subtlelib.poi.api.configuration;
  *
  */
 public interface ConfigurationProvider {
-	
+
 	/**
 	 * Get workbook wide configuration.
 	 * 
