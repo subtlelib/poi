@@ -11,6 +11,8 @@ import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.totals.ColumnTotalsDataRange;
 import org.subtlelib.poi.api.totals.Formula;
 
+import com.google.common.base.Optional;
+
 //TODO think of the case conditionalCell().text() - is text() supposed to move pointer in delegate?
 public class RowContextNoImpl extends AbstractDelegatingRowContext {
 
@@ -46,7 +48,17 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
         return delegate;
     }
 
-	@Override
+    @Override
+    public RowContext text(Optional<String> text) {
+        return delegate;
+    }
+
+    @Override
+    public RowContext text(Optional<String> text, Style style) {
+        return delegate;
+    }
+
+    @Override
 	public RowContext multilineText(Collection<String> lines) {
 		return delegate;
 	}
@@ -62,20 +74,20 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
     }
 
     @Override
+    public RowContext number(Optional<? extends Number> number) {
+        return delegate;
+    }
+
+    @Override
+    public RowContext number(Optional<? extends Number> number, Style style) {
+        return delegate;
+    }
+
+    @Override
     public RowContext number(Number number) {
         return delegate;
     }
 
-    @Override
-    public RowContext optionalNumber(Number number) {
-        return delegate;
-    }
-
-    @Override
-    public RowContext optionalNumber(Number number, Style style) {
-        return delegate;
-    }
-    
 	@Override
 	public RowContext date(Date date) {
 		return delegate;
@@ -120,16 +132,6 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
     public RowContext conditionalCell(boolean condition) {
         return delegate;
     }
-
-	@Override
-	public RowContext optionalText(String text) {
-		return delegate;
-	}
-
-	@Override
-	public RowContext optionalText(String text, Style style) {
-		return delegate;
-	}
 
 	@Override
 	public RowContext setColumnWidth(int width) {

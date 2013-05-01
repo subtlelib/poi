@@ -22,6 +22,7 @@ import org.subtlelib.poi.impl.style.system.SystemCellWrapTextStyle;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Joiner;
+import com.google.common.base.Optional;
 
 
 public class RowContextImpl extends AbstractDelegatingRowContext {
@@ -29,10 +30,10 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 	private static final Joiner multilineTextJoiner = Joiner.on("\n");
 	
     private final StyleRegistry styleRegistry;
-    
+
     private final Row row;
     private ColumnTotalsDataRange totalsData;
-    
+
     private int index;
     private int indent;
     
@@ -54,18 +55,18 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     	return writeText(text, StylesInternal.combineOrOverride(getTextStyle(), style));
     }
 
-	@Override
-	public RowContext optionalText(String text) {
-		return text == null ? skipCell() : text(text);
-	}
+    @Override
+    public RowContext text(Optional<String> text) {
+        return text.isPresent()? text(text.get()) : skipCell();
+    }
 
-	@Override
-	public RowContext optionalText(String text, Style style) {
-		return text == null ? skipCell() : text(text, style);
-	}
+    @Override
+    public RowContext text(Optional<String> text, Style style) {
+        return text.isPresent() ? text(text.get(), style) : skipCell();
+    }
 
 
-	@Override
+    @Override
 	public RowContext multilineText(Collection<String> lines) {
 		return writeMultilineText(lines, getTextStyle());
 	}
@@ -86,16 +87,16 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     }
 
     @Override
-    public RowContext optionalNumber(Number number) {
-    	return number == null ? skipCell() : number(number);
+    public RowContext number(Optional<? extends Number> number) {
+        return number.isPresent() ? number(number.get()) : skipCell();
     }
 
     @Override
-    public RowContext optionalNumber(Number number, Style style) {
-    	return number == null ? skipCell() : number(number, style);
+    public RowContext number(Optional<? extends Number> number, Style style) {
+        return number.isPresent() ? number(number.get(), style) : skipCell();
     }
 
-	@Override
+    @Override
 	public RowContext date(Date date) {
 		return writeDate(date, getDateStyle());
 	}

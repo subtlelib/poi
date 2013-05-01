@@ -7,6 +7,8 @@ import org.joda.time.LocalDate;
 import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.style.StyleConfiguration;
 
+import com.google.common.base.Optional;
+
 /**
  * Basic data output functionality
  * 
@@ -38,26 +40,26 @@ public interface PlainDataOutput {
 	 * @param style style to be applied to the current cell on top of the predefined style
 	 */
     public RowContext text(String text, Style style);
-    
+
     /**
      * Write optional text to the current cell.
-     * 
+     *
      * Same as {@link #text(String)} but the value is optional.
-     *  
-     * @param text string or null, for null no value is written to the cell
+     *
+     * @param text for Present string - value is written, on Absent value the cell is skipped
      */
-    public RowContext optionalText(String text);
+    public RowContext text(Optional<String> text);
 
     /**
      * Write optional text to the current cell and apply style provided.
-     * 
+     *
      * Same as {@link #text(String, Style)} but the value is optional.
-     *  
-     * @param text string or null, for null no value is written to the cell
-	 * @param style style to be applied to the current cell on top of the predefined style 
+     *
+     * @param text for Present string - value is written, on Absent value the cell is skipped
+	 * @param style style to be applied to the current cell on top of the predefined style
      */
-    public RowContext optionalText(String text, Style style);
-
+    public RowContext text(Optional<String> text, Style style);
+    
 	/**
 	 * Write mandatory multiline text to the current cell.
 	 * Shift current cell pointer to the next position.
@@ -108,23 +110,23 @@ public interface PlainDataOutput {
     
     /**
      * Write optional number to the current cell.
-     * 
+     *
      * Same as {@link #number(Number)} but the value is optional.
-     *  
-     * @param number number or null, for null no value is written to the cell
-     */    
-    public RowContext optionalNumber(Number number);
+     *
+     * @param number Present value is written, on Absent value the cell is skipped
+     */
+    public RowContext number(Optional<? extends Number> number);
 
     /**
      * Write optional number to the current cell and apply style provided.
-     * 
+     *
      * Same as {@link #number(Number, Style)} but the value is optional.
-     *  
-     * @param number number or null, for null no value is written to the cell
-	 * @param style style to be applied to the current cell on top of the predefined style 
-     */    
-    public RowContext optionalNumber(Number number, Style style);
-    
+     *
+     * @param number Present value is written, on Absent value the cell is skipped
+	 * @param style style to be applied to the current cell on top of the predefined style
+     */
+    public RowContext number(Optional<? extends Number> number, Style style);
+
 	/**
 	 * Write mandatory date to the current cell.
 	 * Shift current cell pointer to the next position.
