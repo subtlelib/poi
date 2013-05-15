@@ -2,36 +2,39 @@ package simple;
 
 import java.math.BigDecimal;
 
-import org.joda.time.LocalDateTime;
-
 /**
- * TODO: describe class
+ * An example domain object
  * <p/>
  * Created on 14/05/13
- *
  * @author d.serdiuk
  */
 public class Payment {
 
     private final BigDecimal amount;
-    private final BigDecimal date;
-    private final LocalDateTime bookingTime;
+    private final String payeeBank;
+    private final String currency;
+    private final String beneficiary;
 
-    public Payment(BigDecimal amount, BigDecimal date, LocalDateTime bookingTime) {
+    public Payment(BigDecimal amount, String payeeBank, String currency, String beneficiary) {
         this.amount = amount;
-        this.date = date;
-        this.bookingTime = bookingTime;
+        this.payeeBank = payeeBank;
+        this.currency = currency;
+        this.beneficiary = beneficiary;
     }
 
     public BigDecimal getAmount() {
         return amount;
     }
 
-    public BigDecimal getDate() {
-        return date;
+    public String getPayeeBank() {
+        return payeeBank;
     }
 
-    public LocalDateTime getBookingTime() {
-        return bookingTime;
+    public String getCurrency() {
+        return currency;
+    }
+
+    public String getBeneficiary() {
+        return beneficiary;
     }
 }
