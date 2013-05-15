@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.style.StyleConfiguration;
 
@@ -153,5 +154,6 @@ public interface PlainDataOutput {
     public RowContext date(Date date, Style style);
     public RowContext date(LocalDate date);
     public RowContext date(LocalDate date, Style style);
-
+    public RowContext date(LocalDateTime dateTime);
+    public RowContext date(LocalDateTime dateTime, Style style);
 }

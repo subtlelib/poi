@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.style.Style;
@@ -105,6 +106,16 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
 
     @Override
     public RowContext date(LocalDate date, Style style) {
+        return delegate;
+    }
+
+    @Override
+    public RowContext date(LocalDateTime dateTime) {
+        return delegate;
+    }
+
+    @Override
+    public RowContext date(LocalDateTime dateTime, Style style) {
         return delegate;
     }
 
