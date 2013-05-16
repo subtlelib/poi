@@ -1,9 +1,11 @@
-package simple;
+package examples.simple;
 
 import java.math.BigDecimal;
 import java.util.Collection;
 
 import com.google.common.collect.ImmutableList;
+
+import common.Payment;
 
 /**
  * Created on 15/05/13

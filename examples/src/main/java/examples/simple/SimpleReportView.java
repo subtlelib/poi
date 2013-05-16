@@ -1,10 +1,12 @@
-package simple;
+package examples.simple;
 
 import java.util.Collection;
 
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.workbook.WorkbookContext;
 import org.subtlelib.poi.impl.workbook.WorkbookContextFactory;
+
+import common.Payment;
 
 /**
  * This example shows the basics of subtlelib. First headers are rendered, then the data rows

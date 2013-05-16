@@ -1,4 +1,4 @@
-package simple;
+package examples.simple;
 
 import java.io.File;
 import java.io.IOException;
