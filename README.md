@@ -7,6 +7,7 @@ A fancy way to boilerplate-less POI
 ### Simple
 The easiest use of subtlelib: we display a collection of domain objects in an excel worksheet.
 
+#### Source code
     public class SimpleReportView {
         public WorkbookContext render(Collection<Payment> payments) {
             WorkbookContext workbookCtx = WorkbookContextFactory.createWorkbook();
@@ -41,3 +42,5 @@ The easiest use of subtlelib: we display a collection of domain objects in an ex
             Files.write(workbook.toNativeBytes(), new File("simple_example.xls"));
         }
     }
+#### Resulting file    
+![Alt text](/examples/images/example1.png)
