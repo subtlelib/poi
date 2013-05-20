@@ -11,10 +11,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimaps;
 
 /**
- * TODO: describe class
- * <p/>
  * Created on 16/05/13
- *
  * @author d.serdiuk
  */
 public class ConditionalReportModel {
@@ -57,15 +54,15 @@ public class ConditionalReportModel {
         );
 
         List<Book> books1 = ImmutableList.of(
-                new Book(authors.get(0), "Regeneration", 251, Optional.<String>absent(), 4.2f, 56, "Plume", "0452270073" ),
-                new Book(authors.get(1), "Incognito: The Secret Lives of the Brain", 304, Optional.of("634AJ21"), 4.3f, 58, "Vintage", "0307389928"),
-                new Book(authors.get(2), "Crime and Punishment", 446, Optional.<String>absent(), 4.4f, 19, "Simon & Brown", "1613821824"),
-                new Book(authors.get(3), "How to Write a Damn Good Novel: A Step-by-Step No Nonsense Guide to Dramatic Storytelling", 192, Optional.of("722AP1"), 4.5f, 50, "St. Martin's Press", "0312010443"),
-                new Book(authors.get(0), "Toby's Room", 320, Optional.<String>absent(), 4.0f, 52, "Doubleday", "9780385524360"),
-                new Book(authors.get(1), "The Book of Barely Imagined Beings: A 21st Century Bestiary", 448, Optional.of("KBB1166"), 3.3f, 36, "University Of Chicago Press", "022604470X"),
-                new Book(authors.get(2), "The Idiot", 656, Optional.<String>absent(), 4.4f, 48, "Vintage", "0375702245"),
-                new Book(authors.get(0), "The Eye in the Door", 280, Optional.of("91232O"), 4.5f, 55, "Plume", "0452272726"),
-                new Book(authors.get(0), "The Ghost Road", 288, Optional.of("KASD781"), 4.1f, 43, "Plume", "0452276721")
+                new Book(authors.get(0), "Regeneration", 251, "OIJ911A", 4.2f, 56, "Plume", Optional.of("0452270073") ),
+                new Book(authors.get(1), "Incognito: The Secret Lives of the Brain", 304, "634AJ21", 4.3f, 58, "Vintage", Optional.of("0307389928")),
+                new Book(authors.get(2), "Crime and Punishment", 446, "9MZ115P", 4.4f, 19, "Simon & Brown", Optional.of("1613821824")),
+                new Book(authors.get(3), "How to Write a Damn Good Novel: A Step-by-Step No Nonsense Guide to Dramatic Storytelling", 192, "722AP1", 4.5f, 50, "St. Martin's Press", Optional.<String>absent()),
+                new Book(authors.get(0), "Toby's Room", 320, "KJNKJB7", 4.0f, 52, "Doubleday", Optional.<String>absent()),
+                new Book(authors.get(1), "The Book of Barely Imagined Beings: A 21st Century Bestiary", 448, "KBB1166", 3.3f, 36, "University Of Chicago Press", Optional.of("022604470X")),
+                new Book(authors.get(2), "The Idiot", 656, "ZXPL34I", 4.4f, 48, "Vintage", Optional.of("0375702245")),
+                new Book(authors.get(0), "The Eye in the Door", 280, "91232O", 4.5f, 55, "Plume", Optional.of("0452272726")),
+                new Book(authors.get(0), "The Ghost Road", 288, "KASD781", 4.1f, 43, "Plume", Optional.of("0452276721"))
         );
 
         return new ConditionalReportModel(true, books1, LocalDate.now(), "New York");

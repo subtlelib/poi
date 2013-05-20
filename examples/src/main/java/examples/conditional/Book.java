@@ -15,14 +15,14 @@ public class Book {
     private final Author author;
     private final String title;
     private final Integer pages;
-    private final Optional<String> ebookNumber;
+    private final String ebookNumber;
     private final Float rating;
     private final Integer leftInWarehouse;
     private final String publisher;
-    private final String isbn;
+    private final Optional<String> isbn;
 
-    public Book(Author author, String title, Integer pages, Optional<String> ebookNumber, Float rating,
-                Integer leftInWarehouse, String publisher, String isbn) {
+    public Book(Author author, String title, Integer pages, String ebookNumber, Float rating,
+                Integer leftInWarehouse, String publisher, Optional<String> isbn) {
         this.author = author;
         this.title = title;
         this.pages = pages;
@@ -45,7 +45,7 @@ public class Book {
         return pages;
     }
 
-    public Optional<String> getEbookNumber() {
+    public String getEbookNumber() {
         return ebookNumber;
     }
 
@@ -61,7 +61,7 @@ public class Book {
         return publisher;
     }
 
-    public String getIsbn() {
+    public Optional<String> getIsbn() {
         return isbn;
     }
 

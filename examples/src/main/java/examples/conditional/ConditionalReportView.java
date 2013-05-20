@@ -5,10 +5,16 @@ import org.subtlelib.poi.api.workbook.WorkbookContext;
 import org.subtlelib.poi.impl.workbook.WorkbookContextFactory;
 
 /**
- * TODO: describe class
+ * This example shows how to use subtlelib to render a report with grouped data.
+ * Additional features covered:
+ * <ul>
+ *     <li><b>conditional cell</b> (see 'Related E-book' below): it is rendered
+ *         depending on the report model</li>
+ *     <li><b>optional data</b> (see 'ISBN'): when the field is optional, nothing is written in the cell.
+ *         If you have nullable fields instead, use <code>.text(Optional.fromNullable(myData.getSomeField()))</code></li>
+ * </ul>
  * <p/>
  * Created on 16/05/13
- *
  * @author d.serdiuk
  */
 public class ConditionalReportView {
@@ -19,10 +25,10 @@ public class ConditionalReportView {
         // report heading
         sheetCtx
             .nextRow()
-                .text("Authors report")
+                .header("Authors report")
             .nextRow().cellAt(5)
-                .text("Date:")
-                .date(model.getReportCreationDate())
+                .text("Date:").setColumnWidth(11)
+                .date(model.getReportCreationDate()).setColumnWidth(11)
             .nextRow().cellAt(5)
                 .text("Place:")
                 .text(model.getReportCreationPlace());
@@ -30,12 +36,11 @@ public class ConditionalReportView {
         // columns heading
         sheetCtx
             .nextRow()
-                .text("Name")
-                .text("Surname")
-                .text("ContactNumber")
-                .text("Last Activity")
-                .text("Rating")
-            .skipRow();
+                .header("Name")
+                .header("Surname").setColumnWidth(25)
+                .header("ContactNumber").setColumnWidth(15)
+                .header("Last Activity").setColumnWidth(16)
+                .header("Rating");
 
         // data
         for (Author author: model.getBooksByAuthor().keySet()) {
@@ -45,9 +50,29 @@ public class ConditionalReportView {
                     .text(author.getSurname())
                     .text(author.getContactNumber())
                     .date(author.getLastUpdate())
-                    .text(author.getRating());
+                    .text(author.getRating())
+                .nextRow().skipCell()
+                    .header("Title")
+                    .header("# pages")
+                    .conditionalCell(model.isEbooksIncluded()).header("Related E-book")
+                    .header("Rating")
+                    .header("Left in stock")
+                    .header("Publisher")
+                    .header("ISBN");
 
-            // TODO show books heading and data
+            for (Book book : model.getBooksByAuthor().get(author)) {
+                sheetCtx
+                    .nextRow().skipCell()
+                        .text(book.getTitle())
+                        .number(book.getPages())
+                        .conditionalCell(model.isEbooksIncluded()).text(book.getEbookNumber())
+                        .number(book.getRating())
+                        .number(book.getLeftInWarehouse())
+                        .text(book.getPublisher())
+                        .text(book.getIsbn());
+            }
+            sheetCtx
+                .skipRow();
         }
         return workbookCtx;
     }

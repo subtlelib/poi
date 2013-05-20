@@ -3,6 +3,8 @@ package examples.simple;
 import java.util.Collection;
 
 import org.subtlelib.poi.api.sheet.SheetContext;
+import org.subtlelib.poi.api.totals.ColumnTotalsDataRange;
+import org.subtlelib.poi.api.totals.Formula;
 import org.subtlelib.poi.api.workbook.WorkbookContext;
 import org.subtlelib.poi.impl.workbook.WorkbookContextFactory;
 
@@ -23,21 +25,30 @@ public class SimpleReportView {
         // heading
         sheetCtx
             .nextRow()
-                .text("Amount")
-                .text("Currency")
-                .text("Beneficiary").setColumnWidth(25)
-                .text("Payee bank").setColumnWidth(35)
-            .skipRow();
+                .skipCell()
+                .header("Amount")
+                .header("Currency")
+                .header("Beneficiary").setColumnWidth(25)
+                .header("Payee bank").setColumnWidth(35);
+
+        ColumnTotalsDataRange totalsData = sheetCtx.startColumnTotalsDataRangeFromNextRow();
 
         // data
         for (Payment payment : payments) {
             sheetCtx
                 .nextRow()
+                    .skipCell()
                     .number(payment.getAmount())
                     .text(payment.getCurrency())
                     .text(payment.getBeneficiary())
                     .text(payment.getPayeeBank());
         }
+
+        sheetCtx
+            .nextRow().setTotalsDataRange(totalsData)
+                .header("Total:")
+                .total(Formula.SUM);
+
         return workbookCtx;
     }
 }
