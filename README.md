@@ -16,21 +16,30 @@ The easiest use of subtlelib: we display a collection of domain objects in an ex
             // heading
             sheetCtx
                 .nextRow()
-                    .text("Amount")
-                    .text("Currency")
-                    .text("Beneficiary").setColumnWidth(25)
-                    .text("Payee bank").setColumnWidth(35)
-                .skipRow();
+                    .skipCell()
+                    .header("Amount")
+                    .header("Currency")
+                    .header("Beneficiary").setColumnWidth(25)
+                    .header("Payee bank").setColumnWidth(35);
+    
+            ColumnTotalsDataRange totalsData = sheetCtx.startColumnTotalsDataRangeFromNextRow();
     
             // data
             for (Payment payment : payments) {
                 sheetCtx
                     .nextRow()
+                        .skipCell()
                         .number(payment.getAmount())
                         .text(payment.getCurrency())
                         .text(payment.getBeneficiary())
                         .text(payment.getPayeeBank());
             }
+    
+            sheetCtx
+                .nextRow().setTotalsDataRange(totalsData)
+                    .header("Total:")
+                    .total(Formula.SUM);
+    
             return workbookCtx;
         }
     }
