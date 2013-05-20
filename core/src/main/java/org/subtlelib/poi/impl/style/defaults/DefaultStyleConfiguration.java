@@ -1,4 +1,4 @@
-package org.subtlelib.poi.impl.style;
+package org.subtlelib.poi.impl.style.defaults;
 
 import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.style.StyleConfiguration;
@@ -24,7 +24,7 @@ public class DefaultStyleConfiguration implements StyleConfiguration {
 
 	@Override
 	public Style getDateStyle() {
-        return EmptyStyle.instance;
+        return DataStyle.DATE;
     }
 
 	@Override
@@ -34,7 +34,7 @@ public class DefaultStyleConfiguration implements StyleConfiguration {
 
 	@Override
 	public Style getHeaderStyle() {
-        return EmptyStyle.instance;
+        return FontStyle.COLUMN_HEADER;
     }
 
 	@Override

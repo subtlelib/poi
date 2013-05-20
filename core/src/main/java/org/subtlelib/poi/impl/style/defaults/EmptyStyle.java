@@ -1,4 +1,4 @@
-package org.subtlelib.poi.impl.style;
+package org.subtlelib.poi.impl.style.defaults;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
