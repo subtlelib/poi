@@ -48,7 +48,7 @@ public class ConditionalReportView {
                 .nextRow()
                     .text(author.getName())
                     .text(author.getSurname())
-                    .text(author.getContactNumber())
+                    .text(author.getContactNumber()) // contact number is Optional. If value is Absent, cell will be skipped
                     .date(author.getLastUpdate())
                     .text(author.getRating())
                 .nextRow().skipCell()
@@ -69,7 +69,7 @@ public class ConditionalReportView {
                         .number(book.getRating())
                         .number(book.getLeftInWarehouse())
                         .text(book.getPublisher())
-                        .text(book.getIsbn());
+                        .text(book.getIsbn()); // ISBN is Optional. If value is Absent - cell will be skipped
             }
             sheetCtx
                 .skipRow();
