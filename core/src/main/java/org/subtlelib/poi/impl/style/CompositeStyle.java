@@ -9,12 +9,13 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.subtlelib.poi.api.style.AdditiveStyle;
 import org.subtlelib.poi.api.style.Style;
+import org.subtlelib.poi.api.style.Styles;
 
 import com.google.common.collect.ImmutableMap;
 
 /**
  * Don't instantiate this class by yourself,
- * use {@link org.subtlelib.poi.api.style.Styles#combine(org.subtlelib.poi.api.style.AdditiveStyle...)} if needed
+ * use {@link Styles#combine(AdditiveStyle...)} if needed
  */
 public final class CompositeStyle implements AdditiveStyle {
 	private final ImmutableMap<Enum<?>, AdditiveStyle> styles;

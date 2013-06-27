@@ -17,7 +17,7 @@ public interface ColumnTotalsDataRange {
      * of the data range. </p>
      * If you want to leave some lines between the data range and the formula that uses it,
      * call this method when you finished writing your data.
-     * @see org.subtlelib.poi.api.totals.SupportsColumnTotalsRendering#setTotalsDataRange(ColumnTotalsDataRange)
+     * @see SupportsColumnTotalsRendering#setTotalsDataRange(ColumnTotalsDataRange)
      */
     void endOnCurrentRow();
     /** 1-based line number that marks the start of the data range (line number corresponds to how it's shown in Excel */
