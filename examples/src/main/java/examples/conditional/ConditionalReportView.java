@@ -28,7 +28,7 @@ public class ConditionalReportView {
                 .header("Authors report")
             .nextRow().cellAt(5)
                 .text("Date:").setColumnWidth(11)
-                .date(model.getReportCreationDate()).setColumnWidth(11)
+                .date(model.getReportCreationDate().toDate()).setColumnWidth(11)
             .nextRow().cellAt(5)
                 .text("Place:")
                 .text(model.getReportCreationPlace());
@@ -49,7 +49,7 @@ public class ConditionalReportView {
                     .text(author.getName())
                     .text(author.getSurname())
                     .text(author.getContactNumber()) // contact number is Optional. If value is Absent, cell will be skipped
-                    .date(author.getLastUpdate())
+                    .date(author.getLastUpdate().toDate())
                     .text(author.getRating())
                 .nextRow().skipCell()
                     .header("Title")

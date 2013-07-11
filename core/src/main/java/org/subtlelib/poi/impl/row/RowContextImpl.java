@@ -9,8 +9,6 @@ import java.util.Date;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.style.Style;
@@ -108,35 +106,13 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 	}
 
     @Override
-    public RowContext date(LocalDate date) {
-        checkLocalDateIsNotNull(date);
-        return date(date.toDate());
+    public RowContext date(Optional<Date> date) {
+        return date.isPresent() ? date(date.get()) : skipCell();
     }
 
     @Override
-    public RowContext date(LocalDate date, Style style) {
-        checkLocalDateIsNotNull(date);
-        return date(date.toDate(), style);
-    }
-
-    @Override
-    public RowContext date(LocalDateTime dateTime) {
-        checkLocalDateTimeIsNotNull(dateTime);
-        return date(dateTime.toDate());
-    }
-
-    @Override
-    public RowContext date(LocalDateTime dateTime, Style style) {
-        checkLocalDateTimeIsNotNull(dateTime);
-        return date(dateTime.toDate(), style);
-    }
-
-    private void checkLocalDateTimeIsNotNull(LocalDateTime dateTime) {
-        checkArgument(dateTime != null, "trying to set null LocalDateTime in column %s", index);
-    }
-
-    private void checkLocalDateIsNotNull(LocalDate date) {
-        checkArgument(date != null, "trying to set null LocalDate in column %s", index);
+    public RowContext date(Optional<Date> date, Style style) {
+        return date.isPresent() ? date(date.get(), style) : skipCell();
     }
 
     public RowContext total(String text) {
