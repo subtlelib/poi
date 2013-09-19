@@ -26,8 +26,10 @@ import com.google.common.base.Optional;
 
 public class RowContextImpl extends AbstractDelegatingRowContext {
 
-	private static final Joiner multilineTextJoiner = Joiner.on("\n");
-	
+    private static final int ROW_HEIGHT_AUTOMATIC = -1;
+
+    private static final Joiner multilineTextJoiner = Joiner.on("\n");
+
     private final StyleRegistry styleRegistry;
 
     private final Row row;
@@ -35,6 +37,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 
     private int index;
     private int indent;
+    private short rowHeight;
     
     public RowContextImpl(Row row, SheetContext sheet, StyleRegistry styleRegistry, int indent) {
         super(sheet);
@@ -42,6 +45,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
         this.styleRegistry = styleRegistry;
         this.index = indent;
         this.indent = indent;
+        this.rowHeight = ROW_HEIGHT_AUTOMATIC;
     }
 
     @Override
@@ -159,7 +163,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 
     @Override
     public RowContext setRowHeight(int height) {
-        row.setHeight((short) (sheet.getConfiguration().getRowHeightBaseValue() * height));
+        rowHeight = (short) (sheet.getConfiguration().getRowHeightBaseValue() * height);
         return this;
     }
 
@@ -214,13 +218,27 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     
 	@VisibleForTesting
 	Cell createCell(int rowHeightMultiplier, Style style) {
-		row.setHeightInPoints(row.getHeightInPoints() * rowHeightMultiplier);	
-		
+        assignRowHeight(rowHeightMultiplier);
+
         Cell cell = row.createCell(index++);
         cell.setCellStyle(styleRegistry.registerStyle(style));
 
         return cell;
 	}
+
+    /**
+     * Define row height as follows:
+     * - row height set explicitly by user: value defined by user;
+     * - multiline output and no row height defined: default height * number of lines;
+     * - otherwise: auto row height (by setting height to a magic value of #ROW_HEIGHT_AUTOMATIC);
+     */
+    private void assignRowHeight(int rowHeightMultiplier) {
+        if (rowHeightMultiplier > 1 && rowHeight == ROW_HEIGHT_AUTOMATIC) {
+            row.setHeightInPoints(row.getHeightInPoints() * rowHeightMultiplier);
+        } else {
+            row.setHeight(rowHeight);
+        }
+    }
 
     @Override
     public RowContext setTotalsDataRange(ColumnTotalsDataRange data) {
