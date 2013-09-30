@@ -251,7 +251,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 
     @Override
     public RowContext total(Formula formula) {
-        return total(formula, getTextStyle());
+        return total(formula, getTotalStyle());
     }
 
     @Override
@@ -268,7 +268,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 
     @Override
     public RowContext totals(Formula formula, int times) {
-        return totals(formula, times, getTextStyle());
+        return totals(formula, times, getTotalStyle());
     }
 
     @Override
