@@ -209,10 +209,16 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
         return this;
 	}
 
-    private RowContext writeFormula(String formula, Style style) {
+    private RowContext writeFormula(Formula formula, Style style) {
     	checkArgument(formula != null, "Formula is null for column %s", index);
+        checkState(totalsData != null, "Please set totals data before rendering totals formula (setTotalsDataBlock(...)");
+
+        String columnIndex = Columns.columnIndexAsLetters(index + 1);
+        String totalString = formula.toString() + '(' + columnIndex + totalsData.getStartRowNo()
+                + ":"
+                + columnIndex + totalsData.getEndRowNo() + ')';
     	
-        createCell(1, style).setCellFormula(formula);
+        createCell(1, style).setCellFormula(totalString);
         return this;
     }
     
@@ -251,30 +257,29 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 
     @Override
     public RowContext total(Formula formula) {
-        return total(formula, getTotalStyle());
+        writeFormula(formula, getTotalStyle());
+        return this;
     }
 
     @Override
     public RowContext total(Formula formula, Style style) {
-        checkState(totalsData != null, "Please set totals data before rendering totals formula (setTotalsDataBlock(...)");
-
-        String columnIndex = Columns.columnIndexAsLetters(index + 1);
-        String totalString = formula.toString() + '(' + columnIndex + totalsData.getStartRowNo()
-                + ":"
-                + columnIndex + totalsData.getEndRowNo() + ')';
-        writeFormula(totalString, style);
+        writeFormula(formula, StylesInternal.combineOrOverride(getTotalStyle(), style));
         return this;
     }
 
     @Override
     public RowContext totals(Formula formula, int times) {
-        return totals(formula, times, getTotalStyle());
+        for (int i = 0; i < times; i++) {
+            writeFormula(formula, getTotalStyle());
+        }
+        return this;
     }
 
     @Override
     public RowContext totals(Formula formula, int times, Style style) {
+        Style combinedStyle = StylesInternal.combineOrOverride(getTotalStyle(), style);
         for (int i = 0; i < times; i++) {
-            total(formula, style);
+            writeFormula(formula, combinedStyle);
         }
         return this;
     }

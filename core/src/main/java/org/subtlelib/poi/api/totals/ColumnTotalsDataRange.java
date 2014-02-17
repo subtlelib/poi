@@ -33,4 +33,13 @@ public interface ColumnTotalsDataRange {
 
     /** Mark the row rendered before current one as the end of data range */
     void endOnPreviousRow();
+
+    /**
+     * @param rowOffset example values:
+     * <ul>
+     *     <li>= 0 equivalent to {@link #endOnCurrentRow}</li>
+     *     <li>= -1 equivalent to {@link #endOnPreviousRow()}</li>
+     * </ul>
+     */
+    void endOn(int rowOffset);
 }

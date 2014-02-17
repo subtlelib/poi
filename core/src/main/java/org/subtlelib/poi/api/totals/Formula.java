@@ -7,5 +7,5 @@ package org.subtlelib.poi.api.totals;
  * @author d.serdiuk
  */
 public enum Formula {
-    SUM
+    SUM, AVERAGE
 }

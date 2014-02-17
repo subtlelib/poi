@@ -22,23 +22,28 @@ public class ColumnTotalsDataRangeImpl implements ColumnTotalsDataRange {
 
     public ColumnTotalsDataRangeImpl(SheetContextImpl sheetContext) {
         this.startRowNo = sheetContext.getCurrentRowNo() + 2; // +1 since it's next row, +1 since line numbers are
-                                                                // 0-based in SheetContextImpl
+                                                              // 0-based in SheetContextImpl
         this.sheetContext = sheetContext;
     }
 
     @Override
     public void endOnCurrentRow() {
-        end(sheetContext.getCurrentRowNo() + 1); // +1 since line numbers are 0-based in SheetContextImpl
+        endOn(0);
     }
 
     @Override
     public void endOnPreviousRow() {
-        end(sheetContext.getCurrentRowNo());
+        endOn(-1);
+    }
+
+    @Override
+    public void endOn(int rowOffset) {
+        end(sheetContext.getCurrentRowNo() + rowOffset);
     }
 
     private void end(int onLine) {
         checkState(endRowNo == NOT_SET, "Don't mark range end twice. End line was already marked.", this);
-        endRowNo = onLine;
+        endRowNo = onLine + 1; // +1 since line numbers are 0-based in SheetContextImpl
         checkState(endRowNo >= startRowNo, "No data for totals.", this);
     }
 
