@@ -134,6 +134,11 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     }
 
     @Override
+    public RowContext percentage(Optional<? extends Number> number) {
+        return number.isPresent() ? percentage(number.get()) : skipCell();
+    }
+
+    @Override
     public RowContext skipCell() {
         return skipCells(1);
     }

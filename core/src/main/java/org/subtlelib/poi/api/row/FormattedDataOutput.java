@@ -2,6 +2,8 @@ package org.subtlelib.poi.api.row;
 
 import org.subtlelib.poi.api.style.StyleConfiguration;
 
+import com.google.common.base.Optional;
+
 /**
  * Custom data output functionality
  * 
@@ -25,5 +27,7 @@ public interface FormattedDataOutput {
 	 * @param number non-null percentage
 	 */
     public RowContext percentage(Number number);
+
+    public RowContext percentage(Optional<? extends Number> number);
 
 }

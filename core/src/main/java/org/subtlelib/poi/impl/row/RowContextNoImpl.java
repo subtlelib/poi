@@ -128,6 +128,11 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
     }
 
     @Override
+    public RowContext percentage(Optional<? extends Number> number) {
+        return delegate;
+    }
+
+    @Override
     public RowContext conditionalCell(boolean condition) {
         return delegate;
     }
