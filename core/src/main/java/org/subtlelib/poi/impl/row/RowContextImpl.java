@@ -38,13 +38,15 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     private int index;
     private int indent;
     private short rowHeight;
-    
+    private int step;
+
     public RowContextImpl(Row row, SheetContext sheet, StyleRegistry styleRegistry, int indent) {
         super(sheet);
         this.row = row;
         this.styleRegistry = styleRegistry;
         this.index = indent;
         this.indent = indent;
+        this.step = 1;
         this.rowHeight = ROW_HEIGHT_AUTOMATIC;
     }
 
@@ -175,6 +177,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     @Override
 	public RowContext mergeCells(int number) {
     	sheet.mergeCells(index, index + number - 1);
+        step = number;
 		return this;
 	}
 
@@ -231,8 +234,11 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 	Cell createCell(int rowHeightMultiplier, Style style) {
         assignRowHeight(rowHeightMultiplier);
 
-        Cell cell = row.createCell(index++);
+        Cell cell = row.createCell(index);
         cell.setCellStyle(styleRegistry.registerStyle(style));
+
+        index += step;
+        step = 1;
 
         return cell;
 	}

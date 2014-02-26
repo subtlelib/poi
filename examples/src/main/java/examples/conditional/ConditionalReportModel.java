@@ -20,13 +20,15 @@ public class ConditionalReportModel {
     private final ImmutableMultimap<Author, Book> booksByAuthor;
     private final LocalDate reportCreationDate;
     private final String reportCreationPlace;
+    private final Integer reportNumber;
 
     public ConditionalReportModel(boolean ebooksIncluded, Collection<Book> books, LocalDate reportCreationDate,
-                                  String reportCreationPlace) {
+                                  String reportCreationPlace, Integer reportNumber) {
         this.ebooksIncluded = ebooksIncluded;
         booksByAuthor = Multimaps.index(books, Book._author);
         this.reportCreationDate = reportCreationDate;
         this.reportCreationPlace = reportCreationPlace;
+        this.reportNumber = reportNumber;
     }
 
     public boolean isEbooksIncluded() {
@@ -65,6 +67,11 @@ public class ConditionalReportModel {
                 new Book(authors.get(0), "The Ghost Road", 288, "KASD781", 4.1f, 43, "Plume", Optional.of("0452276721"))
         );
 
-        return new ConditionalReportModel(true, books1, LocalDate.now(), "New York");
+        return new ConditionalReportModel(true, books1, LocalDate.now(), "New York", 1436);
     }
+
+    public Integer getReportNumber() {
+        return reportNumber;
+    }
+
 }

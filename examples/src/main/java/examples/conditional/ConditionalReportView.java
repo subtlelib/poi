@@ -25,7 +25,8 @@ public class ConditionalReportView {
         // report heading
         sheetCtx
             .nextRow()
-                .header("Authors report")
+                .mergeCells(2).text("Authors report #")
+                .number(model.getReportNumber())
             .nextRow().cellAt(5)
                 .text("Date:").setColumnWidth(11)
                 .date(model.getReportCreationDate().toDate()).setColumnWidth(11)
