@@ -14,10 +14,10 @@ import com.google.common.collect.ImmutableList;
  */
 public class StylesInternal {
     /**
-     * If at least one style given is non-additive, second passed style is returned (it 'overrides' the 1st).
-     * Otherwise, styles are combined and a composite style is returned.
      * @param style1 not-null
      * @param style2 not-null
+     * @return if at least one style given is non-additive, second passed style is returned (it 'overrides' the 1st).
+     * Otherwise, styles are combined and a composite style is returned.
      */
     public static Style combineOrOverride(Style style1, Style style2) {
         checkNotNull(style1, "first style to combine cannot be null");

@@ -1,12 +1,15 @@
 package org.subtlelib.poi.api.totals;
 
 /**
+ * <p>
  * An instance of this interface represents the contiguous range of rows that can be used as a source
- * for totals formula.<br/>
+ * for totals formula.
+ * </p>
+ * <p>
  * Data range is started when the instance is created, and ended when {@link #endOnCurrentRow()}
  * or {@link #endOnPreviousRow()} called explicitly or when the object is used to render totals.
+ * </p>
  *
- * <p/>
  * Created on 28/03/13
  * @author d.serdiuk
  */
@@ -20,9 +23,15 @@ public interface ColumnTotalsDataRange {
      * @see SupportsColumnTotalsRendering#setTotalsDataRange(ColumnTotalsDataRange)
      */
     void endOnCurrentRow();
-    /** 1-based line number that marks the start of the data range (line number corresponds to how it's shown in Excel */
+
+    /**
+     * @return 1-based line number that marks the start of the data range (line number corresponds to how it's shown in Excel)
+     */
     int getStartRowNo();
-    /** 1-based line number that marks the end of the data range (line number corresponds to how it's shown in Excel */
+
+    /**
+     * @return 1-based line number that marks the end of the data range (line number corresponds to how it's shown in Excel)
+     */
     int getEndRowNo();
 
     /**

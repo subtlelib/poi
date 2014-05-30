@@ -14,6 +14,7 @@ public interface CellCondition<T> {
 	 * Execution will take place only if condition evaluates to true.
 	 * 
 	 * @param condition execution condition
+     * @return this
 	 */
 	public T conditionalCell(boolean condition);
 	

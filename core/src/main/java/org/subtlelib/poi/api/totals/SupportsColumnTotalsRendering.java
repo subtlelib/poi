@@ -11,6 +11,9 @@ public interface SupportsColumnTotalsRendering<R> {
      * The data range will be used to render totals.
      * <b>If the end of data range has not yet been marked, {@link ColumnTotalsDataRange#endOnPreviousRow()}
      * method will be called</b>
+     *
+     * @param data data range to be used for totals calculation
+     * @return this
      */
     R setTotalsDataRange(ColumnTotalsDataRange data);
     R total(Formula formula);

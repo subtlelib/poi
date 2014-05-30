@@ -26,15 +26,14 @@ public interface RowContext extends PlainDataOutput, FormattedDataOutput, CellNa
 	 * 
 	 * <p>
 	 * Sample:
-	 * <pre>
 	 * {@code
 	 *   .nextRow()
 	 *     .text("Some column header").setColumnWidth(25)
 	 * }
-	 * </pre>
 	 * </p>
-	 * 
+	 *
 	 * @param width width in units, subject to multiplication - see {@link Configuration#getColumnWidthBaseValue()}
+     * @return this
 	 */
     public RowContext setColumnWidth(int width);
 
@@ -43,6 +42,7 @@ public interface RowContext extends PlainDataOutput, FormattedDataOutput, CellNa
      * Set height of the current row. Subject to multiplication - see {@link Configuration#getRowHeightBaseValue()}
      *
      * @param height by default, in points (as in Excel row height dialog).
+     * @return this
      */
     public RowContext setRowHeight(int height);
     
@@ -50,6 +50,7 @@ public interface RowContext extends PlainDataOutput, FormattedDataOutput, CellNa
      * Merge cells of the current row starting from the current cell.
      * 
      * @param number total number of cells to merge (including the current one)
+     * @return this
      */
     public RowContext mergeCells(int number);
     

@@ -13,6 +13,7 @@ public interface CellNavigation<T> {
 
 	/**
 	 * Move current cell pointer to the next position.
+     * @return this
 	 */
     public T skipCell();
 
@@ -20,6 +21,7 @@ public interface CellNavigation<T> {
      * Move current cell pointer by {@code offset} cells within the row.
      * 
      * @param offset number of cells to move pointer by
+     * @return this
      */
     public T skipCells(int offset);
 
@@ -29,6 +31,7 @@ public interface CellNavigation<T> {
      * Therefore: absolute position = newIndex + page wide indentation 
      * 
      * @param newIndex new pointer absolute position
+     * @return this
      */
     public T cellAt(int newIndex);
 

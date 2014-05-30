@@ -25,6 +25,7 @@ public interface FormattedDataOutput {
 	 * For details of style configuration please see {@link StyleConfiguration} implementation used.
 	 * 
 	 * @param number non-null percentage
+     * @return this
 	 */
     public RowContext percentage(Number number);
 

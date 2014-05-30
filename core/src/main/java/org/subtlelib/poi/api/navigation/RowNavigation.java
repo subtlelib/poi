@@ -2,6 +2,7 @@ package org.subtlelib.poi.api.navigation;
 
 import org.subtlelib.poi.api.condition.RowCondition;
 import org.subtlelib.poi.api.row.RowContext;
+import org.subtlelib.poi.api.sheet.SheetContext;
 
 /**
  * Row navigation within the sheet routines.
@@ -30,15 +31,18 @@ public interface RowNavigation<S, R> extends RowCondition<R> {
 	
     /**
      * Move current row pointer to the next position within the sheet.
-     * Doesn't involve actual row creation but just the position in which the next row will be created with {@link #nextRow()} or {@link #nextConditionalRow(boolean).
+     * Doesn't involve actual row creation but just the position in which the next row will be created with {@link #nextRow()} or {@link #nextConditionalRow(boolean)}.
+     *
+     * @return current sheet {@link SheetContext}
      */
     public S skipRow();
     
     /**
      * Move current row pointer by {@code offset} rows within the sheet.
-     * Doesn't involve actual row creation but just the position in which the next row will be created with {@link #nextRow()} or {@link #nextConditionalRow(boolean).
+     * Doesn't involve actual row creation but just the position in which the next row will be created with {@link #nextRow()} or {@link #nextConditionalRow(boolean)}.
      * 
      * @param offset number of rows to move pointer by
+     * @return current sheet {@link SheetContext}
      */
     public S skipRows(int offset);
 

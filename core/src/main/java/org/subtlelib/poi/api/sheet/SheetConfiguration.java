@@ -18,6 +18,7 @@ public interface SheetConfiguration<T> {
 	 * 
 	 * @param columnNumber index of the column to set width for
 	 * @param width width in units, subject to multiplication - see {@link Configuration#getColumnWidthBaseValue()}
+     * @return this
 	 */
 	public T setColumnWidth(int columnNumber, int width);
 	
@@ -25,11 +26,13 @@ public interface SheetConfiguration<T> {
 	 * Set widths for subsequent columns starting from the first one.
 	 * 
 	 * @param widths each width in units, subject to multiplication - see {@link Configuration#getColumnWidthBaseValue()}
+     * @return this
 	 */
 	public T setColumnWidths(int... widths);
 	
 	/**
 	 * Hide grid lines for current sheet.
+     * @return this
 	 */
 	public T hideGrid();
 	
@@ -42,6 +45,7 @@ public interface SheetConfiguration<T> {
 	 * Default: 0.
 	 * 
 	 * @param indent indentation in number of cells
+     * @return this
 	 */
 	public T setDefaultRowIndent(int indent);
 

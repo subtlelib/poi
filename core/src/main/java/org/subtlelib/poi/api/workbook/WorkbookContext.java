@@ -19,6 +19,7 @@ public interface WorkbookContext extends ConfigurationProvider, StyleRegistry, S
 	 * Create new sheet within the current workbook.
 	 * 
 	 * @param sheetName sheet name
+     * @return created {@link SheetContext}
 	 */
 	public SheetContext createSheet(String sheetName);
 	

@@ -24,6 +24,7 @@ public interface PlainDataOutput {
 	 * For details of style configuration please see {@link StyleConfiguration} implementation used.
 	 * 
 	 * @param text non-null string
+     * @return this
 	 */
     public RowContext text(String text);
 
@@ -37,6 +38,7 @@ public interface PlainDataOutput {
 	 * 
 	 * @param text non-null string
 	 * @param style style to be applied to the current cell on top of the predefined style
+     * @return this
 	 */
     public RowContext text(String text, Style style);
 
@@ -46,6 +48,7 @@ public interface PlainDataOutput {
      * Same as {@link #text(String)} but the value is optional.
      *
      * @param text for Present string - value is written, on Absent value the cell is skipped
+     * @return this
      */
     public RowContext text(Optional<String> text);
 
@@ -56,6 +59,7 @@ public interface PlainDataOutput {
      *
      * @param text for Present string - value is written, on Absent value the cell is skipped
 	 * @param style style to be applied to the current cell on top of the predefined style
+     * @return this
      */
     public RowContext text(Optional<String> text, Style style);
     
@@ -67,6 +71,7 @@ public interface PlainDataOutput {
 	 * For details of style configuration please see {@link StyleConfiguration} implementation used.
 	 * 
 	 * @param lines non-null collection of strings
+     * @return this
 	 */
     public RowContext multilineText(Collection<String> lines);
     
@@ -80,6 +85,7 @@ public interface PlainDataOutput {
 	 * 
 	 * @param lines non-null collection of strings
 	 * @param style style to be applied to the current cell on top of the predefined style
+     * @return this
 	 */
     public RowContext multilineText(Collection<String> lines, Style style);
     
@@ -91,6 +97,7 @@ public interface PlainDataOutput {
 	 * For details of style configuration please see {@link StyleConfiguration} implementation used.
 	 * 
 	 * @param number non-null number
+     * @return this
 	 */
     public RowContext number(Number number);
     
@@ -103,7 +110,8 @@ public interface PlainDataOutput {
 	 * For details of style merging see actual {@link Style} in use.
 	 * 
 	 * @param number non-null number
-	 * @param style style to be applied to the current cell on top of the predefined style 
+	 * @param style style to be applied to the current cell on top of the predefined style
+     * @return this
 	 */    
     public RowContext number(Number number, Style style);
     
@@ -113,6 +121,7 @@ public interface PlainDataOutput {
      * Same as {@link #number(Number)} but the value is optional.
      *
      * @param number Present value is written, on Absent value the cell is skipped
+     * @return this
      */
     public RowContext number(Optional<? extends Number> number);
 
@@ -123,6 +132,7 @@ public interface PlainDataOutput {
      *
      * @param number Present value is written, on Absent value the cell is skipped
 	 * @param style style to be applied to the current cell on top of the predefined style
+     * @return this
      */
     public RowContext number(Optional<? extends Number> number, Style style);
 
@@ -135,6 +145,7 @@ public interface PlainDataOutput {
 	 * For details of style merging see actual {@link Style} in use.
 	 * 
 	 * @param date non-null date
+     * @return this
 	 */        
     public RowContext date(Date date);
     
@@ -147,7 +158,8 @@ public interface PlainDataOutput {
 	 * For details of style merging see actual {@link Style} in use.
 	 * 
 	 * @param date non-null date
-	 * @param style style to be applied to the current cell on top of the predefined style 
+	 * @param style style to be applied to the current cell on top of the predefined style
+     * @return this
 	 */        
     public RowContext date(Date date, Style style);
 
