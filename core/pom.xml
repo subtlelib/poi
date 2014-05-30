@@ -48,12 +48,12 @@
 
     <distributionManagement>
         <repository>
-            <id>sonatype-nexus</id>
+            <id>sonatype-nexus-release</id>
             <name>Sonatype release repository</name>
             <url>${sonatype.repo.url}/service/local/staging/deploy/maven2/</url>
         </repository>
         <snapshotRepository>
-            <id>sonatype-nexus</id>
+            <id>sonatype-nexus-snapshot</id>
             <name>Sonatype snapshot repository</name>
             <url>${sonatype.repo.url}/content/repositories/snapshots/</url>
         </snapshotRepository>
