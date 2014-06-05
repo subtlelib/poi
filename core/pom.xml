@@ -104,6 +104,7 @@
     </dependencies>
 
     <build>
+<!--
         <plugins>
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
@@ -116,6 +117,7 @@
                 </configuration>
             </plugin>
         </plugins>
+-->
         <pluginManagement>
             <plugins>
 
