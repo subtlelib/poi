@@ -13,7 +13,7 @@ import common.Payment;
 /**
  * This example shows the basics of subtlelib. First headers are rendered, then the data rows
  * (each row corresponds to 1 domain object).
- * <p/>
+ *
  * Created on 15/05/13
  * @author d.serdiuk
  */

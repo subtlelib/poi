@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 /**
  * An example domain object
- * <p/>
+ *
  * Created on 14/05/13
  * @author d.serdiuk
  */

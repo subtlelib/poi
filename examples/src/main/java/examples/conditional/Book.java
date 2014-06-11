@@ -4,8 +4,6 @@ import com.google.common.base.Function;
 import com.google.common.base.Optional;
 
 /**
- * TODO: describe class
- * <p/>
  * Created on 16/05/13
  *
  * @author d.serdiuk

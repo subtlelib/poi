@@ -13,7 +13,7 @@ import org.subtlelib.poi.impl.workbook.WorkbookContextFactory;
  *     <li><b>optional data</b> (see 'ISBN'): when the field is optional, nothing is written in the cell.
  *         If you have nullable fields instead, use <code>.text(Optional.fromNullable(myData.getSomeField()))</code></li>
  * </ul>
- * <p/>
+ *
  * Created on 16/05/13
  * @author d.serdiuk
  */

@@ -8,8 +8,6 @@ import org.subtlelib.poi.api.workbook.WorkbookContext;
 import com.google.common.io.Files;
 
 /**
- * TODO: describe class
- * <p/>
  * Created on 17/05/13
  *
  * @author d.serdiuk
