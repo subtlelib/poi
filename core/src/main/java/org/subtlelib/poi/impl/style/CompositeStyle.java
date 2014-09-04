@@ -1,7 +1,7 @@
 package org.subtlelib.poi.impl.style;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +21,7 @@ public final class CompositeStyle implements AdditiveStyle {
 	private final ImmutableMap<Enum<?>, AdditiveStyle> styles;
 	
     public CompositeStyle(List<AdditiveStyle> partialStyles) {
-        Map<Enum<?>, AdditiveStyle> combined = new HashMap<>();
+        Map<Enum<?>, AdditiveStyle> combined = new LinkedHashMap<>();
         for (AdditiveStyle partialStyle : partialStyles) {
             combined.put(partialStyle.getType(), partialStyle);
         }
