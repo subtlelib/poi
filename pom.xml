@@ -38,7 +38,7 @@
 
         <sonatype.repo.url>https://oss.sonatype.org</sonatype.repo.url>
 
-        <apache.poi.version>3.10-FINAL</apache.poi.version>
+        <apache.poi.version>3.10.1</apache.poi.version>
         <google.guava.version>17.0</google.guava.version>
         <slf4j.version>1.7.6</slf4j.version>
     </properties>
