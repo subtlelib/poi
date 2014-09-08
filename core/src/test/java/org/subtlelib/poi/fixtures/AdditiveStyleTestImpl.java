@@ -39,4 +39,10 @@ public class AdditiveStyleTestImpl implements AdditiveStyle {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return id;
+    }
+
 }
