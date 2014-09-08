@@ -117,6 +117,7 @@
                 <configuration>
                     <serverId>sonatype-nexus-release</serverId>
                     <nexusUrl>${sonatype.repo.url}</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
         </plugins>
