@@ -23,6 +23,11 @@ public interface WorkbookContext extends ConfigurationProvider, StyleRegistry, S
 	 */
 	public SheetContext createSheet(String sheetName);
 	
+	/**
+	 * Use an existing sheet within the current workbook
+	 */
+	public SheetContext useSheet(String sheetName); 
+	
     /**
      * Retrieve POI workbook referred to by current {@link WorkbookContext}.
      * Please refrain from using the exposed {@link HSSFWorkbook} directly unless you need functionality of POI not provided by {@link WorkbookContext}.
