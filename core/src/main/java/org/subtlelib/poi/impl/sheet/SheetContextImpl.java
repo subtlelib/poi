@@ -61,8 +61,9 @@ public class SheetContextImpl extends InheritableStyleConfiguration<SheetContext
 
     @Override
 	public RowContext nextRow() {
-        currentRow = new RowContextImpl(Rows.getOrCreate(sheet, ++rowNo), this, workbook, defaultRowIndent);
-        return currentRow;
+    	++rowNo;
+    	currentRow = null; // clear to force init of the currentRow
+        return currentRow();
     }
 
     @Override
@@ -77,8 +78,12 @@ public class SheetContextImpl extends InheritableStyleConfiguration<SheetContext
 
     @Override
 	public RowContext currentRow() {
-        checkState(currentRow != null, "Current row doesn't exist. Use nextRow() to create a new row");
-        
+    	if (rowNo == -1) {
+            checkState(currentRow != null, "Current row doesn't exist. Use nextRow() to create a new row");
+    	}
+    	if (currentRow == null) {
+    		currentRow = new RowContextImpl(Rows.getOrCreate(sheet, rowNo), this, workbook, defaultRowIndent);    		
+    	}
         return currentRow;
     }
 

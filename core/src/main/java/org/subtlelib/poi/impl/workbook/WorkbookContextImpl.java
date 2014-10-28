@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.subtlelib.poi.api.configuration.Configuration;
 import org.subtlelib.poi.api.sheet.SheetContext;
@@ -35,6 +36,12 @@ public class WorkbookContextImpl extends InheritableStyleConfiguration<WorkbookC
     public SheetContext createSheet(String sheetName) {
         return new SheetContextImpl(workbook.createSheet(sheetName), this);
     }
+    
+	@Override
+	public SheetContext useSheet(String sheetName) {
+		HSSFSheet sheet = workbook.getSheet(sheetName);
+		return new SheetContextImpl(sheet, this);
+	}    
     
 	@Override
 	public HSSFCellStyle registerStyle(Style style) {
@@ -71,4 +78,6 @@ public class WorkbookContextImpl extends InheritableStyleConfiguration<WorkbookC
 	public Configuration getConfiguration() {
 		return configuration;
 	}
+
+
 }
