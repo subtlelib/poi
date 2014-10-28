@@ -25,6 +25,7 @@ public interface WorkbookContext extends ConfigurationProvider, StyleRegistry, S
 	
 	/**
 	 * Use an existing sheet within the current workbook
+	 * @throws java.lang.IllegalArgumentException if a sheet with the given name doesn't exist
 	 */
 	public SheetContext useSheet(String sheetName); 
 	

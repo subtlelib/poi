@@ -40,6 +40,7 @@ public class WorkbookContextImpl extends InheritableStyleConfiguration<WorkbookC
 	@Override
 	public SheetContext useSheet(String sheetName) {
 		HSSFSheet sheet = workbook.getSheet(sheetName);
+		checkArgument(sheet != null, "Sheet %s doesn't exist in workbook", sheetName);
 		return new SheetContextImpl(sheet, this);
 	}    
     
