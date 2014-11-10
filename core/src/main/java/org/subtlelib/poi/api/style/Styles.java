@@ -29,7 +29,7 @@ public class Styles {
             return styles.get(0);
         }
 
-        List<AdditiveStyle> parts = new ArrayList<>();
+        List<AdditiveStyle> parts = new ArrayList<AdditiveStyle>();
         for (AdditiveStyle style : styles) {
             // can't use polymorphism in this case since we want to keep AdditiveStyle an interface so
             // that it can be implemented by user enums
