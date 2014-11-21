@@ -28,7 +28,7 @@ public interface WorkbookContext extends ConfigurationProvider, StyleRegistry, S
 	 * @throws java.lang.IllegalArgumentException if a sheet with the given name doesn't exist
 	 */
 	public SheetContext useSheet(String sheetName); 
-	
+		
     /**
      * Retrieve POI workbook referred to by current {@link WorkbookContext}.
      * Please refrain from using the exposed {@link HSSFWorkbook} directly unless you need functionality of POI not provided by {@link WorkbookContext}.

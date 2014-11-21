@@ -22,7 +22,7 @@ public class WorkbookContextImpl extends InheritableStyleConfiguration<WorkbookC
 
     private final HSSFWorkbook workbook;
     
-    private final Map<Style, HSSFCellStyle> registeredStyles = new HashMap<>();
+    private final Map<Style, HSSFCellStyle> registeredStyles = new HashMap<Style, HSSFCellStyle>();
     
     private final Configuration configuration;
     

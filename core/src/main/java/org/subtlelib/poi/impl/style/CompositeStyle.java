@@ -21,7 +21,7 @@ public final class CompositeStyle implements AdditiveStyle {
 	private final ImmutableMap<Enum<?>, AdditiveStyle> styles;
 	
     public CompositeStyle(List<AdditiveStyle> partialStyles) {
-        Map<Enum<?>, AdditiveStyle> combined = new LinkedHashMap<>();
+        Map<Enum<?>, AdditiveStyle> combined = new LinkedHashMap<Enum<?>, AdditiveStyle>();
         for (AdditiveStyle partialStyle : partialStyles) {
             combined.put(partialStyle.getType(), partialStyle);
         }

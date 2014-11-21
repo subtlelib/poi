@@ -1,10 +1,10 @@
 package org.subtlelib.poi.fixtures;
 
-import java.util.Objects;
-
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.subtlelib.poi.api.style.AdditiveStyle;
+
+import com.google.common.base.Objects;
 
 public class AdditiveStyleTestImpl implements AdditiveStyle {
 
@@ -28,14 +28,14 @@ public class AdditiveStyleTestImpl implements AdditiveStyle {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type);
+        return Objects.hashCode(id, type);
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof AdditiveStyleTestImpl) {
             AdditiveStyleTestImpl that = (AdditiveStyleTestImpl) obj;
-            return Objects.equals(this.id, that.id) && Objects.equals(this.type, that.type);
+            return Objects.equal(this.id, that.id) && Objects.equal(this.type, that.type);
         }
         return false;
     }
