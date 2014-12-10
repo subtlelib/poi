@@ -68,7 +68,7 @@ public class ColumnTotalsDataRangeImpl implements ColumnTotalsDataRange {
         return Objects.toStringHelper(this)
                 .add("startRow", startRowNo)
                 .add("endRow", endRowNo)
-                .add("isEndMarked", isEndMarked())
+                .add("isEndRowMarked", isEndMarked())
                 .toString();
     }
 }

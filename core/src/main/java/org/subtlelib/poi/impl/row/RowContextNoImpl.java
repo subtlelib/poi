@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.apache.poi.ss.usermodel.Row;
+import org.subtlelib.poi.api.filter.FilterDataRange;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.style.Style;
@@ -158,6 +159,11 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
     }
 
     @Override
+    public int getCurrentColNo() {
+        return delegate.getCurrentColNo(); 
+    }
+
+    @Override
     public RowContext setTotalsDataRange(ColumnTotalsDataRange data) {
         return delegate;
     }
@@ -179,6 +185,16 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
 
     @Override
     public RowContext totals(Formula formula, int times, Style style) {
+        return delegate;
+    }
+
+    @Override
+    public RowContext setFilterDataRange(FilterDataRange data) {
+        return delegate;
+    }
+
+    @Override
+    public RowContext filter() {
         return delegate;
     }
 }

@@ -3,11 +3,14 @@ package org.subtlelib.poi.impl.row;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
+import java.awt.*;
 import java.util.Collection;
 import java.util.Date;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.subtlelib.poi.api.filter.FilterDataRange;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.style.Style;
@@ -33,6 +36,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 
     private final Row row;
     private ColumnTotalsDataRange totalsData;
+    private FilterDataRange filterData;
 
     private int index;
     private final int indent;
@@ -184,7 +188,12 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     public Row getNativeRow() {
         return row;
     }
-    
+
+    @Override
+    public int getCurrentColNo() {
+        return this.index;
+    }
+
     private RowContext writeText(String text, Style style) {
     	checkArgument(text != null, "Text is null for column %s", index);
     	
@@ -292,6 +301,43 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
         for (int i = 0; i < times; i++) {
             writeFormula(formula, combinedStyle);
         }
+        return this;
+    }
+
+    @Override
+    public RowContext setFilterDataRange(FilterDataRange data) {
+        if (!data.isEndColMarked()) {
+            data.endOnPreviousCol();
+        }
+        if (!data.isEndRowMarked()) {
+            data.endOnPreviousRow();
+        }
+        this.filterData = data;
+        return this;
+    }
+
+    @Override
+    public RowContext filter() {
+        checkState(filterData != null, "Please set filter data range before applying filter (setFilterDataRange(...)");
+
+        CellRangeAddress filterRange = new CellRangeAddress(
+                filterData.getStartRowNo(),
+                filterData.getEndRowNo(),
+                filterData.getStartColNo(),
+                filterData.getEndColNo()
+        );
+        sheet.getNativeSheet().setAutoFilter(filterRange);
+
+        // auto-set column widths
+        // NOTE: see notice in http://poi.apache.org/spreadsheet/quick-guide.html#Autofit
+        // NOTE: To calculate column width Sheet.autoSizeColumn uses Java2D classes that throw exception if graphical environment is not available. In case if graphical environment is not available, you must tell Java that you are running in headless mode and set the following system property: java.awt.headless=true . You should also ensure that the fonts you use in your workbook are available to Java.
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        if (!ge.isHeadless()) {
+            for (int i = filterData.getStartColNo(); i <= filterData.getEndColNo(); i++) {
+                sheet.getNativeSheet().autoSizeColumn(i);
+            }
+        }
+
         return this;
     }
 }
