@@ -2,9 +2,8 @@ package org.subtlelib.poi.impl.style.defaults;
 
 import java.util.Locale;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFDataFormat;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.DateFormatConverter;
 import org.subtlelib.poi.api.style.AdditiveStyle;
 
@@ -24,8 +23,8 @@ public enum DataStyle implements AdditiveStyle {
     }
 
 	@Override
-	public void enrich(HSSFWorkbook workbook, HSSFCellStyle style) {
-        HSSFDataFormat dataFormat = workbook.createDataFormat();
+	public void enrich(Workbook workbook, org.apache.poi.ss.usermodel.CellStyle style) {
+        DataFormat dataFormat = workbook.createDataFormat();
         style.setDataFormat(dataFormat.getFormat(format));
 	}
 

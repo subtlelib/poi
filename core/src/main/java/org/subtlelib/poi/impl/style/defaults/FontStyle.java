@@ -9,9 +9,8 @@ import static org.apache.poi.ss.usermodel.Font.BOLDWEIGHT_NORMAL;
 import static org.apache.poi.ss.usermodel.Font.U_NONE;
 import static org.apache.poi.ss.usermodel.Font.U_SINGLE;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.subtlelib.poi.api.style.AdditiveStyle;
 
 public enum FontStyle implements AdditiveStyle {
@@ -53,8 +52,8 @@ public enum FontStyle implements AdditiveStyle {
     }
 
 	@Override
-	public void enrich(HSSFWorkbook workbook, HSSFCellStyle style) {
-        HSSFFont font = workbook.createFont();
+	public void enrich(Workbook workbook, org.apache.poi.ss.usermodel.CellStyle style) {
+        Font font = workbook.createFont();
         font.setFontName(name);
         font.setFontHeightInPoints(height);
         font.setBoldweight(boldWeight);

@@ -1,6 +1,6 @@
 package org.subtlelib.poi.api.style;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.ss.usermodel.CellStyle;
 
 /**
  * Workbook style registry.
@@ -18,6 +18,6 @@ public interface StyleRegistry {
 	 * @param style style to be converted and registered
 	 * @return POI representation of the provided style
 	 */
-	public HSSFCellStyle registerStyle(Style style);
+	public CellStyle registerStyle(Style style);
 	
 }

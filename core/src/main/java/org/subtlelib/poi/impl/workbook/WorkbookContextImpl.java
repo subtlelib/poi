@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.subtlelib.poi.api.configuration.Configuration;
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.style.Style;
@@ -20,13 +20,13 @@ import org.subtlelib.poi.impl.style.InheritableStyleConfiguration;
 
 public class WorkbookContextImpl extends InheritableStyleConfiguration<WorkbookContext> implements WorkbookContext {
 
-    private final HSSFWorkbook workbook;
+    private final Workbook workbook;
     
-    private final Map<Style, HSSFCellStyle> registeredStyles = new HashMap<Style, HSSFCellStyle>();
+    private final Map<Style, CellStyle> registeredStyles = new HashMap<Style, CellStyle>();
     
     private final Configuration configuration;
     
-    protected WorkbookContextImpl(HSSFWorkbook workbook, StyleConfiguration styleConfiguration, Configuration configuration) {
+    protected WorkbookContextImpl(Workbook workbook, StyleConfiguration styleConfiguration, Configuration configuration) {
     	super(styleConfiguration);
         this.workbook = workbook;
         this.configuration = configuration;
@@ -39,16 +39,16 @@ public class WorkbookContextImpl extends InheritableStyleConfiguration<WorkbookC
     
 	@Override
 	public SheetContext useSheet(String sheetName) {
-		HSSFSheet sheet = workbook.getSheet(sheetName);
+		Sheet sheet = workbook.getSheet(sheetName);
 		checkArgument(sheet != null, "Sheet %s doesn't exist in workbook", sheetName);
 		return new SheetContextImpl(sheet, this);
 	}    
     
 	@Override
-	public HSSFCellStyle registerStyle(Style style) {
+	public CellStyle registerStyle(Style style) {
 		checkArgument(style != null, "Style is null");
 
-		HSSFCellStyle registeredStyle = registeredStyles.get(style);
+		CellStyle registeredStyle = registeredStyles.get(style);
 		
 		if (registeredStyle == null) {
 			registeredStyle = workbook.createCellStyle();
@@ -71,7 +71,7 @@ public class WorkbookContextImpl extends InheritableStyleConfiguration<WorkbookC
     }
 
 	@Override
-	public HSSFWorkbook toNativeWorkbook() {
+	public Workbook toNativeWorkbook() {
 		return workbook;
 	}
 

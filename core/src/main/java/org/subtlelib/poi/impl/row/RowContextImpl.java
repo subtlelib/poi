@@ -6,7 +6,6 @@ import static com.google.common.base.Preconditions.checkState;
 import java.util.Collection;
 import java.util.Date;
 
-import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.subtlelib.poi.api.row.RowContext;
@@ -189,7 +188,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     private RowContext writeText(String text, Style style) {
     	checkArgument(text != null, "Text is null for column %s", index);
     	
-    	createCell(1, style).setCellValue(new HSSFRichTextString(text));
+    	createCell(1, style).setCellValue(text);
     	return this;
     }
 
@@ -199,7 +198,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     	String text = multilineTextJoiner.join(lines);
 		Style styleWithWrapped = StylesInternal.combineOrOverride(style, SystemCellWrapTextStyle.WRAP_TEXT);
 		
-		createCell(lines.size(), styleWithWrapped).setCellValue(new HSSFRichTextString(text));
+		createCell(lines.size(), styleWithWrapped).setCellValue(text);
     	return this;
     }
     

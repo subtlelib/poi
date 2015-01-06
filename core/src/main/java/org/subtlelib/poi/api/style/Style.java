@@ -1,7 +1,7 @@
 package org.subtlelib.poi.api.style;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Workbook;
 
 /**
  * <p>
@@ -16,5 +16,5 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
  */
 public interface Style {
 
-    public void enrich(HSSFWorkbook workbook, HSSFCellStyle style);
+    public void enrich(Workbook workbook, CellStyle style);
 }
