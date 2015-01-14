@@ -25,12 +25,15 @@ public class WorkbookContextImpl extends InheritableStyleConfiguration<WorkbookC
     private final Map<Style, CellStyle> registeredStyles = new HashMap<Style, CellStyle>();
     
     private final Configuration configuration;
-    
-    protected WorkbookContextImpl(Workbook workbook, StyleConfiguration styleConfiguration, Configuration configuration) {
+	private final String defaultFontName;
+
+	protected WorkbookContextImpl(Workbook workbook, StyleConfiguration styleConfiguration, Configuration configuration,
+								  String defaultFontName) {
     	super(styleConfiguration);
         this.workbook = workbook;
         this.configuration = configuration;
-    }
+		this.defaultFontName = defaultFontName;
+	}
     
     @Override
     public SheetContext createSheet(String sheetName) {
@@ -52,7 +55,7 @@ public class WorkbookContextImpl extends InheritableStyleConfiguration<WorkbookC
 		
 		if (registeredStyle == null) {
 			registeredStyle = workbook.createCellStyle();
-			style.enrich(workbook, registeredStyle);
+			style.enrich(this, registeredStyle);
 			registeredStyles.put(style, registeredStyle);
 		}
 		
@@ -71,6 +74,11 @@ public class WorkbookContextImpl extends InheritableStyleConfiguration<WorkbookC
     }
 
 	@Override
+	public String getDefaultFontName() {
+		return defaultFontName;
+	}
+
+	@Override
 	public Workbook toNativeWorkbook() {
 		return workbook;
 	}
@@ -79,6 +87,4 @@ public class WorkbookContextImpl extends InheritableStyleConfiguration<WorkbookC
 	public Configuration getConfiguration() {
 		return configuration;
 	}
-
-
 }

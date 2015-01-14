@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.subtlelib.poi.api.style.AdditiveStyle;
 import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.style.Styles;
+import org.subtlelib.poi.api.workbook.WorkbookContext;
 
 import com.google.common.collect.ImmutableMap;
 
@@ -29,9 +29,9 @@ public final class CompositeStyle implements AdditiveStyle {
     }
 
 	@Override
-	public void enrich(Workbook workbook, CellStyle nativeStyle) {
+	public void enrich(WorkbookContext workbookContext, CellStyle nativeStyle) {
 		for (Style style : styles.values()) {
-			style.enrich(workbook, nativeStyle);
+			style.enrich(workbookContext, nativeStyle);
 		}
 	}
 

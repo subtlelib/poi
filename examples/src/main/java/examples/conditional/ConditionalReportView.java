@@ -18,8 +18,14 @@ import org.subtlelib.poi.impl.workbook.WorkbookContextFactory;
  * @author d.serdiuk
  */
 public class ConditionalReportView {
+    private final WorkbookContextFactory ctxFactory;
+
+    public ConditionalReportView(WorkbookContextFactory ctxFactory) {
+        this.ctxFactory = ctxFactory;
+    }
+
     public WorkbookContext render(ConditionalReportModel model) {
-        WorkbookContext workbookCtx = WorkbookContextFactory.createWorkbook();
+        WorkbookContext workbookCtx = ctxFactory.createWorkbook();
         SheetContext sheetCtx = workbookCtx.createSheet("Books");
 
         // report heading

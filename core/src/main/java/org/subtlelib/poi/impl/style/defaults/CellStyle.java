@@ -4,8 +4,8 @@ import static org.apache.poi.ss.usermodel.CellStyle.BORDER_DOUBLE;
 import static org.apache.poi.ss.usermodel.CellStyle.BORDER_NONE;
 import static org.apache.poi.ss.usermodel.CellStyle.BORDER_THIN;
 
-import org.apache.poi.ss.usermodel.Workbook;
 import org.subtlelib.poi.api.style.AdditiveStyle;
+import org.subtlelib.poi.api.workbook.WorkbookContext;
 
 public enum CellStyle implements AdditiveStyle {
 
@@ -27,7 +27,7 @@ public enum CellStyle implements AdditiveStyle {
     }
 
 	@Override
-	public void enrich(Workbook workbook, org.apache.poi.ss.usermodel.CellStyle style) {
+	public void enrich(WorkbookContext workbookContext, org.apache.poi.ss.usermodel.CellStyle style) {
 		style.setBorderTop(borderTop);
         style.setBorderRight(borderRight);
         style.setBorderBottom(borderBottom);
