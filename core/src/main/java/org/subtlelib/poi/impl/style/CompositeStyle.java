@@ -5,8 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.subtlelib.poi.api.style.AdditiveStyle;
 import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.style.Styles;
@@ -29,7 +29,7 @@ public final class CompositeStyle implements AdditiveStyle {
     }
 
 	@Override
-	public void enrich(HSSFWorkbook workbook, HSSFCellStyle nativeStyle) {
+	public void enrich(Workbook workbook, CellStyle nativeStyle) {
 		for (Style style : styles.values()) {
 			style.enrich(workbook, nativeStyle);
 		}

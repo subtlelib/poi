@@ -1,6 +1,5 @@
 package org.subtlelib.poi.api.row;
 
-import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.ss.usermodel.Row;
 import org.subtlelib.poi.api.condition.CellCondition;
 import org.subtlelib.poi.api.configuration.Configuration;
@@ -56,9 +55,9 @@ public interface RowContext extends PlainDataOutput, FormattedDataOutput, CellNa
     
     /**
      * Retrieve POI row referred to by current {@link RowContext}.
-     * Please refrain from using the exposed {@link HSSFRow} directly unless you need functionality of POI not provided by {@link RowContext}.
+     * Please refrain from using the exposed {@link Row} directly unless you need functionality of POI not provided by {@link RowContext}.
      * 
-     * @return native POI {@link HSSFRow}
+     * @return native POI {@link Row}
      */
 	public Row getNativeRow();
     

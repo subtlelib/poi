@@ -1,7 +1,7 @@
 package org.subtlelib.poi.fixtures;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.subtlelib.poi.api.style.Style;
 
 import com.google.common.base.Objects;
@@ -14,7 +14,7 @@ public class NonAdditiveStyleTestImpl implements Style {
     }
 
     @Override
-    public void enrich(HSSFWorkbook workbook, HSSFCellStyle style) {
+    public void enrich(Workbook workbook, CellStyle style) {
         //do nothing
     }
 

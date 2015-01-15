@@ -1,6 +1,6 @@
 package org.subtlelib.poi.api.workbook;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.subtlelib.poi.api.configuration.ConfigurationProvider;
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.style.StyleConfigurable;
@@ -31,12 +31,12 @@ public interface WorkbookContext extends ConfigurationProvider, StyleRegistry, S
 		
     /**
      * Retrieve POI workbook referred to by current {@link WorkbookContext}.
-     * Please refrain from using the exposed {@link HSSFWorkbook} directly unless you need functionality of POI not provided by {@link WorkbookContext}.
+     * Please refrain from using the exposed {@link Workbook} directly unless you need functionality of POI not provided by {@link WorkbookContext}.
      * To retrieve a workbook for saving to a file look at {@link #toNativeBytes()} instead.
      * 
-     * @return native POI {@link HSSFWorkbook}
+     * @return native POI {@link Workbook}
      */	
-	public HSSFWorkbook toNativeWorkbook();
+	public Workbook toNativeWorkbook();
 	
 	/**
 	 * Create .xls file binary representation for current {@link WorkbookContext}
