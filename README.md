@@ -1,7 +1,15 @@
-poi
+POI Builder library
 ===
 
-A fancy way to boilerplate-less POI
+An easy way to generate Excel reports.
+- Supports generation of **xls** and **xlsx** files
+- Fluent syntax
+- Refactoring friendly
+- Easy to read
+- Supports cascading styles (define default styles for your project, customize for a single report)
+- Used in production for > 2 years
+- Supports simple formulas for totals
+- Doesn't tolerate nulls, uses [Optional](https://code.google.com/p/guava-libraries/wiki/UsingAndAvoidingNullExplained) instead
 
 ## Examples
 ### Simple
@@ -9,8 +17,14 @@ The easiest use of subtlelib: we display a collection of domain objects in an ex
 
 #### Source code
     public class SimpleReportView {
+        private final WorkbookContextFactory ctxFactory;
+    
+        public SimpleReportView(WorkbookContextFactory ctxFactory) {
+            this.ctxFactory = ctxFactory;
+        }
+    
         public WorkbookContext render(Collection<Payment> payments) {
-            WorkbookContext workbookCtx = WorkbookContextFactory.createWorkbook();
+            WorkbookContext workbookCtx = ctxFactory.createWorkbook();
             SheetContext sheetCtx = workbookCtx.createSheet("Payments");
     
             // heading
@@ -46,7 +60,7 @@ The easiest use of subtlelib: we display a collection of domain objects in an ex
     
     public class SimpleReportController {
         public static void main(String[] args) throws IOException {
-            SimpleReportView view = new SimpleReportView();
+            SimpleReportView view = new SimpleReportView(WorkbookContextFactory.useXlsx());
             WorkbookContext workbook = view.render(new SimpleReportModel().getPayments());
             Files.write(workbook.toNativeBytes(), new File("simple_example.xls"));
         }
@@ -57,17 +71,24 @@ The easiest use of subtlelib: we display a collection of domain objects in an ex
 ### An example featuring optional and conditional elements
 #### Source code
     public class ConditionalReportView {
+        private final WorkbookContextFactory ctxFactory;
+    
+        public ConditionalReportView(WorkbookContextFactory ctxFactory) {
+            this.ctxFactory = ctxFactory;
+        }
+    
         public WorkbookContext render(ConditionalReportModel model) {
-            WorkbookContext workbookCtx = WorkbookContextFactory.createWorkbook();
+            WorkbookContext workbookCtx = ctxFactory.createWorkbook();
             SheetContext sheetCtx = workbookCtx.createSheet("Books");
     
             // report heading
             sheetCtx
                 .nextRow()
-                    .header("Authors report")
+                    .mergeCells(2).text("Authors report #")
+                    .number(model.getReportNumber())
                 .nextRow().cellAt(5)
                     .text("Date:").setColumnWidth(11)
-                    .date(model.getReportCreationDate()).setColumnWidth(11)
+                    .date(model.getReportCreationDate().toDate()).setColumnWidth(11)
                 .nextRow().cellAt(5)
                     .text("Place:")
                     .text(model.getReportCreationPlace());
@@ -88,7 +109,7 @@ The easiest use of subtlelib: we display a collection of domain objects in an ex
                         .text(author.getName())
                         .text(author.getSurname())
                         .text(author.getContactNumber()) // contact number is Optional. If value is Absent, cell will be skipped
-                        .date(author.getLastUpdate())
+                        .date(author.getLastUpdate().toDate())
                         .text(author.getRating())
                     .nextRow().skipCell()
                         .header("Title")
