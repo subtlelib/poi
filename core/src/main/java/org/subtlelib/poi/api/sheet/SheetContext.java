@@ -27,6 +27,7 @@ public interface SheetContext extends RowNavigation<SheetContext, RowContext>, B
 	 * @param endColumn index of the last column participating in a merged cell
      * @return this
 	 */
+	@SuppressWarnings("UnusedReturnValue") // for consistency with other similar methods
 	public SheetContext mergeCells(int startColumn, int endColumn);
 	
     /**

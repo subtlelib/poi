@@ -27,8 +27,8 @@ public class WorkbookContextImpl extends InheritableStyleConfiguration<WorkbookC
     private final Configuration configuration;
 	private final String defaultFontName;
 
-	protected WorkbookContextImpl(Workbook workbook, StyleConfiguration styleConfiguration, Configuration configuration,
-								  String defaultFontName) {
+	WorkbookContextImpl(Workbook workbook, StyleConfiguration styleConfiguration, Configuration configuration,
+						String defaultFontName) {
     	super(styleConfiguration);
         this.workbook = workbook;
         this.configuration = configuration;

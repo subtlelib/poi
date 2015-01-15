@@ -6,9 +6,9 @@ import org.subtlelib.poi.impl.style.InheritableStyleConfiguration;
 
 public abstract class AbstractDelegatingRowContext extends InheritableStyleConfiguration<RowContext> implements RowContext {
 
-    protected final SheetContext sheet;
+    final SheetContext sheet;
 
-    public AbstractDelegatingRowContext(SheetContext sheet) {
+    AbstractDelegatingRowContext(SheetContext sheet) {
     	super(sheet);
         this.sheet = sheet;
     }

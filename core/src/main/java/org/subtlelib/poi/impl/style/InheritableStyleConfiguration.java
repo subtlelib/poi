@@ -15,7 +15,7 @@ public abstract class InheritableStyleConfiguration<T> implements StyleConfigura
 	private Style headerStyle;
 	private Style percentageStyle;
 
-	public InheritableStyleConfiguration(StyleConfiguration parentConfig) {
+	protected InheritableStyleConfiguration(StyleConfiguration parentConfig) {
 		overwriteStyles(parentConfig);
 	}
 

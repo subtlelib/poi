@@ -71,16 +71,19 @@ public class WorkbookContextFactory {
      * Use an existing WorkBook
      * @param workbook could be of type xls (HSSFWorkbook) or xlsx (XSSFWorkbook)
      */
+    @SuppressWarnings("WeakerAccess") // part of API
     public static WorkbookContext useWorkbook(Workbook workbook) {
         return new WorkbookContextImpl(workbook, new DefaultStyleConfiguration(), new DefaultConfiguration(),
                 getDefaultFontName(workbook));
     }
     
+    @SuppressWarnings("WeakerAccess") // part of API
     public static WorkbookContext useWorkbook(Workbook workbook, Configuration configuration) {
         return new WorkbookContextImpl(workbook, new DefaultStyleConfiguration(), configuration,
                 getDefaultFontName(workbook));
     }
 
+    @SuppressWarnings("WeakerAccess") // part of API
     public static WorkbookContext useWorkbook(Workbook workbook, StyleConfiguration styleConfiguration) {
         return new WorkbookContextImpl(workbook, styleConfiguration, new DefaultConfiguration(),
                 getDefaultFontName(workbook));

@@ -22,8 +22,8 @@ public class SheetContextImpl extends InheritableStyleConfiguration<SheetContext
     
     private final Sheet sheet;
     
-    protected RowContext currentRow;
-    protected int rowNo = -1;
+    private RowContext currentRow;
+    private int rowNo = -1;
     
     private int defaultRowIndent = 0;
 
