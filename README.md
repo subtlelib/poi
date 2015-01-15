@@ -1,4 +1,4 @@
-POI Builder library
+Java Excel report Builder library (using POI)
 ===
 
 An easy way to generate Excel reports.
@@ -18,11 +18,11 @@ The easiest use of subtlelib: we display a collection of domain objects in an ex
 #### Source code
     public class SimpleReportView {
         private final WorkbookContextFactory ctxFactory;
-    
+
         public SimpleReportView(WorkbookContextFactory ctxFactory) {
             this.ctxFactory = ctxFactory;
         }
-    
+
         public WorkbookContext render(Collection<Payment> payments) {
             WorkbookContext workbookCtx = ctxFactory.createWorkbook();
             SheetContext sheetCtx = workbookCtx.createSheet("Payments");
@@ -72,15 +72,16 @@ The easiest use of subtlelib: we display a collection of domain objects in an ex
 #### Source code
     public class ConditionalReportView {
         private final WorkbookContextFactory ctxFactory;
-    
+
         public ConditionalReportView(WorkbookContextFactory ctxFactory) {
             this.ctxFactory = ctxFactory;
         }
-    
+
         public WorkbookContext render(ConditionalReportModel model) {
             WorkbookContext workbookCtx = ctxFactory.createWorkbook();
-            SheetContext sheetCtx = workbookCtx.createSheet("Books");
-    
+            SheetContext sheetCtx = workbookCtx.createSheet("Books")
+                    .hideGrid();
+
             // report heading
             sheetCtx
                 .nextRow()
@@ -92,16 +93,16 @@ The easiest use of subtlelib: we display a collection of domain objects in an ex
                 .nextRow().cellAt(5)
                     .text("Place:")
                     .text(model.getReportCreationPlace());
-    
+
             // columns heading
             sheetCtx
                 .nextRow()
                     .header("Name")
-                    .header("Surname").setColumnWidth(25)
+                    .header("Surname").setColumnWidth(35)
                     .header("ContactNumber").setColumnWidth(15)
                     .header("Last Activity").setColumnWidth(16)
                     .header("Rating");
-    
+
             // data
             for (Author author: model.getBooksByAuthor().keySet()) {
                 sheetCtx
@@ -119,7 +120,7 @@ The easiest use of subtlelib: we display a collection of domain objects in an ex
                         .header("Left in stock")
                         .header("Publisher")
                         .header("ISBN");
-    
+
                 for (Book book : model.getBooksByAuthor().get(author)) {
                     sheetCtx
                         .nextRow().skipCell()

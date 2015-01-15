@@ -26,7 +26,8 @@ public class ConditionalReportView {
 
     public WorkbookContext render(ConditionalReportModel model) {
         WorkbookContext workbookCtx = ctxFactory.createWorkbook();
-        SheetContext sheetCtx = workbookCtx.createSheet("Books");
+        SheetContext sheetCtx = workbookCtx.createSheet("Books")
+                .hideGrid();
 
         // report heading
         sheetCtx
@@ -44,7 +45,7 @@ public class ConditionalReportView {
         sheetCtx
             .nextRow()
                 .header("Name")
-                .header("Surname").setColumnWidth(25)
+                .header("Surname").setColumnWidth(35)
                 .header("ContactNumber").setColumnWidth(15)
                 .header("Last Activity").setColumnWidth(16)
                 .header("Rating");
