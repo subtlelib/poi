@@ -1,5 +1,6 @@
-Java Excel report Builder library (using POI)
+Java Excel report Builder library
 ===
+using [POI](poi.apache.org).
 
 An easy way to generate Excel reports.
 - Supports generation of **xls** and **xlsx** files
@@ -66,7 +67,7 @@ The easiest use of subtlelib: we display a collection of domain objects in an ex
         }
     }
 #### Resulting file    
-![Simple example](/examples/images/example1.png)
+![Simple example](https://github.com/subtlelib/poi/blob/master/examples/images/example1.png)
 
 ### An example featuring optional and conditional elements
 #### Source code
@@ -141,4 +142,4 @@ The easiest use of subtlelib: we display a collection of domain objects in an ex
 
 #### Resulting file
 
-![Conditional example](/examples/images/example2.PNG)
+![Conditional example](https://github.com/subtlelib/poi/blob/master/examples/images/example2.PNG)
