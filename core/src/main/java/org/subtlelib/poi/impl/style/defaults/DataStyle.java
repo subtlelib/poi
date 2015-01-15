@@ -3,9 +3,9 @@ package org.subtlelib.poi.impl.style.defaults;
 import java.util.Locale;
 
 import org.apache.poi.ss.usermodel.DataFormat;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.DateFormatConverter;
 import org.subtlelib.poi.api.style.AdditiveStyle;
+import org.subtlelib.poi.api.workbook.WorkbookContext;
 
 public enum DataStyle implements AdditiveStyle {
 
@@ -23,8 +23,8 @@ public enum DataStyle implements AdditiveStyle {
     }
 
 	@Override
-	public void enrich(Workbook workbook, org.apache.poi.ss.usermodel.CellStyle style) {
-        DataFormat dataFormat = workbook.createDataFormat();
+	public void enrich(WorkbookContext workbookContext, org.apache.poi.ss.usermodel.CellStyle style) {
+        DataFormat dataFormat = workbookContext.toNativeWorkbook().createDataFormat();
         style.setDataFormat(dataFormat.getFormat(format));
 	}
 

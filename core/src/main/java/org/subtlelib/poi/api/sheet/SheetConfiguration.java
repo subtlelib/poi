@@ -20,6 +20,7 @@ public interface SheetConfiguration<T> {
 	 * @param width width in units, subject to multiplication - see {@link Configuration#getColumnWidthBaseValue()}
      * @return this
 	 */
+	@SuppressWarnings("UnusedReturnValue") // for consistency with other similar methods
 	public T setColumnWidth(int columnNumber, int width);
 	
 	/**

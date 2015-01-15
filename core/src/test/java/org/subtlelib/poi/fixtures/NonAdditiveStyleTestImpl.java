@@ -1,8 +1,8 @@
 package org.subtlelib.poi.fixtures;
 
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.subtlelib.poi.api.style.Style;
+import org.subtlelib.poi.api.workbook.WorkbookContext;
 
 import com.google.common.base.Objects;
 
@@ -14,7 +14,7 @@ public class NonAdditiveStyleTestImpl implements Style {
     }
 
     @Override
-    public void enrich(Workbook workbook, CellStyle style) {
+    public void enrich(WorkbookContext workbookContext, CellStyle style) {
         //do nothing
     }
 

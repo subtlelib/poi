@@ -35,7 +35,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     private ColumnTotalsDataRange totalsData;
 
     private int index;
-    private int indent;
+    private final int indent;
     private short rowHeight;
     private int step;
 
@@ -216,6 +216,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
         return this;
 	}
 
+    @SuppressWarnings("UnusedReturnValue") // for consistency with the other methods
     private RowContext writeFormula(Formula formula, Style style) {
     	checkArgument(formula != null, "Formula is null for column %s", index);
         checkState(totalsData != null, "Please set totals data before rendering totals formula (setTotalsDataBlock(...)");

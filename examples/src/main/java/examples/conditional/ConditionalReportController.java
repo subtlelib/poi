@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.subtlelib.poi.api.workbook.WorkbookContext;
+import org.subtlelib.poi.impl.workbook.WorkbookContextFactory;
 
 import com.google.common.io.Files;
 
@@ -15,9 +16,9 @@ import com.google.common.io.Files;
 public class ConditionalReportController {
 
     public static void main(String[] args) throws IOException {
-        ConditionalReportView view = new ConditionalReportView();
+        ConditionalReportView view = new ConditionalReportView(WorkbookContextFactory.useXlsx());
         WorkbookContext workbook = view.render(ConditionalReportModel.getExample());
-        Files.write(workbook.toNativeBytes(), new File("conditional_example_books.xls"));
+        Files.write(workbook.toNativeBytes(), new File("conditional_example_books.xlsx"));
     }
 }
 

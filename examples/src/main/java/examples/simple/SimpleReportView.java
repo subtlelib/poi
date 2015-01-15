@@ -18,8 +18,14 @@ import common.Payment;
  * @author d.serdiuk
  */
 public class SimpleReportView {
+    private final WorkbookContextFactory ctxFactory;
+
+    public SimpleReportView(WorkbookContextFactory ctxFactory) {
+        this.ctxFactory = ctxFactory;
+    }
+
     public WorkbookContext render(Collection<Payment> payments) {
-        WorkbookContext workbookCtx = WorkbookContextFactory.createWorkbook();
+        WorkbookContext workbookCtx = ctxFactory.createWorkbook();
         SheetContext sheetCtx = workbookCtx.createSheet("Payments");
 
         // heading

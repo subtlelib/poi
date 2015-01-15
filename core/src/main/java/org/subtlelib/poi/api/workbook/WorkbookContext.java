@@ -44,5 +44,8 @@ public interface WorkbookContext extends ConfigurationProvider, StyleRegistry, S
 	 * @return excel file binary representation
 	 */
 	public byte[] toNativeBytes();
+
+	/** xls and xlsx files have different default fonts */
+	public String getDefaultFontName();
 	
 }

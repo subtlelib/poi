@@ -16,7 +16,7 @@ public interface Configuration {
 
     /**
      * @return multiplier used to convert values passed to height-setting methods into those that Excel understands
-     * ("twips" or 1/20th of a point). Default multipler corresponds to the one in Row Height dialog in Excel (20).
+     * ("twips" or 1/20th of a point). Default multiplier corresponds to the one in Row Height dialog in Excel (20).
      * Therefore you would set height in typographical points.
      */
     public double getRowHeightBaseValue();

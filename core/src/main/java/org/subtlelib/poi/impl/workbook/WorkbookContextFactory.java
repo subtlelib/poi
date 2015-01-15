@@ -1,7 +1,9 @@
 package org.subtlelib.poi.impl.workbook;
 
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.subtlelib.poi.api.configuration.Configuration;
 import org.subtlelib.poi.api.style.StyleConfiguration;
@@ -12,46 +14,78 @@ import org.subtlelib.poi.impl.style.defaults.DefaultStyleConfiguration;
 public class WorkbookContextFactory {
 	
 	// if HSSF (.xls) or XSSF (.xlsx) format is used for new workbooks ?
-	private static boolean useHSSF = true;	
-	
-	public static boolean isUseHSSF() {
-		return useHSSF;
-	}
-	public static void setUseHSSF(boolean useHSSF) {
-		WorkbookContextFactory.useHSSF = useHSSF;
-	}
-	
-    private static Workbook newWorkBook() {
-		return useHSSF ? new HSSFWorkbook() : new XSSFWorkbook();
-	}
+	private final boolean useHSSF;
 
-    public static WorkbookContext createWorkbook() {
+    private WorkbookContextFactory(boolean useHSSF) {
+        this.useHSSF = useHSSF;
+    }
+
+    private static final WorkbookContextFactory xlsFactory = new WorkbookContextFactory(true);
+    private static final WorkbookContextFactory xlsxFactory = new WorkbookContextFactory(false);
+
+    /**
+     * <p>
+     * If you use Dependency Injection, inject WorkbookContextFactory
+     * and in your config wire/bind one of these 2 static factory methods as implementation.
+     * </p>
+     * <p>
+     * Tip: Spring has <bean factory-method="..." /> attribute; Guice has @Provides methods.
+     * </p>
+     */
+    public static WorkbookContextFactory useXls() {
+        return xlsFactory;
+    }
+
+    public static WorkbookContextFactory useXlsx() {
+        return xlsxFactory;
+    }
+
+    public WorkbookContext createWorkbook() {
         return useWorkbook(newWorkBook());
     }
 	
-    public static WorkbookContext createWorkbook(Configuration configuration) {
+    public WorkbookContext createWorkbook(Configuration configuration) {
         return useWorkbook(newWorkBook(), configuration);
     }
 
-    public static WorkbookContext createWorkbook(StyleConfiguration styleConfiguration) {
+    public WorkbookContext createWorkbook(StyleConfiguration styleConfiguration) {
         return useWorkbook(newWorkBook(), styleConfiguration);
+    }
+
+    private Workbook newWorkBook() {
+		return useHSSF ? new HSSFWorkbook() : new XSSFWorkbook();
+	}
+
+    private static String getDefaultFontName(Workbook workbook) {
+        if (workbook instanceof HSSFWorkbook) {
+            return HSSFFont.FONT_ARIAL;
+        } else if (workbook instanceof XSSFWorkbook) {
+            return XSSFFont.DEFAULT_FONT_NAME;
+        } else {
+            throw new IllegalArgumentException("Workbook is expected to be an instance of HSSFWorkbook or XSSFWorkbook: "
+                    + workbook);
+        }
     }
     
     /**
      * Use an existing WorkBook
-     * @param workbook
-     * @return
+     * @param workbook could be of type xls (HSSFWorkbook) or xlsx (XSSFWorkbook)
      */
+    @SuppressWarnings("WeakerAccess") // part of API
     public static WorkbookContext useWorkbook(Workbook workbook) {
-        return new WorkbookContextImpl(workbook, new DefaultStyleConfiguration(), new DefaultConfiguration());
+        return new WorkbookContextImpl(workbook, new DefaultStyleConfiguration(), new DefaultConfiguration(),
+                getDefaultFontName(workbook));
     }
     
+    @SuppressWarnings("WeakerAccess") // part of API
     public static WorkbookContext useWorkbook(Workbook workbook, Configuration configuration) {
-        return new WorkbookContextImpl(workbook, new DefaultStyleConfiguration(), configuration);
+        return new WorkbookContextImpl(workbook, new DefaultStyleConfiguration(), configuration,
+                getDefaultFontName(workbook));
     }
 
+    @SuppressWarnings("WeakerAccess") // part of API
     public static WorkbookContext useWorkbook(Workbook workbook, StyleConfiguration styleConfiguration) {
-        return new WorkbookContextImpl(workbook, styleConfiguration, new DefaultConfiguration());
+        return new WorkbookContextImpl(workbook, styleConfiguration, new DefaultConfiguration(),
+                getDefaultFontName(workbook));
     }
-    
 }
