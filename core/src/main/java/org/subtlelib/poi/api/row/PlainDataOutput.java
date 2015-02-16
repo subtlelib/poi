@@ -170,4 +170,9 @@ public interface PlainDataOutput {
     public RowContext bool(Boolean bool, Style style);
     public RowContext bool(Optional<Boolean> bool);
     public RowContext bool(Optional<Boolean> bool, Style style);
+
+    public RowContext object(Object object);
+    public RowContext object(Object object, Style style);
+    public RowContext object(Optional<Object> object);
+    public RowContext object(Optional<Object> object, Style style);
 }

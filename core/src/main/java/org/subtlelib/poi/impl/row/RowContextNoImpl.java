@@ -129,6 +129,26 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
     }
 
     @Override
+    public RowContext object(Object object) {
+        return delegate;
+    }
+
+    @Override
+    public RowContext object(Object object, Style style) {
+        return delegate;
+    }
+
+    @Override
+    public RowContext object(Optional<Object> object) {
+        return delegate;
+    }
+
+    @Override
+    public RowContext object(Optional<Object> object, Style style) {
+        return delegate;
+    }
+
+    @Override
     public RowContext skipCell() {
         return delegate;
     }

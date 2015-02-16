@@ -6,10 +6,12 @@ import static com.google.common.base.Preconditions.checkState;
 import java.awt.*;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Calendar;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.usermodel.RichTextString;
 import org.subtlelib.poi.api.filter.FilterDataRange;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
@@ -144,6 +146,34 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
         return bool.isPresent() ? bool(bool.get(), style) : skipCell();
     }
 
+    @Override
+    public RowContext object(Object object) {
+        return writeObject(object, getObjectStyle());
+    }
+    
+    @Override
+    public RowContext object(Object object, Style style) {
+        return writeObject(object, StylesInternal.combineOrOverride(getObjectStyle(), style));
+    }
+    
+    @Override
+    public RowContext object(Optional<Object> object) {
+		if (object == null || !object.isPresent()) {
+			return skipCell();
+		} else {
+			return object(object.get());
+		}
+    }
+    
+    @Override
+    public RowContext object(Optional<Object> object, Style style) {
+		if (object == null || !object.isPresent()) {
+			return skipCell();
+		} else {
+			return object(object.get(), style);
+		}
+    }
+
     public RowContext total(String text) {
         return writeText(text, getTotalStyle());
     }
@@ -221,6 +251,13 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     	return this;
     }
 
+    private RowContext writeText(RichTextString text, Style style) {
+    	checkArgument(text != null, "Text is null for column %s", index);
+    	
+    	createCell(1, style).setCellValue(text);
+    	return this;
+    }
+
     private RowContext writeMultilineText(Collection<String> lines, Style style) {
     	checkArgument(lines != null, "Lines is null for column %s", index);
     	
@@ -245,11 +282,55 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
         return this;
 	}
     
+	private RowContext writeCalendar(Calendar calendar, Style style) {
+		checkArgument(calendar != null, "Date is null for column %s", index);
+		
+		createCell(1, style).setCellValue(calendar);
+        return this;
+	}
+    
     private RowContext writeBoolean(Boolean bool, Style style) {
         checkArgument(bool != null, "Bool is null for column %s", index);
         
         createCell(1, style).setCellValue(bool);
         return this;
+    }
+
+    private RowContext writeObject(Object object, Style style) {
+
+		// null is an empty string
+		if (object == null) {
+			return writeText("", style);
+		}
+		
+		// boolean object
+		else if (object instanceof Boolean) {
+			return writeBoolean((Boolean) object, style);
+		}
+		
+		// date related objects, styled as YYYY-MM-DD HH:MM:SS
+		else if (object instanceof java.util.Calendar) {
+			return writeCalendar((java.util.Calendar) object, getDateStyle());
+		} else if (object instanceof java.util.Date) {
+			return writeDate((java.util.Date) object, getDateStyle());
+		}
+		
+		// Number formats, rendered with their respective value object (best Excel can do)
+		else if (object instanceof Number) {
+			return writeNumber(((Number)object).doubleValue(), style);
+		}
+		
+		// Strings
+		else if (object instanceof RichTextString) {
+			return writeText((RichTextString)object, style);
+		} else if (object instanceof String) {
+			return writeText((String)object, style);
+		}
+		
+		// everything unknown will be translated to a string
+		else {
+			return writeText(object.toString(), style);
+		}
     }
 
     @SuppressWarnings("UnusedReturnValue") // for consistency with the other methods
