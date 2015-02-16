@@ -9,6 +9,7 @@ public interface StyleConfigurable<T> {
 	public T setTextStyle(Style style);
 	public T setNumberStyle(Style style);
 	public T setDateStyle(Style style);
+	public T setBooleanStyle(Style style);
 	
 	public T setTotalStyle(Style style);
 	public T setHeaderStyle(Style style);

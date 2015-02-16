@@ -165,4 +165,9 @@ public interface PlainDataOutput {
 
     public RowContext date(Optional<Date> date);
     public RowContext date(Optional<Date> date, Style style);
+    
+    public RowContext bool(Boolean bool);
+    public RowContext bool(Boolean bool, Style style);
+    public RowContext bool(Optional<Boolean> bool);
+    public RowContext bool(Optional<Boolean> bool, Style style);
 }

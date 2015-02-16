@@ -109,6 +109,26 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
     }
 
     @Override
+    public RowContext bool(Boolean bool) {
+        return delegate;
+    }
+
+    @Override
+    public RowContext bool(Boolean bool, Style style) {
+        return delegate;
+    }
+
+    @Override
+    public RowContext bool(Optional<Boolean> bool) {
+        return delegate;
+    }
+
+    @Override
+    public RowContext bool(Optional<Boolean> bool, Style style) {
+        return delegate;
+    }
+
+    @Override
     public RowContext skipCell() {
         return delegate;
     }

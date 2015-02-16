@@ -123,6 +123,26 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     public RowContext date(Optional<Date> date, Style style) {
         return date.isPresent() ? date(date.get(), style) : skipCell();
     }
+    
+    @Override
+    public RowContext bool(Boolean bool) {
+        return writeBoolean(bool, getBooleanStyle());
+    }
+    
+    @Override
+    public RowContext bool(Boolean bool, Style style) {
+        return writeBoolean(bool, StylesInternal.combineOrOverride(getBooleanStyle(), style));
+    }
+    
+    @Override
+    public RowContext bool(Optional<Boolean> bool) {
+        return bool.isPresent() ? bool(bool.get()) : skipCell();
+    }
+    
+    @Override
+    public RowContext bool(Optional<Boolean> bool, Style style) {
+        return bool.isPresent() ? bool(bool.get(), style) : skipCell();
+    }
 
     public RowContext total(String text) {
         return writeText(text, getTotalStyle());
@@ -224,6 +244,13 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 		createCell(1, style).setCellValue(date);
         return this;
 	}
+    
+    private RowContext writeBoolean(Boolean bool, Style style) {
+        checkArgument(bool != null, "Bool is null for column %s", index);
+        
+        createCell(1, style).setCellValue(bool);
+        return this;
+    }
 
     @SuppressWarnings("UnusedReturnValue") // for consistency with the other methods
     private RowContext writeFormula(Formula formula, Style style) {

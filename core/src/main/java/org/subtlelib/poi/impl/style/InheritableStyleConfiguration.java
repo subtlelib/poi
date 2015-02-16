@@ -10,6 +10,7 @@ public abstract class InheritableStyleConfiguration<T> implements StyleConfigura
 	private Style textStyle;
 	private Style numberStyle;
 	private Style dateStyle;
+	private Style booleanStyle;
 
 	private Style totalStyle;
 	private Style headerStyle;
@@ -23,6 +24,7 @@ public abstract class InheritableStyleConfiguration<T> implements StyleConfigura
 		textStyle = parentConfig.getTextStyle();
 		numberStyle = parentConfig.getNumberStyle();
 		dateStyle = parentConfig.getDateStyle();
+		booleanStyle = parentConfig.getBooleanStyle();
 		totalStyle = parentConfig.getTotalStyle();
 		headerStyle = parentConfig.getHeaderStyle();
 		percentageStyle = parentConfig.getPercentageStyle();
@@ -91,6 +93,17 @@ public abstract class InheritableStyleConfiguration<T> implements StyleConfigura
 	@Override
 	public T setDateStyle(Style style) {
 		dateStyle = StylesInternal.combineOrOverride(dateStyle, style);
+		return (T) this;
+	}
+	
+	@Override
+	public Style getBooleanStyle() {
+		return booleanStyle;
+	}
+	
+	@Override
+	public T setBooleanStyle(Style style) {
+		booleanStyle = StylesInternal.combineOrOverride(booleanStyle, style);
 		return (T) this;
 	}
 	
