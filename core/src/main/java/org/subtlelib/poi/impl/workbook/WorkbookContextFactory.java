@@ -29,8 +29,9 @@ public class WorkbookContextFactory {
      * and in your config wire/bind one of these 2 static factory methods as implementation.
      * </p>
      * <p>
-     * Tip: Spring has <bean factory-method="..." /> attribute; Guice has @Provides methods.
+     * Tip: Spring has &lt;bean factory-method="..." /&gt; attribute. Guice has @Provides methods.
      * </p>
+     * @return xls workbook factory
      */
     public static WorkbookContextFactory useXls() {
         return xlsFactory;
@@ -70,6 +71,7 @@ public class WorkbookContextFactory {
     /**
      * Use an existing WorkBook
      * @param workbook could be of type xls (HSSFWorkbook) or xlsx (XSSFWorkbook)
+     * @return new context for existing workbook
      */
     @SuppressWarnings("WeakerAccess") // part of API
     public static WorkbookContext useWorkbook(Workbook workbook) {
