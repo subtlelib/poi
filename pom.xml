@@ -4,7 +4,7 @@
 
     <groupId>org.subtlelib</groupId>
     <artifactId>poi.builder.parent</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
     <packaging>pom</packaging>
 
     <name>POI builder parent</name>
@@ -45,7 +45,7 @@
         <connection>scm:git:https://github.com/subtlelib/poi.git</connection>
         <developerConnection>scm:git:https://github.com/subtlelib/poi.git</developerConnection>
         <url>https://github.com/subtlelib/poi</url>
-      <tag>HEAD</tag>
+      <tag>poi.builder.parent-1.0.3</tag>
   </scm>
 
     <distributionManagement>
