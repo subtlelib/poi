@@ -7,7 +7,9 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.style.Style;
@@ -225,12 +227,21 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
         String totalString = formula.toString() + '(' + columnIndex + totalsData.getStartRowNo()
                 + ":"
                 + columnIndex + totalsData.getEndRowNo() + ')';
-    	
-        createCell(1, style).setCellFormula(totalString);
+
+        Cell cell = createCell(1, style);
+        cell.setCellFormula(totalString);
+        cacheEvaluatedFormula(cell);
+
         return this;
     }
-    
-	@VisibleForTesting
+
+    private void cacheEvaluatedFormula(Cell cell) {
+        Workbook workbook = sheet.getNativeSheet().getWorkbook();
+        FormulaEvaluator formulaEvaluator = workbook.getCreationHelper().createFormulaEvaluator();
+        formulaEvaluator.evaluateInCell(cell);
+    }
+
+    @VisibleForTesting
 	Cell createCell(int rowHeightMultiplier, Style style) {
         assignRowHeight(rowHeightMultiplier);
 
