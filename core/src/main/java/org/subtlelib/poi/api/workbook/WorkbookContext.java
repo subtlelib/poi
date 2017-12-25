@@ -25,6 +25,9 @@ public interface WorkbookContext extends ConfigurationProvider, StyleRegistry, S
 	
 	/**
 	 * Use an existing sheet within the current workbook
+	 *
+	 * @param sheetName sheet to use
+	 * @return existing {@link SheetContext}
 	 * @throws java.lang.IllegalArgumentException if a sheet with the given name doesn't exist
 	 */
 	public SheetContext useSheet(String sheetName); 
@@ -45,7 +48,11 @@ public interface WorkbookContext extends ConfigurationProvider, StyleRegistry, S
 	 */
 	public byte[] toNativeBytes();
 
-	/** xls and xlsx files have different default fonts */
+	/** 
+	 * xls and xlsx files have different default fonts 
+	 *
+	 * @return font name
+	 */
 	public String getDefaultFontName();
 	
 }

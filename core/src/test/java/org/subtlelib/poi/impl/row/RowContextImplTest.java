@@ -1,20 +1,21 @@
 package org.subtlelib.poi.impl.row;
 
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Answers;
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.style.StyleConfiguration;
 import org.subtlelib.poi.api.style.StyleRegistry;
 import org.subtlelib.poi.api.totals.ColumnTotalsDataRange;
 import org.subtlelib.poi.api.totals.Formula;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.*;
 
 /**
  * Created on 02/04/13
@@ -29,6 +30,7 @@ public class RowContextImplTest {
     Cell cell = mock(Cell.class);
     Style style = mock(Style.class);
     ColumnTotalsDataRange dataRange = mock(ColumnTotalsDataRange.class);
+    Sheet nativeSheet = mock(Sheet.class, Answers.RETURNS_DEEP_STUBS.get());
 
     @Before
     public void setUp() throws Exception {
@@ -39,6 +41,9 @@ public class RowContextImplTest {
         when(sheetContext.getPercentageStyle()).thenReturn(style);
         when(sheetContext.getTextStyle()).thenReturn(style);
         when(sheetContext.getTotalStyle()).thenReturn(style);
+        when(sheetContext.getNativeSheet()).thenReturn(nativeSheet);
+        when(nativeSheet.getWorkbook().getCreationHelper().createFormulaEvaluator()
+                .evaluateInCell(any(Cell.class))).thenReturn(null); //result is not used
 
         rowContext = new RowContextImpl(row, sheetContext, styleRegistry, 0);
 

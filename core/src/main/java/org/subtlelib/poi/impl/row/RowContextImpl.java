@@ -1,17 +1,10 @@
 package org.subtlelib.poi.impl.row;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkState;
-
-import java.awt.*;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Calendar;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Joiner;
+import com.google.common.base.Optional;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.ss.usermodel.RichTextString;
 import org.subtlelib.poi.api.filter.FilterDataRange;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
@@ -23,9 +16,13 @@ import org.subtlelib.poi.impl.column.Columns;
 import org.subtlelib.poi.impl.style.StylesInternal;
 import org.subtlelib.poi.impl.style.system.SystemCellWrapTextStyle;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Joiner;
-import com.google.common.base.Optional;
+import java.awt.*;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
 
 
 public class RowContextImpl extends AbstractDelegatingRowContext {
@@ -342,12 +339,21 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
         String totalString = formula.toString() + '(' + columnIndex + totalsData.getStartRowNo()
                 + ":"
                 + columnIndex + totalsData.getEndRowNo() + ')';
-    	
-        createCell(1, style).setCellFormula(totalString);
+
+        Cell cell = createCell(1, style);
+        cell.setCellFormula(totalString);
+        cacheEvaluatedFormula(cell);
+
         return this;
     }
-    
-	@VisibleForTesting
+
+    private void cacheEvaluatedFormula(Cell cell) {
+        Workbook workbook = sheet.getNativeSheet().getWorkbook();
+        FormulaEvaluator formulaEvaluator = workbook.getCreationHelper().createFormulaEvaluator();
+        formulaEvaluator.evaluateInCell(cell);
+    }
+
+    @VisibleForTesting
 	Cell createCell(int rowHeightMultiplier, Style style) {
         assignRowHeight(rowHeightMultiplier);
 
