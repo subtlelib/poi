@@ -15,5 +15,7 @@ public interface StyleConfiguration {
 	public Style getTextStyle();
 	public Style getNumberStyle();
 	public Style getDateStyle();
+	public Style getBooleanStyle();
+	public Style getObjectStyle();
 	
 }

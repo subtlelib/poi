@@ -6,10 +6,12 @@ import org.apache.poi.ss.usermodel.PrintSetup;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.subtlelib.poi.api.configuration.Configuration;
+import org.subtlelib.poi.api.filter.FilterDataRange;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.totals.ColumnTotalsDataRange;
 import org.subtlelib.poi.api.workbook.WorkbookContext;
+import org.subtlelib.poi.impl.filter.FilterDataRangeImpl;
 import org.subtlelib.poi.impl.row.RowContextImpl;
 import org.subtlelib.poi.impl.row.RowContextNoImpl;
 import org.subtlelib.poi.impl.row.Rows;
@@ -163,5 +165,10 @@ public class SheetContextImpl extends InheritableStyleConfiguration<SheetContext
 
     public int getCurrentRowNo() {
         return rowNo;
+    }
+
+    @Override
+    public FilterDataRange startFilterDataRangeFromCurrentCell() {
+        return new FilterDataRangeImpl(this);
     }
 }

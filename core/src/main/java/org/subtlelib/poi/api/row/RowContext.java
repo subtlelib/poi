@@ -3,6 +3,7 @@ package org.subtlelib.poi.api.row;
 import org.apache.poi.ss.usermodel.Row;
 import org.subtlelib.poi.api.condition.CellCondition;
 import org.subtlelib.poi.api.configuration.Configuration;
+import org.subtlelib.poi.api.filter.SupportsFilterRendering;
 import org.subtlelib.poi.api.navigation.CellNavigation;
 import org.subtlelib.poi.api.navigation.RowNavigation;
 import org.subtlelib.poi.api.sheet.SheetContext;
@@ -18,7 +19,7 @@ import org.subtlelib.poi.api.totals.SupportsColumnTotalsRendering;
  */
 public interface RowContext extends PlainDataOutput, FormattedDataOutput, CellNavigation<RowContext>, CellCondition<RowContext>,
 		RowNavigation<SheetContext, RowContext>, StyleConfiguration, StyleConfigurable<RowContext>,
-        SupportsColumnTotalsRendering<RowContext> {
+        SupportsColumnTotalsRendering<RowContext>, SupportsFilterRendering<RowContext> {
 
 	/**
 	 * Set width of the last output cell.
@@ -60,5 +61,10 @@ public interface RowContext extends PlainDataOutput, FormattedDataOutput, CellNa
      * @return native POI {@link Row}
      */
 	public Row getNativeRow();
-    
+
+    /**
+     * Return the current column index (cell index)
+     * @return the current column index (cell index)
+     */
+    public int getCurrentColNo();
 }

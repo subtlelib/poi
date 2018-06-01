@@ -1,15 +1,11 @@
 package org.subtlelib.poi.impl.row;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkState;
-
-import java.util.Collection;
-import java.util.Date;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Workbook;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Joiner;
+import com.google.common.base.Optional;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.subtlelib.poi.api.filter.FilterDataRange;
 import org.subtlelib.poi.api.row.RowContext;
 import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.style.Style;
@@ -20,9 +16,13 @@ import org.subtlelib.poi.impl.column.Columns;
 import org.subtlelib.poi.impl.style.StylesInternal;
 import org.subtlelib.poi.impl.style.system.SystemCellWrapTextStyle;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Joiner;
-import com.google.common.base.Optional;
+import java.awt.*;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
 
 
 public class RowContextImpl extends AbstractDelegatingRowContext {
@@ -35,6 +35,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 
     private final Row row;
     private ColumnTotalsDataRange totalsData;
+    private FilterDataRange filterData;
 
     private int index;
     private final int indent;
@@ -121,6 +122,54 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     public RowContext date(Optional<Date> date, Style style) {
         return date.isPresent() ? date(date.get(), style) : skipCell();
     }
+    
+    @Override
+    public RowContext bool(Boolean bool) {
+        return writeBoolean(bool, getBooleanStyle());
+    }
+    
+    @Override
+    public RowContext bool(Boolean bool, Style style) {
+        return writeBoolean(bool, StylesInternal.combineOrOverride(getBooleanStyle(), style));
+    }
+    
+    @Override
+    public RowContext bool(Optional<Boolean> bool) {
+        return bool.isPresent() ? bool(bool.get()) : skipCell();
+    }
+    
+    @Override
+    public RowContext bool(Optional<Boolean> bool, Style style) {
+        return bool.isPresent() ? bool(bool.get(), style) : skipCell();
+    }
+
+    @Override
+    public RowContext object(Object object) {
+        return writeObject(object, getObjectStyle());
+    }
+    
+    @Override
+    public RowContext object(Object object, Style style) {
+        return writeObject(object, StylesInternal.combineOrOverride(getObjectStyle(), style));
+    }
+    
+    @Override
+    public RowContext object(Optional<Object> object) {
+		if (object == null || !object.isPresent()) {
+			return skipCell();
+		} else {
+			return object(object.get());
+		}
+    }
+    
+    @Override
+    public RowContext object(Optional<Object> object, Style style) {
+		if (object == null || !object.isPresent()) {
+			return skipCell();
+		} else {
+			return object(object.get(), style);
+		}
+    }
 
     public RowContext total(String text) {
         return writeText(text, getTotalStyle());
@@ -186,8 +235,20 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     public Row getNativeRow() {
         return row;
     }
-    
+
+    @Override
+    public int getCurrentColNo() {
+        return this.index;
+    }
+
     private RowContext writeText(String text, Style style) {
+    	checkArgument(text != null, "Text is null for column %s", index);
+    	
+    	createCell(1, style).setCellValue(text);
+    	return this;
+    }
+
+    private RowContext writeText(RichTextString text, Style style) {
     	checkArgument(text != null, "Text is null for column %s", index);
     	
     	createCell(1, style).setCellValue(text);
@@ -217,6 +278,57 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
 		createCell(1, style).setCellValue(date);
         return this;
 	}
+    
+	private RowContext writeCalendar(Calendar calendar, Style style) {
+		checkArgument(calendar != null, "Date is null for column %s", index);
+		
+		createCell(1, style).setCellValue(calendar);
+        return this;
+	}
+    
+    private RowContext writeBoolean(Boolean bool, Style style) {
+        checkArgument(bool != null, "Bool is null for column %s", index);
+        
+        createCell(1, style).setCellValue(bool);
+        return this;
+    }
+
+    private RowContext writeObject(Object object, Style style) {
+
+		// null is an empty string
+		if (object == null) {
+			return writeText("", style);
+		}
+		
+		// boolean object
+		else if (object instanceof Boolean) {
+			return writeBoolean((Boolean) object, style);
+		}
+		
+		// date related objects, styled as YYYY-MM-DD HH:MM:SS
+		else if (object instanceof java.util.Calendar) {
+			return writeCalendar((java.util.Calendar) object, getDateStyle());
+		} else if (object instanceof java.util.Date) {
+			return writeDate((java.util.Date) object, getDateStyle());
+		}
+		
+		// Number formats, rendered with their respective value object (best Excel can do)
+		else if (object instanceof Number) {
+			return writeNumber(((Number)object).doubleValue(), style);
+		}
+		
+		// Strings
+		else if (object instanceof RichTextString) {
+			return writeText((RichTextString)object, style);
+		} else if (object instanceof String) {
+			return writeText((String)object, style);
+		}
+		
+		// everything unknown will be translated to a string
+		else {
+			return writeText(object.toString(), style);
+		}
+    }
 
     @SuppressWarnings("UnusedReturnValue") // for consistency with the other methods
     private RowContext writeFormula(Formula formula, Style style) {
@@ -303,6 +415,43 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
         for (int i = 0; i < times; i++) {
             writeFormula(formula, combinedStyle);
         }
+        return this;
+    }
+
+    @Override
+    public RowContext setFilterDataRange(FilterDataRange data) {
+        if (!data.isEndColMarked()) {
+            data.endOnPreviousCol();
+        }
+        if (!data.isEndRowMarked()) {
+            data.endOnPreviousRow();
+        }
+        this.filterData = data;
+        return this;
+    }
+
+    @Override
+    public RowContext filter() {
+        checkState(filterData != null, "Please set filter data range before applying filter (setFilterDataRange(...)");
+
+        CellRangeAddress filterRange = new CellRangeAddress(
+                filterData.getStartRowNo(),
+                filterData.getEndRowNo(),
+                filterData.getStartColNo(),
+                filterData.getEndColNo()
+        );
+        sheet.getNativeSheet().setAutoFilter(filterRange);
+
+        // auto-set column widths
+        // NOTE: see notice in http://poi.apache.org/spreadsheet/quick-guide.html#Autofit
+        // NOTE: To calculate column width Sheet.autoSizeColumn uses Java2D classes that throw exception if graphical environment is not available. In case if graphical environment is not available, you must tell Java that you are running in headless mode and set the following system property: java.awt.headless=true . You should also ensure that the fonts you use in your workbook are available to Java.
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        if (!ge.isHeadless()) {
+            for (int i = filterData.getStartColNo(); i <= filterData.getEndColNo(); i++) {
+                sheet.getNativeSheet().autoSizeColumn(i);
+            }
+        }
+
         return this;
     }
 }

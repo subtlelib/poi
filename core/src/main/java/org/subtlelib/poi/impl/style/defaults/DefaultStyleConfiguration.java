@@ -28,6 +28,16 @@ public class DefaultStyleConfiguration implements StyleConfiguration {
     }
 
 	@Override
+	public Style getBooleanStyle() {
+		return EmptyStyle.instance;
+	}
+
+	@Override
+	public Style getObjectStyle() {
+		return EmptyStyle.instance;
+	}
+
+	@Override
 	public Style getTotalStyle() {
         return EmptyStyle.instance;
     }
