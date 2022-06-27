@@ -1,7 +1,6 @@
 package examples.conditional;
 
-import com.google.common.base.Function;
-import com.google.common.base.Optional;
+import java.util.Optional;
 
 /**
  * Created on 16/05/13
@@ -62,11 +61,4 @@ public class Book {
     public Optional<String> getIsbn() {
         return isbn;
     }
-
-    public static final Function<Book, Author> _author = new Function<Book, Author>() {
-        @Override
-        public Author apply(Book book) {
-            return book.getAuthor();
-        }
-    };
 }

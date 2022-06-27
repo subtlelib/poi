@@ -1,11 +1,7 @@
 package org.subtlelib.poi.impl.totals;
 
-import static com.google.common.base.Preconditions.checkState;
-
 import org.subtlelib.poi.api.totals.ColumnTotalsDataRange;
 import org.subtlelib.poi.impl.sheet.SheetContextImpl;
-
-import com.google.common.base.Objects;
 
 /**
  * Created on 28/03/13
@@ -42,9 +38,13 @@ public class ColumnTotalsDataRangeImpl implements ColumnTotalsDataRange {
     }
 
     private void end(int onLine) {
-        checkState(endRowNo == NOT_SET, "Don't mark range end twice. End line was already marked.", this);
+        if (endRowNo != NOT_SET) {
+            throw new IllegalStateException("Don't mark range end twice. End line was already marked: " + this);
+        }
         endRowNo = onLine + 1; // +1 since line numbers are 0-based in SheetContextImpl
-        checkState(endRowNo >= startRowNo, "No data for totals.", this);
+        if (endRowNo < startRowNo) {
+            throw new IllegalStateException("No data for totals: " + this);
+        }
     }
 
     @Override
@@ -54,7 +54,10 @@ public class ColumnTotalsDataRangeImpl implements ColumnTotalsDataRange {
 
     @Override
     public int getEndRowNo() {
-        checkState(isEndMarked(), "End line of data range must be marked before trying to retrieve it.", this);
+        if (!isEndMarked()) {
+            throw new IllegalStateException("End line of data range must be marked " +
+                    "before trying to retrieve it: " + this);
+        }
         return endRowNo;
     }
 
@@ -65,10 +68,10 @@ public class ColumnTotalsDataRangeImpl implements ColumnTotalsDataRange {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
-                .add("startRow", startRowNo)
-                .add("endRow", endRowNo)
-                .add("isEndMarked", isEndMarked())
-                .toString();
+        return "ColumnTotalsDataRangeImpl{" +
+                "startRowNo=" + startRowNo +
+                ", endRowNo=" + endRowNo +
+                ", isEndMarked=" + isEndMarked() +
+                '}';
     }
 }

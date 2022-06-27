@@ -1,9 +1,6 @@
 package org.subtlelib.poi.impl.style;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.subtlelib.poi.api.style.AdditiveStyle;
@@ -11,21 +8,19 @@ import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.style.Styles;
 import org.subtlelib.poi.api.workbook.WorkbookContext;
 
-import com.google.common.collect.ImmutableMap;
-
 /**
  * Don't instantiate this class by yourself,
  * use {@link Styles#combine(AdditiveStyle...)} if needed
  */
 public final class CompositeStyle implements AdditiveStyle {
-	private final ImmutableMap<Enum<?>, AdditiveStyle> styles;
+	private final Map<Enum<?>, AdditiveStyle> styles;
 	
     public CompositeStyle(List<AdditiveStyle> partialStyles) {
-        Map<Enum<?>, AdditiveStyle> combined = new LinkedHashMap<Enum<?>, AdditiveStyle>();
+        Map<Enum<?>, AdditiveStyle> combined = new LinkedHashMap<>();
         for (AdditiveStyle partialStyle : partialStyles) {
             combined.put(partialStyle.getType(), partialStyle);
         }
-        styles = ImmutableMap.copyOf(combined);
+        styles = combined;
     }
 
 	@Override
@@ -36,21 +31,20 @@ public final class CompositeStyle implements AdditiveStyle {
 	}
 
 
-	@Override
-	public int hashCode() {
-        // May add caching here if needed
-        // (ImmutableMap.hashCode() does no caching and TypeAdditiveStyle instances must be immutable)
-        return styles.hashCode();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CompositeStyle that = (CompositeStyle) o;
+
+        return Objects.equals(styles, that.styles);
     }
 
     @Override
-	public boolean equals(Object obj) {
-		if (obj instanceof CompositeStyle) {
-			CompositeStyle other = CompositeStyle.class.cast(obj);
-			return styles.equals(other.styles);
-		}
-		return false;
-	}
+    public int hashCode() {
+        return styles != null ? styles.hashCode() : 0;
+    }
 
     public Collection<AdditiveStyle> getStyles() {
         return styles.values();

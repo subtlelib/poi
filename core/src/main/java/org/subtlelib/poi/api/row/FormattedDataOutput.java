@@ -2,7 +2,7 @@ package org.subtlelib.poi.api.row;
 
 import org.subtlelib.poi.api.style.StyleConfiguration;
 
-import com.google.common.base.Optional;
+import java.util.Optional;
 
 /**
  * Custom data output functionality
@@ -12,8 +12,8 @@ import com.google.common.base.Optional;
  */
 public interface FormattedDataOutput {
 
-    public RowContext header(String text);
-    public RowContext total(String text);
+    RowContext header(String text);
+    RowContext total(String text);
 
 	/**
 	 * Write mandatory percentage to the current cell.
@@ -27,8 +27,8 @@ public interface FormattedDataOutput {
 	 * @param number non-null percentage
      * @return this
 	 */
-    public RowContext percentage(Number number);
+	RowContext percentage(Number number);
 
-    public RowContext percentage(Optional<? extends Number> number);
+    RowContext percentage(Optional<? extends Number> number);
 
 }

@@ -5,8 +5,7 @@
     <parent>
         <groupId>org.subtlelib</groupId>
         <artifactId>poi.builder.parent</artifactId>
-        <version>1.0.5-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>poi.builder.examples</artifactId>
@@ -15,24 +14,11 @@
     <description>Usage examples for POI builder library</description>
     <url>https://github.com/subtlelib/poi</url>
 
-    <properties>
-        <joda.time.version>2.3</joda.time.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.subtlelib</groupId>
             <artifactId>poi.builder</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>${joda.time.version}</version>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 

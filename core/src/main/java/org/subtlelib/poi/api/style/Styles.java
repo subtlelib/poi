@@ -1,14 +1,12 @@
 package org.subtlelib.poi.api.style;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.subtlelib.poi.impl.style.CompositeStyle;
 
-import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Created on 10/04/13
@@ -22,14 +20,16 @@ public class Styles {
      * @return a style that has the features of passed styles
      */
     public static AdditiveStyle combine(List<AdditiveStyle> styles) {
-        checkNotNull(styles, "styles to combine cannot be null");
-        checkArgument(styles.size() > 0, "cannot combine an empty list of styles");
+        requireNonNull(styles, "styles to combine cannot be null");
+        if (styles.isEmpty()) {
+            throw new IllegalArgumentException("cannot combine an empty list of styles");
+        }
 
         if (styles.size() == 1) {
             return styles.get(0);
         }
 
-        List<AdditiveStyle> parts = new ArrayList<AdditiveStyle>();
+        List<AdditiveStyle> parts = new ArrayList<>();
         for (AdditiveStyle style : styles) {
             // can't use polymorphism in this case since we want to keep AdditiveStyle an interface so
             // that it can be implemented by user enums
@@ -49,6 +49,6 @@ public class Styles {
      * @return a style that has the features of passed styles
      */
     public static AdditiveStyle combine(AdditiveStyle... styles) {
-        return Styles.combine(ImmutableList.copyOf(styles));
+        return Styles.combine(Arrays.asList(styles));
     }
 }

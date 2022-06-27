@@ -1,8 +1,7 @@
 package examples.conditional;
 
-import org.joda.time.LocalDate;
-
-import com.google.common.base.Optional;
+import java.time.LocalDate;
+import java.util.Optional;
 
 /**
  * Created on 16/05/13

@@ -1,12 +1,11 @@
 package examples.conditional;
 
-import java.io.File;
-import java.io.IOException;
-
 import org.subtlelib.poi.api.workbook.WorkbookContext;
 import org.subtlelib.poi.impl.workbook.WorkbookContextFactory;
 
-import com.google.common.io.Files;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Created on 17/05/13
@@ -18,7 +17,7 @@ public class ConditionalReportController {
     public static void main(String[] args) throws IOException {
         ConditionalReportView view = new ConditionalReportView(WorkbookContextFactory.useXlsx());
         WorkbookContext workbook = view.render(ConditionalReportModel.getExample());
-        Files.write(workbook.toNativeBytes(), new File("conditional_example_books.xlsx"));
+        Files.write(Paths.get("conditional_example_books.xlsx"), workbook.toNativeBytes());
     }
 }
 

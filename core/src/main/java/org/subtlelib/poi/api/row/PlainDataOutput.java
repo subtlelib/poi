@@ -1,12 +1,11 @@
 package org.subtlelib.poi.api.row;
 
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
+import java.util.Optional;
 
 import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.style.StyleConfiguration;
-
-import com.google.common.base.Optional;
 
 /**
  * Basic data output functionality
@@ -26,7 +25,7 @@ public interface PlainDataOutput {
 	 * @param text non-null string
      * @return this
 	 */
-    public RowContext text(String text);
+	RowContext text(String text);
 
 	/**
 	 * Write mandatory text to the current cell.
@@ -40,7 +39,7 @@ public interface PlainDataOutput {
 	 * @param style style to be applied to the current cell on top of the predefined style
      * @return this
 	 */
-    public RowContext text(String text, Style style);
+	RowContext text(String text, Style style);
 
     /**
      * Write optional text to the current cell.
@@ -50,7 +49,7 @@ public interface PlainDataOutput {
      * @param text for Present string - value is written, on Absent value the cell is skipped
      * @return this
      */
-    public RowContext text(Optional<String> text);
+	RowContext text(Optional<String> text);
 
     /**
      * Write optional text to the current cell and apply style provided.
@@ -61,7 +60,7 @@ public interface PlainDataOutput {
 	 * @param style style to be applied to the current cell on top of the predefined style
      * @return this
      */
-    public RowContext text(Optional<String> text, Style style);
+	RowContext text(Optional<String> text, Style style);
     
 	/**
 	 * Write mandatory multiline text to the current cell.
@@ -73,7 +72,7 @@ public interface PlainDataOutput {
 	 * @param lines non-null collection of strings
      * @return this
 	 */
-    public RowContext multilineText(Collection<String> lines);
+	RowContext multilineText(Collection<String> lines);
     
 	/**
 	 * Write mandatory multiline text to the current cell.
@@ -87,7 +86,7 @@ public interface PlainDataOutput {
 	 * @param style style to be applied to the current cell on top of the predefined style
      * @return this
 	 */
-    public RowContext multilineText(Collection<String> lines, Style style);
+	RowContext multilineText(Collection<String> lines, Style style);
     
 	/**
 	 * Write mandatory number to the current cell.
@@ -99,7 +98,7 @@ public interface PlainDataOutput {
 	 * @param number non-null number
      * @return this
 	 */
-    public RowContext number(Number number);
+	RowContext number(Number number);
     
 	/**
 	 * Write mandatory number to the current cell.
@@ -112,8 +111,8 @@ public interface PlainDataOutput {
 	 * @param number non-null number
 	 * @param style style to be applied to the current cell on top of the predefined style
      * @return this
-	 */    
-    public RowContext number(Number number, Style style);
+	 */
+	RowContext number(Number number, Style style);
     
     /**
      * Write optional number to the current cell.
@@ -123,7 +122,7 @@ public interface PlainDataOutput {
      * @param number Present value is written, on Absent value the cell is skipped
      * @return this
      */
-    public RowContext number(Optional<? extends Number> number);
+	RowContext number(Optional<? extends Number> number);
 
     /**
      * Write optional number to the current cell and apply style provided.
@@ -134,7 +133,7 @@ public interface PlainDataOutput {
 	 * @param style style to be applied to the current cell on top of the predefined style
      * @return this
      */
-    public RowContext number(Optional<? extends Number> number, Style style);
+	RowContext number(Optional<? extends Number> number, Style style);
 
 	/**
 	 * Write mandatory date to the current cell.
@@ -146,8 +145,8 @@ public interface PlainDataOutput {
 	 * 
 	 * @param date non-null date
      * @return this
-	 */        
-    public RowContext date(Date date);
+	 */
+	RowContext date(LocalDate date);
     
 	/**
 	 * Write mandatory date to the current cell.
@@ -160,9 +159,9 @@ public interface PlainDataOutput {
 	 * @param date non-null date
 	 * @param style style to be applied to the current cell on top of the predefined style
      * @return this
-	 */        
-    public RowContext date(Date date, Style style);
+	 */
+	RowContext date(LocalDate date, Style style);
 
-    public RowContext date(Optional<Date> date);
-    public RowContext date(Optional<Date> date, Style style);
+    RowContext date(Optional<LocalDate> date);
+    RowContext date(Optional<LocalDate> date, Style style);
 }

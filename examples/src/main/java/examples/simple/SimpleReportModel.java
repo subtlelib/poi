@@ -1,9 +1,8 @@
 package examples.simple;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Collection;
-
-import com.google.common.collect.ImmutableList;
 
 import common.Payment;
 
@@ -13,7 +12,7 @@ import common.Payment;
  */
 public class SimpleReportModel {
     public Collection<Payment> getPayments() {
-        return ImmutableList.of(
+        return Arrays.asList(
                 new Payment(BigDecimal.valueOf(512.33), "Credit Suisse", "USD", "Pears AG 10007 Berlin"),
                 new Payment(BigDecimal.valueOf(217.02), "UBS", "USD", "Pears AG 10007 Berlin"),
                 new Payment(BigDecimal.valueOf(9100.25), "UBS", "USD", "Cherry GmbH 10008 Berlin"),

@@ -1,16 +1,16 @@
 package org.subtlelib.poi.api.style;
 
-import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
 import org.junit.Test;
 import org.subtlelib.poi.fixtures.AdditiveStyleTestImpl;
 import org.subtlelib.poi.fixtures.StyleType;
 import org.subtlelib.poi.impl.style.CompositeStyle;
 
-import com.google.common.collect.ImmutableList;
+import java.util.List;
+
+import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created on 10/04/13
@@ -18,9 +18,9 @@ import com.google.common.collect.ImmutableList;
  */
 public class StylesTest {
 
-    private AdditiveStyle style1type1 = new AdditiveStyleTestImpl("style1", StyleType.type1);
-    private AdditiveStyle style2type1 = new AdditiveStyleTestImpl("style2", StyleType.type1);
-    private AdditiveStyle style3type2 = new AdditiveStyleTestImpl("style3", StyleType.type2);
+    private final AdditiveStyle style1type1 = new AdditiveStyleTestImpl("style1", StyleType.type1);
+    private final AdditiveStyle style2type1 = new AdditiveStyleTestImpl("style2", StyleType.type1);
+    private final AdditiveStyle style3type2 = new AdditiveStyleTestImpl("style3", StyleType.type2);
 
     @Test(expected = NullPointerException.class)
     public void testCombine_nullList_exception() {
@@ -33,11 +33,6 @@ public class StylesTest {
         Styles.combine(null, null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCombine_emptyList_exception() {
-        Styles.combine(ImmutableList.<AdditiveStyle>of());
-    }
-
     @Test
     public void testCombine_oneStyleInList_itIsReturned() {
         // do
@@ -47,10 +42,15 @@ public class StylesTest {
         assertEquals(style1type1, result);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testCombine_emptyList_exception() {
+        Styles.combine(emptyList());
+    }
+
     @Test
     public void testCombine_stylePassedDirectlyAndTheSameStyleInsideComposite_resultHasOneStyle() {
         // given
-        AdditiveStyle compositeFromStyle1 = new CompositeStyle(ImmutableList.of(style1type1));
+        AdditiveStyle compositeFromStyle1 = new CompositeStyle(singletonList(style1type1));
 
         // do
         CompositeStyle result = (CompositeStyle) Styles.combine(compositeFromStyle1, style1type1);
@@ -63,7 +63,7 @@ public class StylesTest {
     @Test
     public void testCombine_oneStyleWrappedInsideCompositeAndSecondStyleOfDifferentType_resultHasBoth() {
         // given
-        AdditiveStyle compositeFromStyle1 = new CompositeStyle(ImmutableList.of(style1type1));
+        AdditiveStyle compositeFromStyle1 = new CompositeStyle(singletonList(style1type1));
 
         // do
         CompositeStyle result = (CompositeStyle) Styles.combine(compositeFromStyle1, style3type2);

@@ -4,7 +4,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.workbook.WorkbookContext;
 
-import com.google.common.base.Objects;
+import java.util.Objects;
 
 public class NonAdditiveStyleTestImpl implements Style {
     private final String id;
@@ -19,13 +19,17 @@ public class NonAdditiveStyleTestImpl implements Style {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        NonAdditiveStyleTestImpl that = (NonAdditiveStyleTestImpl) o;
+
+        return Objects.equals(id, that.id);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return obj instanceof NonAdditiveStyleTestImpl
-                && Objects.equal(id, NonAdditiveStyleTestImpl.class.cast(obj).id);
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

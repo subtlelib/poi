@@ -35,8 +35,8 @@ public class ConditionalReportView {
                 .mergeCells(2).text("Authors report #")
                 .number(model.getReportNumber())
             .nextRow().cellAt(5)
-                .text("Date:").setColumnWidth(11)
-                .date(model.getReportCreationDate().toDate()).setColumnWidth(11)
+                .text("LocalDate:").setColumnWidth(11)
+                .date(model.getReportCreationDate()).setColumnWidth(11)
             .nextRow().cellAt(5)
                 .text("Place:")
                 .text(model.getReportCreationPlace());
@@ -57,7 +57,7 @@ public class ConditionalReportView {
                     .text(author.getName())
                     .text(author.getSurname())
                     .text(author.getContactNumber()) // contact number is Optional. If value is Absent, cell will be skipped
-                    .date(author.getLastUpdate().toDate())
+                    .date(author.getLastUpdate())
                     .text(author.getRating())
                 .nextRow().skipCell()
                     .header("Title")

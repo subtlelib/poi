@@ -1,10 +1,8 @@
 package org.subtlelib.poi.impl.row;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkState;
-
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
+import java.util.Optional;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
@@ -20,16 +18,12 @@ import org.subtlelib.poi.impl.column.Columns;
 import org.subtlelib.poi.impl.style.StylesInternal;
 import org.subtlelib.poi.impl.style.system.SystemCellWrapTextStyle;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Joiner;
-import com.google.common.base.Optional;
+import static java.util.Objects.requireNonNull;
 
 
 public class RowContextImpl extends AbstractDelegatingRowContext {
 
     private static final int ROW_HEIGHT_AUTOMATIC = -1;
-
-    private static final Joiner multilineTextJoiner = Joiner.on("\n");
 
     private final StyleRegistry styleRegistry;
 
@@ -86,7 +80,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     public RowContext number(Number number) {
         return writeNumber(number, getNumberStyle());
     }
-    
+
     @Override
     public RowContext number(Number number, Style style) {
     	return writeNumber(number, StylesInternal.combineOrOverride(getNumberStyle(), style));
@@ -103,22 +97,22 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     }
 
     @Override
-	public RowContext date(Date date) {
+	public RowContext date(LocalDate date) {
 		return writeDate(date, getDateStyle());
 	}
 
     @Override
-	public RowContext date(Date date, Style style) {
+	public RowContext date(LocalDate date, Style style) {
     	return writeDate(date, StylesInternal.combineOrOverride(getDateStyle(), style));
 	}
 
     @Override
-    public RowContext date(Optional<Date> date) {
+    public RowContext date(Optional<LocalDate> date) {
         return date.isPresent() ? date(date.get()) : skipCell();
     }
 
     @Override
-    public RowContext date(Optional<Date> date, Style style) {
+    public RowContext date(Optional<LocalDate> date, Style style) {
         return date.isPresent() ? date(date.get(), style) : skipCell();
     }
 
@@ -130,7 +124,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     public RowContext header(String text) {
         return writeText(text, getHeaderStyle());
     }
-    
+
     @Override
     public RowContext percentage(Number number) {
     	return writeNumber(number.doubleValue() / 100, getPercentageStyle());
@@ -157,7 +151,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
         index = newIndex + indent;
         return this;
     }
-    
+
     @Override
     public RowContext conditionalCell(boolean condition) {
     	return condition ? this : new RowContextNoImpl(sheet, this);
@@ -186,42 +180,45 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
     public Row getNativeRow() {
         return row;
     }
-    
+
     private RowContext writeText(String text, Style style) {
-    	checkArgument(text != null, "Text is null for column %s", index);
-    	
+    	requireNonNull(text, () -> "Text is null for column " + index);
+
     	createCell(1, style).setCellValue(text);
     	return this;
     }
 
     private RowContext writeMultilineText(Collection<String> lines, Style style) {
-    	checkArgument(lines != null, "Lines is null for column %s", index);
-    	
-    	String text = multilineTextJoiner.join(lines);
+    	requireNonNull(lines, () -> "Lines is null for column" + index);
+
+    	String text = String.join("\n", lines);
 		Style styleWithWrapped = StylesInternal.combineOrOverride(style, SystemCellWrapTextStyle.WRAP_TEXT);
-		
+
 		createCell(lines.size(), styleWithWrapped).setCellValue(text);
     	return this;
     }
-    
+
 	private RowContext writeNumber(Number number, Style style) {
-		checkArgument(number != null, "Number is null for column %s", index);
-		
+		requireNonNull(number, () -> "Number is null for column " + index);
+
 		createCell(1, style).setCellValue(number.doubleValue());
         return this;
 	}
-    
-	private RowContext writeDate(Date date, Style style) {
-		checkArgument(date != null, "Date is null for column %s", index);
-		
+
+	private RowContext writeDate(LocalDate date, Style style) {
+        requireNonNull(date, () -> "Date is null for column " + index);
+
 		createCell(1, style).setCellValue(date);
         return this;
 	}
 
     @SuppressWarnings("UnusedReturnValue") // for consistency with the other methods
     private RowContext writeFormula(Formula formula, Style style) {
-    	checkArgument(formula != null, "Formula is null for column %s", index);
-        checkState(totalsData != null, "Please set totals data before rendering totals formula (setTotalsDataBlock(...)");
+    	requireNonNull(formula, () -> "Formula is null for column " + index);
+        if (totalsData == null) {
+            throw new IllegalStateException("Please set totals data before rendering totals formula " +
+                    "(setTotalsDataBlock(...)");
+        }
 
         String columnIndex = Columns.columnIndexAsLetters(index + 1);
         String totalString = formula.toString() + '(' + columnIndex + totalsData.getStartRowNo()
@@ -241,8 +238,7 @@ public class RowContextImpl extends AbstractDelegatingRowContext {
         formulaEvaluator.evaluateInCell(cell);
     }
 
-    @VisibleForTesting
-	Cell createCell(int rowHeightMultiplier, Style style) {
+	private Cell createCell(int rowHeightMultiplier, Style style) {
         assignRowHeight(rowHeightMultiplier);
 
         Cell cell = row.createCell(index);

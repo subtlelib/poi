@@ -4,7 +4,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.subtlelib.poi.api.style.AdditiveStyle;
 import org.subtlelib.poi.api.workbook.WorkbookContext;
 
-import com.google.common.base.Objects;
+import java.util.Objects;
 
 public class AdditiveStyleTestImpl implements AdditiveStyle {
 
@@ -27,17 +27,21 @@ public class AdditiveStyleTestImpl implements AdditiveStyle {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hashCode(id, type);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AdditiveStyleTestImpl that = (AdditiveStyleTestImpl) o;
+
+        if (!Objects.equals(id, that.id)) return false;
+        return type == that.type;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof AdditiveStyleTestImpl) {
-            AdditiveStyleTestImpl that = (AdditiveStyleTestImpl) obj;
-            return Objects.equal(this.id, that.id) && Objects.equal(this.type, that.type);
-        }
-        return false;
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        return result;
     }
 
     @Override

@@ -1,7 +1,8 @@
 package org.subtlelib.poi.impl.row;
 
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
+import java.util.Optional;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.subtlelib.poi.api.row.RowContext;
@@ -9,8 +10,6 @@ import org.subtlelib.poi.api.sheet.SheetContext;
 import org.subtlelib.poi.api.style.Style;
 import org.subtlelib.poi.api.totals.ColumnTotalsDataRange;
 import org.subtlelib.poi.api.totals.Formula;
-
-import com.google.common.base.Optional;
 
 //TODO think of the case conditionalCell().text() - is text() supposed to move pointer in delegate?
 public class RowContextNoImpl extends AbstractDelegatingRowContext {
@@ -88,22 +87,22 @@ public class RowContextNoImpl extends AbstractDelegatingRowContext {
     }
 
 	@Override
-	public RowContext date(Date date) {
+	public RowContext date(LocalDate date) {
 		return delegate;
 	}
 
 	@Override
-	public RowContext date(Date date, Style style) {
+	public RowContext date(LocalDate date, Style style) {
 		return delegate;
 	}
 
     @Override
-    public RowContext date(Optional<Date> date) {
+    public RowContext date(Optional<LocalDate> date) {
         return delegate;
     }
 
     @Override
-    public RowContext date(Optional<Date> date, Style style) {
+    public RowContext date(Optional<LocalDate> date, Style style) {
         return delegate;
     }
 
