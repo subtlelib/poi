@@ -13,8 +13,6 @@ import org.subtlelib.poi.api.style.StyleRegistry;
 import org.subtlelib.poi.api.totals.ColumnTotalsDataRange;
 import org.subtlelib.poi.api.totals.Formula;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 
 /**
@@ -30,10 +28,10 @@ public class RowContextImplTest {
     Cell cell = mock(Cell.class);
     Style style = mock(Style.class);
     ColumnTotalsDataRange dataRange = mock(ColumnTotalsDataRange.class);
-    Sheet nativeSheet = mock(Sheet.class, Answers.RETURNS_DEEP_STUBS.get());
+    Sheet nativeSheet = mock(Sheet.class, Answers.RETURNS_DEEP_STUBS);
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         when(sheetContext.getStyleConfiguration()).thenReturn(styleConfig);
         when(sheetContext.getDateStyle()).thenReturn(style);
         when(sheetContext.getHeaderStyle()).thenReturn(style);
