@@ -2,11 +2,11 @@ package examples.simple;
 
 import java.util.Collection;
 
-import org.subtlelib.poi.api.sheet.SheetContext;
-import org.subtlelib.poi.api.totals.ColumnTotalsDataRange;
-import org.subtlelib.poi.api.totals.Formula;
-import org.subtlelib.poi.api.workbook.WorkbookContext;
-import org.subtlelib.poi.impl.workbook.WorkbookContextFactory;
+import com.github.subtlelib.poi.api.sheet.SheetContext;
+import com.github.subtlelib.poi.api.totals.ColumnTotalsDataRange;
+import com.github.subtlelib.poi.api.totals.Formula;
+import com.github.subtlelib.poi.api.workbook.WorkbookContext;
+import com.github.subtlelib.poi.impl.workbook.WorkbookContextFactory;
 
 import common.Payment;
 

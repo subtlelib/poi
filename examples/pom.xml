@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.subtlelib</groupId>
-        <artifactId>poi.builder.parent</artifactId>
+        <groupId>com.github.subtlelib</groupId>
+        <artifactId>poi-builder.parent</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>poi.builder.examples</artifactId>
+    <artifactId>poi-builder.examples</artifactId>
 
     <name>POI builder examples</name>
     <description>Usage examples for POI builder library</description>
@@ -16,8 +16,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.subtlelib</groupId>
-            <artifactId>poi.builder</artifactId>
+            <groupId>com.github.subtlelib</groupId>
+            <artifactId>poi-builder</artifactId>
             <version>${revision}</version>
         </dependency>
     </dependencies>

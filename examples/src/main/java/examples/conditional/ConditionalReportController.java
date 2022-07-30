@@ -1,7 +1,7 @@
 package examples.conditional;
 
-import org.subtlelib.poi.api.workbook.WorkbookContext;
-import org.subtlelib.poi.impl.workbook.WorkbookContextFactory;
+import com.github.subtlelib.poi.api.workbook.WorkbookContext;
+import com.github.subtlelib.poi.impl.workbook.WorkbookContextFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
