@@ -4,12 +4,12 @@
 
     <parent>
         <groupId>com.github.subtlelib</groupId>
-        <artifactId>poi-builder.parent</artifactId>
+        <artifactId>poi-builder-parent</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>poi-builder</artifactId>
+    <artifactId>poi-builder-core</artifactId>
 
     <name>POI builder</name>
     <description>Convenience library for apache poi-based xls documents creation</description>
