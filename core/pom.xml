@@ -11,7 +11,7 @@
 
     <artifactId>poi-builder-core</artifactId>
 
-    <name>POI builder</name>
+    <name>${project.groupId}:${project.artifactId}</name>
     <description>Convenience library for apache poi-based xls documents creation</description>
     <url>https://github.com/subtlelib/poi</url>
 
