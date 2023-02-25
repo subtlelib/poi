@@ -1,7 +1,7 @@
 package examples.simple;
 
-import com.github.subtlelib.poi.api.workbook.WorkbookContext;
-import com.github.subtlelib.poi.impl.workbook.WorkbookContextFactory;
+import io.github.subtlelib.poi.api.workbook.WorkbookContext;
+import io.github.subtlelib.poi.impl.workbook.WorkbookContextFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;

@@ -10,13 +10,14 @@ An easy way to generate Excel reports.
 - Supports cascading styles (define default styles for your project, customize for a single report)
 - Used in production for > 2 years
 - Supports simple formulas for totals
-- Doesn't tolerate nulls, uses [Optional](https://code.google.com/p/guava-libraries/wiki/UsingAndAvoidingNullExplained) instead
+- Doesn't tolerate nulls, uses Optionals instead
 
 ## Examples
 ### Simple
 The easiest use of subtlelib: we display a collection of domain objects in an excel worksheet.
 
 #### Source code
+
 ```java
 public class SimpleReportView {
     private final WorkbookContextFactory ctxFactory;
@@ -61,10 +62,10 @@ public class SimpleReportView {
 }
 
 public class SimpleReportController {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         SimpleReportView view = new SimpleReportView(WorkbookContextFactory.useXlsx());
         WorkbookContext workbook = view.render(new SimpleReportModel().getPayments());
-        Files.write(workbook.toNativeBytes(), new File("simple_example.xls"));
+        Files.write(Paths.get("simple_example.xls"), workbook.toNativeBytes());
     }
 }
 ```
