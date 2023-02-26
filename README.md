@@ -8,9 +8,21 @@ An easy way to generate Excel reports.
 - Refactoring friendly
 - Easy to read
 - Supports cascading styles (define default styles for your project, customize for a single report)
-- Used in production for > 2 years
+- Used in production for > 10 years
 - Supports simple formulas for totals
 - Doesn't tolerate nulls, uses Optionals instead
+## Maven/Gradle
+```xml
+<dependency>
+    <groupId>io.github.subtlelib</groupId>
+    <artifactId>poi-builder-core</artifactId>
+    <version>1.1.1</version>
+</dependency>
+```
+```groovy
+implementation 'io.github.subtlelib:poi-builder-core:1.1.1'
+```
+
 
 ## Examples
 ### Simple
